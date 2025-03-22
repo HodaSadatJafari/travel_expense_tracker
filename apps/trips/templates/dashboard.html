@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block additional_styles %}
+<style>
+    .dashboard-header {
+        padding: 3rem 0 2rem;
+        text-align: center;
+    }
+    
+    .dashboard-title {
+        font-family: 'Playfair Display', serif;
+        font-weight: 800;
+        color: var(--dark-color);
+        margin-bottom: 1rem;
+        position: relative;
+        display: inline-block;
+    }
+    
+    .dashboard-title:after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 3px;
+        background-color: var(--primary-color);
+        border-radius: 2px;
+    }
+    
+    .trips-container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    .trip-card {
+        background-color: white;
+        border-radius: var(--radius-sm);
+        box-shadow: var(--shadow);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        transition: all 0.3s ease;
+        border-left: 4px solid transparent;
+    }
+    
+    .trip-card:nth-child(4n+1) {
+        border-left-color: var(--primary-color);
+    }
+    
+    .trip-card:nth-child(4n+2) {
+        border-left-color: var(--secondary-color);
+    }
+    
+    .trip-card:nth-child(4n+3) {
+        border-left-color: var(--accent-color);
+    }
+    
+    .trip-card:nth-child(4n+4) {
+        border-left-color: #ddbea9;
+    }
+    
+    .trip-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg);
+    }
+    
+    .trip-details {
+        font-weight: 500;
+    }
+    
+    .trip-dates {
+        color: var(--light-text);
+        font-size: 0.9rem;
+    }
+    
+    .btn-view-trip {
+        background-color: var(--light-color);
+        color: var(--dark-color);
+        border: none;
+        padding: 0.5rem 1rem;
+        font-weight: 500;
+        border-radius: var(--radius-sm);
+        transition: all 0.3s ease;
+    }
+    
+    .btn-view-trip:hover {
+        background-color: var(--primary-color);
+        color: var(--dark-color);
+    }
+    
+    .no-trips {
+        background-color: var(--light-color);
+        padding: 3rem;
+        border-radius: var(--radius);
+        text-align: center;
+        color: var(--light-text);
+    }
+    
+    .btn-add-trip {
+        background-color: var(--primary-color);
+        color: var(--dark-color);
+        border: none;
+        padding: 0.75rem 1.5rem;
+        font-weight: 600;
+        border-radius: var(--radius-sm);
+        transition: all 0.3s ease;
+        margin-top: 1.5rem;
+        box-shadow: 0 4px 14px rgba(148, 210, 189, 0.4);
+    }
+    
+    .btn-add-trip:hover {
+        background-color: var(--primary-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(148, 210, 189, 0.5);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="dashboard-header">
+        <h2 class="dashboard-title">{% trans "My Trips" %}</h2>
+    </div>
+    
+    <div class="trips-container">
+        {% if trips %}
+            {% for trip in trips %}
+                <div class="trip-card d-flex justify-content-between align-items-center">
+                    <div class="trip-info">
+                        <div class="trip-details">{{ trip.name }}</div>
+                        <div class="trip-dates">{{ trip.start_date }} - {{ trip.end_date }}</div>
+                    </div>
+                    <a href="{% url 'view_trip' trip.id %}" class="btn btn-view-trip">
+                        {% trans "View Trip" %}
+                    </a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="no-trips">
+                <p>{% trans "No trips found. Start your adventure by adding a new trip!" %}</p>
+                <a href="{% url 'add_trip' %}" class="btn btn-add-trip">{% trans "Add New Trip" %}</a>
+            </div>
+        {% endif %}
+        
+        {% if trips %}
+        <div class="text-center mt-4 mb-5">
+            <a href="{% url 'add_trip' %}" class="btn btn-add-trip">{% trans "Add New Trip" %}</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,24 +1,120 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
+{% block additional_styles %}
+<style>
+    .form-section {
+        padding: 3rem 0;
+    }
+    
+    .form-container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: white;
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-xl);
+        padding: 3rem;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .form-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 6px;
+        background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    }
+    
+    .form-title {
+        font-family: 'Playfair Display', serif;
+        font-weight: 800;
+        color: var(--dark-color);
+        margin-bottom: 2rem;
+        position: relative;
+        display: inline-block;
+    }
+    
+    .form-title:after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 40px;
+        height: 3px;
+        background-color: var(--primary-color);
+        border-radius: 2px;
+    }
+    
+    .form-group {
+        margin-bottom: 1.75rem;
+    }
+    
+    label {
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+        color: var(--text-color);
+        display: block;
+    }
+    
+    input[type="text"],
+    input[type="date"] {
+        width: 100%;
+        padding: 0.875rem;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--border-color);
+        transition: all 0.3s ease;
+    }
+    
+    input[type="text"]:focus,
+    input[type="date"]:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 0.25rem rgba(148, 210, 189, 0.25);
+        outline: none;
+    }
+    
+    .btn-submit {
+        background: linear-gradient(to right, var(--primary-color), var(--primary-dark));
+        border: none;
+        padding: 1rem 2rem;
+        font-weight: 600;
+        color: var(--dark-color);
+        border-radius: var(--radius-sm);
+        transition: all 0.3s ease;
+        width: 100%;
+        margin-top: 1rem;
+        box-shadow: 0 4px 14px rgba(148, 210, 189, 0.4);
+    }
+    
+    .btn-submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(148, 210, 189, 0.5);
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-<div class="container">
-    <h2>{% trans "Add a New Trip" %}</h2>
-    <form method="post">
-        {% csrf_token %}
-        <div class="form-group">
-            <label for="name">{% trans "Trip Name" %}</label>
-            {{ form.name }}
-        </div>
-        <div class="form-group">
-            <label for="start_date">{% trans "Start Date" %}</label>
-            {{ form.start_date }}
-        </div>
-        <div class="form-group">
-            <label for="end_date">{% trans "End Date" %}</label>
-            {{ form.end_date }}
-        </div>
-        <button type="submit" class="btn btn-primary">{% trans "Add Trip" %}</button>
-    </form>
+<div class="container form-section">
+    <div class="form-container">
+        <h2 class="form-title">{% trans "Add a New Trip" %}</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="name">{% trans "Trip Name" %}</label>
+                {{ form.name }}
+            </div>
+            <div class="form-group">
+                <label for="start_date">{% trans "Start Date" %}</label>
+                {{ form.start_date }}
+            </div>
+            <div class="form-group">
+                <label for="end_date">{% trans "End Date" %}</label>
+                {{ form.end_date }}
+            </div>
+            <button type="submit" class="btn btn-submit">{% trans "Add Trip" %}</button>
+        </form>
+    </div>
 </div>
 {% endblock %}

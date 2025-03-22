@@ -148,3 +148,4 @@ CSS_RTL = "rtl.css"
 RTL_LANGUAGES = ["fa"]
 
 LOGIN_REDIRECT_URL = "/trips"
+LOGOUT_REDIRECT_URL = "/"

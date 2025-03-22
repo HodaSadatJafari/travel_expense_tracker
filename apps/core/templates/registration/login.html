@@ -1,66 +1,157 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
+{% block additional_styles %}
+<style>
+    .auth-section {
+        padding: 5rem 0;
+    }
+    
+    .auth-container {
+        max-width: 450px;
+        margin: 0 auto;
+        padding: 3rem;
+        border-radius: var(--radius-lg);
+        background-color: var(--background);
+        box-shadow: var(--shadow-xl);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .auth-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 6px;
+        background: linear-gradient(to right, var(--secondary-color), var(--primary-color));
+    }
+    
+    .auth-header {
+        margin-bottom: 2.5rem;
+        text-align: center;
+        position: relative;
+    }
+    
+    .auth-header h2 {
+        font-weight: 800;
+        color: var(--dark-color);
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .auth-subheader {
+        color: var(--light-text);
+        font-size: 1.1rem;
+    }
+    
+    .form-control {
+        padding: 1rem;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--border-color);
+        margin-bottom: 1rem;
+        transition: all 0.3s ease;
+        font-size: 1rem;
+    }
+    
+    .form-control:focus {
+        border-color: var(--secondary-color);
+        box-shadow: 0 0 0 0.25rem rgba(189, 178, 255, 0.25);
+    }
+    
+    .btn-login {
+        background: linear-gradient(to right, var(--secondary-color), #a99eff);
+        border: none;
+        padding: 1rem;
+        font-weight: 600;
+        color: var(--dark-color);
+        border-radius: var(--radius-sm);
+        margin-top: 1.5rem;
+        transition: all 0.3s ease;
+        font-size: 1.1rem;
+        box-shadow: 0 4px 14px rgba(189, 178, 255, 0.4);
+    }
+    
+    .btn-login:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(189, 178, 255, 0.5);
+    }
+    
+    .signup-link {
+        margin-top: 2rem;
+        text-align: center;
+        padding-top: 2rem;
+        border-top: 1px solid var(--border-color);
+    }
+    
+    .signup-link a {
+        color: var(--secondary-color);
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.2s ease;
+    }
+    
+    .signup-link a:hover {
+        color: #a99eff;
+    }
+    
+    .form-group {
+        margin-bottom: 1.75rem;
+    }
+    
+    label {
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+        color: var(--text-color);
+        display: block;
+    }
+    
+    .alert-danger {
+        background-color: #fee2e2;
+        color: #ef4444;
+        border: none;
+        padding: 1rem;
+        border-radius: var(--radius-sm);
+        margin-bottom: 1.5rem;
+        border-left: 4px solid #ef4444;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-<div class="container">
-    <h2>{% trans "Trip Details" %}: {{ trip.name }}</h2>
-    <p>
-        <strong>{% trans "Start Date" %}:</strong> {{ trip.start_date }}<br>
-        <strong>{% trans "End Date" %}:</strong> {{ trip.end_date }}
-    </p>
-
-    <h3>{% trans "Expenses" %}</h3>
-    {% if expenses %}
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>{% trans "Date" %}</th>
-                    <th>{% trans "Category" %}</th>
-                    <th>{% trans "Amount" %}</th>
-                    <th>{% trans "Description" %}</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for expense in expenses %}
-                <tr>
-                    <td>{{ expense.date }}</td>
-                    <td>{{ expense.category }}</td>
-                    <td>${{ expense.amount }}</td>
-                    <td>{{ expense.description }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        <p>{% trans "No expenses found for this trip." %}</p>
-    {% endif %}
-
-    <!-- Display expense summary by category, if desired -->
-    {% if expense_summary %}
-        <h4>{% trans "Expense Summary by Category" %}</h4>
-        <div class="row">
-            {% for category, total in expense_summary.items %}
-            <div class="col-md-3">
-                <div class="card mb-2">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ category }}</h5>
-                        <p class="card-text">${{ total }}</p>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
+<section class="auth-section">
+    <div class="auth-container">
+        <div class="auth-header">
+            <h2>{% trans "Welcome Back" %}</h2>
+            <p class="auth-subheader">{% trans "Log in to your account" %}</p>
         </div>
-    {% endif %}
-
-    <div class="mt-4">
-        <!-- Button to add a new expense for this trip -->
-        <a href="{% url 'add_expense' trip.id %}" class="btn btn-primary mr-2">
-            {% trans "Add Expense" %}
-        </a>
-        <!-- Button to add a brand new trip -->
-        <a href="{% url 'add_trip' %}" class="btn btn-secondary">
-            {% trans "Add New Trip" %}
-        </a>
+        
+        <form method="post">
+            {% csrf_token %}
+            
+            {% if form.errors %}
+            <div class="alert alert-danger" role="alert">
+                {% trans "Your username and password didn't match. Please try again." %}
+            </div>
+            {% endif %}
+            
+            <div class="form-group">
+                <label for="id_username">{% trans "Username" %}</label>
+                <input type="text" name="username" id="id_username" class="form-control" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="id_password">{% trans "Password" %}</label>
+                <input type="password" name="password" id="id_password" class="form-control" required>
+            </div>
+            
+            <button type="submit" class="btn btn-login btn-block w-100">{% trans "Log In" %}</button>
+        </form>
+        
+        <div class="signup-link">
+            <p>{% trans "Don't have an account?" %} <a href="{% url 'signup' %}">{% trans "Sign Up" %}</a></p>
+        </div>
     </div>
-</div>
+</section>
 {% endblock %}

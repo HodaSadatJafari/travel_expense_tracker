@@ -17,10 +17,18 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import include, path
+from django.conf.urls.i18n import i18n_patterns
+from django.views.i18n import set_language
 
 urlpatterns = [
-    path("core/", include("apps.core.urls")),
+    # ... your other URL patterns
+    path("i18n/setlang/", set_language, name="set_language"),
+]
+
+
+urlpatterns += i18n_patterns(
+    path("", include("apps.core.urls")),
     path("expenses/", include("apps.expenses.urls")),
     path("trips/", include("apps.trips.urls")),
     path("admin/", admin.site.urls),
-]
+)

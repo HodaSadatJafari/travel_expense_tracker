@@ -1,0 +1,499 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block additional_styles %}
+<style>
+    .hero-section {
+        position: relative;
+        padding: 8rem 0 12rem;
+        background: linear-gradient(135deg, #94d2bd 0%, #76c2bd 100%);
+        color: var(--dark-color);
+        overflow: hidden;
+        margin-top: -2px;
+    }
+    
+    .hero-pattern {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    
+    .hero-blob {
+        position: absolute;
+        bottom: -150px;
+        right: -150px;
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 70%);
+        border-radius: 50%;
+    }
+    
+    .hero-blob-2 {
+        position: absolute;
+        top: -100px;
+        left: -100px;
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 70%);
+        border-radius: 50%;
+    }
+    
+    .hero-content {
+        position: relative;
+        z-index: 2;
+    }
+    
+    .hero-title {
+        font-size: 4rem;
+        font-weight: 900;
+        line-height: 1.1;
+        margin-bottom: 1.5rem;
+        letter-spacing: -1px;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.25rem;
+        opacity: 0.85;
+        max-width: 600px;
+        margin: 0 auto 3rem;
+    }
+    
+    .btn-hero {
+        padding: 1rem 2.5rem;
+        font-size: 1.1rem;
+        border-radius: var(--radius);
+        letter-spacing: 0.5px;
+    }
+    
+    .btn-light {
+        background-color: white;
+        color: var(--primary-dark);
+        border: none;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    }
+    
+    .btn-light:hover {
+        background-color: white;
+        color: var(--primary-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .btn-outline {
+        background-color: transparent;
+        color: var(--dark-color);
+        border: 2px solid rgba(73, 80, 87, 0.3);
+    }
+    
+    .btn-outline:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: var(--dark-color);
+        border-color: var(--dark-color);
+        transform: translateY(-2px);
+    }
+    
+    .features-section {
+        margin-top: -5rem;
+        padding-bottom: 5rem;
+        position: relative;
+        z-index: 10;
+    }
+    
+    .feature-card {
+        background: white;
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        box-shadow: var(--shadow-xl);
+        transition: all 0.4s ease;
+        height: 100%;
+        position: relative;
+    }
+    
+    .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+    }
+    
+    .feature-header {
+        padding: 2rem;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    /* Updated background colors for feature headers */
+    .feature-header.teal {
+        background: #e0f2f1; /* Soft teal background */
+    }
+    
+    .feature-header.lavender {
+        background: #ede9fe; /* Soft lavender background */
+    }
+    
+    .feature-header.yellow {
+        background: #fef3c7; /* Soft yellow/amber background */
+    }
+    
+    .feature-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        position: relative;
+        z-index: 1;
+    }
+    
+    /* Updated icon colors to match the new backgrounds */
+    .feature-icon.teal {
+        color: #2c6e6a; /* Darker teal */
+    }
+    
+    .feature-icon.lavender {
+        color: #5a45c0; /* Darker lavender */
+    }
+    
+    .feature-icon.yellow {
+        color: #b38000; /* Darker yellow/amber */
+    }
+    
+    .feature-title {
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin-bottom: 0;
+        position: relative;
+        z-index: 1;
+    }
+    
+    .feature-title.teal {
+        color: #2c6e6a; /* Darker teal */
+    }
+    
+    .feature-title.lavender {
+        color: #5a45c0; /* Darker lavender */
+    }
+    
+    .feature-title.yellow {
+        color: #b38000; /* Darker yellow/amber */
+    }
+    
+    .feature-pattern {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 150px;
+        height: 150px;
+        opacity: 0.1;
+        transform: rotate(45deg);
+    }
+    
+    .feature-body {
+        padding: 2rem;
+    }
+    
+    .feature-text {
+        color: var(--light-text);
+        font-size: 1rem;
+        line-height: 1.7;
+    }
+    
+    .section-title {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+        position: relative;
+        display: inline-block;
+    }
+    
+    .section-title:after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 60px;
+        height: 4px;
+        background-color: var(--primary-color);
+        border-radius: 2px;
+    }
+    
+    .section-subtitle {
+        color: var(--light-text);
+        font-size: 1.1rem;
+        max-width: 600px;
+        margin-bottom: 3rem;
+    }
+    
+    /* Learn More Section */
+    .benefit-item {
+        padding: 2rem;
+        border-radius: var(--radius);
+        background-color: white;
+        box-shadow: var(--shadow);
+        transition: all 0.3s ease;
+        height: 100%;
+        border-top: 4px solid transparent;
+    }
+    
+    .benefit-item:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg);
+    }
+    
+    .benefit-item.teal {
+        border-top-color: var(--primary-color);
+    }
+    
+    .benefit-item.lavender {
+        border-top-color: var(--secondary-color);
+    }
+    
+    .benefit-item.yellow {
+        border-top-color: var(--accent-color);
+    }
+    
+    .benefit-item.pink {
+        border-top-color: #ddbea9;
+    }
+    
+    .benefit-icon {
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        margin-bottom: 1.5rem;
+        font-size: 1.5rem;
+        color: var(--dark-color);
+    }
+    
+    .benefit-icon.teal {
+        background-color: rgba(148, 210, 189, 0.15);
+        color: #76c2bd;
+    }
+    
+    .benefit-icon.lavender {
+        background-color: rgba(189, 178, 255, 0.15);
+        color: #a99eff;
+    }
+    
+    .benefit-icon.yellow {
+        background-color: rgba(255, 209, 102, 0.15);
+        color: #ffc44d;
+    }
+    
+    .benefit-icon.pink {
+        background-color: rgba(221, 190, 169, 0.15);
+        color: #c8a287;
+    }
+    
+    .benefit-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 0.75rem;
+        color: var(--dark-color);
+    }
+    
+    .benefit-text {
+        color: var(--light-text);
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+    
+    .cta-section {
+        background-color: var(--dark-color);
+        color: white;
+        padding: 5rem 0;
+        border-radius: var(--radius-lg);
+        margin-bottom: -8rem;
+        position: relative;
+        overflow: hidden;
+        box-shadow: var(--shadow-xl);
+    }
+    
+    .cta-pattern {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    
+    .cta-title {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+        position: relative;
+    }
+    
+    .cta-subtitle {
+        font-size: 1.1rem;
+        opacity: 0.8;
+        max-width: 600px;
+        margin: 0 auto 2rem;
+    }
+    
+    .btn-cta {
+        padding: 1rem 2.5rem;
+        font-size: 1.1rem;
+        border-radius: var(--radius);
+    }
+    
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 2.5rem;
+        }
+        
+        .hero-section {
+            padding: 6rem 0 10rem;
+        }
+        
+        .feature-card {
+            margin-bottom: 2rem;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+        }
+        
+        .cta-title {
+            font-size: 2rem;
+        }
+        
+        .benefit-item {
+            margin-bottom: 1.5rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="hero-pattern"></div>
+    <div class="hero-blob"></div>
+    <div class="hero-blob-2"></div>
+    <div class="container hero-content text-center">
+        <h1 class="hero-title">{% translate "Travel Without Financial Stress" %}</h1>
+        <p class="hero-subtitle">{% translate "Track expenses, split costs with friends, and manage your trips all in one place" %}</p>
+        <div>
+            <a class="btn btn-hero btn-light me-3" href="{% url 'signup' %}" role="button">{% translate "Get Started Free" %}</a>
+            <a class="btn btn-hero btn-outline" href="#features" role="button">{% translate "Learn More" %}</a>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section with updated backgrounds -->
+<section id="features" class="features-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="feature-card">
+                    <div class="feature-header teal">
+                        <div class="feature-pattern"></div>
+                        <div class="feature-icon teal">
+                            <i class="fas fa-receipt"></i>
+                        </div>
+                        <h3 class="feature-title teal">{% translate "Easy Expense Tracking" %}</h3>
+                    </div>
+                    <div class="feature-body">
+                        <p class="feature-text">{% translate "Quickly log expenses in multiple currencies with automatic conversion. Keep all your travel spending organized in one place." %}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="feature-card">
+                    <div class="feature-header lavender">
+                        <div class="feature-pattern"></div>
+                        <div class="feature-icon lavender">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3 class="feature-title lavender">{% translate "Fair Cost Splitting" %}</h3>
+                    </div>
+                    <div class="feature-body">
+                        <p class="feature-text">{% translate "Automatically calculate who owes what with smart splitting algorithms. Settle debts easily and maintain friendships." %}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="feature-card">
+                    <div class="feature-header yellow">
+                        <div class="feature-pattern"></div>
+                        <div class="feature-icon yellow">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <h3 class="feature-title yellow">{% translate "Insightful Reports" %}</h3>
+                    </div>
+                    <div class="feature-body">
+                        <p class="feature-text">{% translate "Visualize spending patterns and keep your travel budget under control. Get detailed insights into your travel expenses." %}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Learn More Section -->
+        <div class="mt-5 pt-5 text-center">
+            <h2 class="section-title mx-auto">{% translate "Why Choose Travel Expense Tracker?" %}</h2>
+            <p class="section-subtitle mx-auto">{% translate "Our platform is designed specifically for travelers who want to focus on experiences, not spreadsheets." %}</p>
+            
+            <div class="row mt-5">
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="benefit-item teal">
+                        <div class="benefit-icon teal mx-auto">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <h4 class="benefit-title">{% translate "Works Everywhere" %}</h4>
+                        <p class="benefit-text">{% translate "Access from any device, anywhere in the world, even without an internet connection" %}</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="benefit-item lavender">
+                        <div class="benefit-icon lavender mx-auto">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <h4 class="benefit-title">{% translate "Secure & Private" %}</h4>
+                        <p class="benefit-text">{% translate "Your financial data is encrypted and protected with bank-level security" %}</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="benefit-item yellow">
+                        <div class="benefit-icon yellow mx-auto">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h4 class="benefit-title">{% translate "Lightning Fast" %}</h4>
+                        <p class="benefit-text">{% translate "Add expenses in seconds with our intuitive and streamlined interface" %}</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="benefit-item pink">
+                        <div class="benefit-icon pink mx-auto">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h4 class="benefit-title">{% translate "Loved by Travelers" %}</h4>
+                        <p class="benefit-text">{% translate "Join thousands of satisfied users who travel stress-free worldwide" %}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="container mb-5 pb-5">
+    <div class="cta-section text-center">
+        <div class="cta-pattern"></div>
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <h3 class="cta-title">{% translate "Ready to simplify your travel finances?" %}</h3>
+                <p class="cta-subtitle">{% translate "Join thousands of travelers who manage their expenses with ease" %}</p>
+                <a class="btn btn-cta btn-accent" href="{% url 'signup' %}" role="button">{% translate "Sign Up Free" %}</a>
+                <p class="mt-3 text-muted small">{% translate "No credit card required" %}</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block additional_scripts %}
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+{% endblock %}

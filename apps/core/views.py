@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 
 
 def landing(request):
-    return render(request, "landing_page.html")
+    return render(request, "index.html")
 
 
 def signup(request):

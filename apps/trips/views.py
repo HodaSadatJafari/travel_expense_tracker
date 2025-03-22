@@ -10,10 +10,10 @@ from django.contrib.auth.decorators import login_required
 
 
 @login_required
-def my_trips(request):
+def dashboard(request):
     # Filter trips by the currently logged-in user
     user_trips = Trip.objects.filter(user=request.user).order_by("-start_date")
-    return render(request, "my_trips.html", {"trips": user_trips})
+    return render(request, "dashboard.html", {"trips": user_trips})
 
 
 # @login_required
@@ -39,14 +39,17 @@ def view_trip(request, trip_id):
     expenses = trip.expenses.all().order_by("-date")  # Retrieve expenses for this trip
 
     # Calculate total expenses by category (optional)
+    total_expense = 0
     expense_summary = {}
     for expense in expenses:
         expense_summary[expense.category] = (
             expense_summary.get(expense.category, 0) + expense.amount
         )
+        total_expense += expense.amount
 
     context = {
         "trip": trip,
+        "total_expense": total_expense,
         "expenses": expenses,
         "expense_summary": expense_summary,
     }

@@ -1,17 +1,196 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
+{% block additional_styles %}
+<style>
+    .trip-header {
+        padding: 2.5rem 0;
+        margin-bottom: 2rem;
+        background-color: var(--light-color);
+        border-radius: var(--radius);
+    }
+    
+    .trip-title {
+        font-family: 'Playfair Display', serif;
+        font-weight: 800;
+        color: var(--dark-color);
+        margin-bottom: 1rem;
+        position: relative;
+        display: inline-block;
+    }
+    
+    .trip-title:after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background-color: var(--primary-color);
+        border-radius: 2px;
+    }
+    
+    .trip-dates {
+        background-color: white;
+        padding: 1.5rem;
+        border-radius: var(--radius-sm);
+        box-shadow: var(--shadow);
+        margin-bottom: 2.5rem;
+        border-left: 4px solid var(--primary-color);
+    }
+    
+    .section-heading {
+        font-family: 'Playfair Display', serif;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        color: var(--dark-color);
+    }
+    
+    .expenses-table {
+        border-radius: var(--radius-sm);
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        margin-bottom: 3rem;
+    }
+    
+    .expenses-table thead {
+        background-color: var(--primary-color);
+        color: var(--dark-color);
+    }
+    
+    .expenses-table th {
+        font-weight: 600;
+        padding: 1rem;
+    }
+    
+    .expenses-table td {
+        padding: 1rem;
+        vertical-align: middle;
+    }
+    
+    .expenses-table tr:nth-child(even) {
+        background-color: var(--light-color);
+    }
+    
+    .category-card {
+        background-color: white;
+        border-radius: var(--radius-sm);
+        box-shadow: var(--shadow);
+        transition: all 0.3s ease;
+        height: 100%;
+        border-top: 4px solid transparent;
+    }
+    
+    .category-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg);
+    }
+    
+    .category-card.teal {
+        border-top-color: var(--primary-color);
+    }
+    
+    .category-card.lavender {
+        border-top-color: var(--secondary-color);
+    }
+    
+    .category-card.yellow {
+        border-top-color: var(--accent-color);
+    }
+    
+    .category-card.pink {
+        border-top-color: #ddbea9;
+    }
+    
+    .category-title {
+        font-weight: 600;
+        color: var(--dark-color);
+        margin-bottom: 0.5rem;
+    }
+    
+    .category-amount {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--dark-color);
+    }
+    
+    .btn-add-expense {
+        background-color: var(--primary-color);
+        color: var(--dark-color);
+        border: none;
+        padding: 0.75rem 1.5rem;
+        font-weight: 600;
+        border-radius: var(--radius-sm);
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 14px rgba(148, 210, 189, 0.4);
+    }
+    
+    .btn-add-expense:hover {
+        background-color: var(--primary-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(148, 210, 189, 0.5);
+    }
+    
+    .no-expenses {
+        background-color: var(--light-color);
+        padding: 2rem;
+        border-radius: var(--radius-sm);
+        text-align: center;
+        color: var(--light-text);
+        margin-bottom: 2rem;
+    }
+    
+    /* Total expense card styling */
+    .total-expense-card {
+        background: linear-gradient(135deg, #e0f2f1 0%, #c8e6e3 100%);
+        border-radius: var(--radius);
+        padding: 2rem;
+        margin-bottom: 3rem;
+        box-shadow: var(--shadow);
+        border-left: 5px solid var(--primary-color);
+    }
+    
+    .total-expense-label {
+        font-size: 1.1rem;
+        color: var(--dark-color);
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+    }
+    
+    .total-expense-amount {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: var(--dark-color);
+        font-family: 'Playfair Display', serif;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
 <div class="container">
-    <h2>{% trans "Trip Details" %}: {{ trip.name }}</h2>
-    <p>
-        <strong>{% trans "Start Date" %}:</strong> {{ trip.start_date }}<br>
-        <strong>{% trans "End Date" %}:</strong> {{ trip.end_date }}
-    </p>
+    <div class="trip-header">
+        <h2 class="trip-title">{% trans "Trip Details" %}: {{ trip.name }}</h2>
+        <div class="trip-dates">
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>{% trans "Start Date" %}:</strong> {{ trip.start_date }}</p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>{% trans "End Date" %}:</strong> {{ trip.end_date }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <h3>{% trans "Expenses" %}</h3>
+    <!-- Total Expense Card -->
+    <div class="total-expense-card">
+        <p class="total-expense-label">{% trans "Total Trip Expenses" %}</p>
+        <div class="total-expense-amount">${{ total_expense }}</div>
+    </div>
+
+    <h3 class="section-heading">{% trans "Expenses" %}</h3>
     {% if expenses %}
-        <table class="table">
+        <table class="table expenses-table">
             <thead>
                 <tr>
                     <th>{% trans "Date" %}</th>
@@ -32,25 +211,27 @@
             </tbody>
         </table>
     {% else %}
-        <p>{% trans "No expenses found for this trip." %}</p>
+        <div class="no-expenses">
+            <p>{% trans "No expenses found for this trip." %}</p>
+        </div>
     {% endif %}
 
-    <!-- Display expense summary by category, if you want -->
-    <h4>{% trans "Expense Summary by Category" %}</h4>
+    <!-- Display expense summary by category -->
+    <h4 class="section-heading">{% trans "Expense Summary by Category" %}</h4>
     <div class="row">
         {% for category, total in expense_summary.items %}
-        <div class="col-md-3">
-            <div class="card mb-2">
-                <div class="card-body">
-                    <h5 class="card-title">{{ category }}</h5>
-                    <p class="card-text">${{ total }}</p>
-                </div>
+        <div class="col-md-3 mb-4">
+            <div class="category-card {{ forloop.counter|divisibleby:4|yesno:'pink,yellow,lavender,teal' }} p-4">
+                <h5 class="category-title">{{ category }}</h5>
+                <p class="category-amount">${{ total }}</p>
             </div>
         </div>
         {% endfor %}
     </div>
 
     <!-- Button to add a new expense for this trip -->
-    <a href="{% url 'add_expense' trip.id %}" class="btn btn-primary">{% trans "Add Expense" %}</a>
+    <div class="text-center mt-4 mb-5">
+        <a href="{% url 'add_expense' trip.id %}" class="btn btn-add-expense">{% trans "Add Expense" %}</a>
+    </div>
 </div>
 {% endblock %}
