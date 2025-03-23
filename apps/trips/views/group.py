@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import gettext_lazy as _
+from django.contrib.auth.models import User
 
 from apps.core.utils import get_or_create_user
 from apps.expenses.models import Contribution, Expense, ExpenseShare
