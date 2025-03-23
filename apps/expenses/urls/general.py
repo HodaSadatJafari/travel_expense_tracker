@@ -7,7 +7,7 @@ urlpatterns = [
     path(
         "trip/<int:trip_id>/expense/<int:expense_id>/edit/",
         edit_expense,
-        name="edit_solo_expense",
+        name="edit_expense",
     ),
     path(
         "group/<int:trip_id>/expense/<int:expense_id>/delete/",
