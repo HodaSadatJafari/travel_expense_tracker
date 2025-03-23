@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {% load trip_tags %}
+
 {% block additional_styles %}
 <style>
     .trip-header {
@@ -189,13 +190,117 @@
         color: var(--light-text);
         margin-bottom: 2rem;
     }
+    
+    .management-toolbar {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 1rem;
+    }
+    
+    .btn-toolbar {
+        background-color: white;
+        padding: 0.5rem;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow-sm);
+    }
+    
+    .btn-tool {
+        padding: 0.5rem 1rem;
+        border-radius: var(--radius-sm);
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: all 0.2s ease;
+        margin: 0 0.25rem;
+    }
+    
+    .btn-tool.edit {
+        background-color: #f8f9fa;
+        color: var(--dark-color);
+    }
+    
+    .btn-tool.edit:hover {
+        background-color: #e9ecef;
+    }
+    
+    .btn-tool.delete {
+        background-color: #ffebee;
+        color: #c62828;
+    }
+    
+    .btn-tool.delete:hover {
+        background-color: #ffcdd2;
+    }
+    
+    .btn-tool.primary {
+        background-color: var(--primary-color);
+        color: var(--dark-color);
+    }
+    
+    .btn-tool.primary:hover {
+        background-color: var(--primary-dark);
+    }
+    
+    .btn-action {
+        padding: 0.25rem 0.5rem;
+        margin: 0 0.125rem;
+        border-radius: var(--radius-sm);
+        transition: all 0.2s ease;
+    }
+    
+    .btn-action.edit {
+        color: #0d6efd;
+        border: 1px solid #0d6efd;
+    }
+    
+    .btn-action.edit:hover {
+        background-color: #0d6efd;
+        color: white;
+    }
+    
+    .btn-action.delete {
+        color: #dc3545;
+        border: 1px solid #dc3545;
+    }
+    
+    .btn-action.delete:hover {
+        background-color: #dc3545;
+        color: white;
+    }
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="container py-5">
+    {% if messages %}
+        <div class="messages mb-4">
+            {% for message in messages %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
     <div class="trip-header">
-        <h2 class="trip-title">{{ trip.name }} <span class="badge bg-primary">{% trans "Group Trip" %}</span></h2>
+        <div class="d-flex justify-content-between align-items-start mb-3">
+            <h2 class="trip-title">{{ trip.name }} <span class="badge bg-primary">{% trans "Group Trip" %}</span></h2>
+            
+            {% if trip.user == request.user %}
+                <div class="btn-toolbar">
+                    <a href="{% url 'manage_participants' trip.id %}" class="btn btn-tool primary">
+                        <i class="fas fa-users me-2"></i> {% trans "Manage Participants" %}
+                    </a>
+                    <a href="{% url 'edit_trip' trip.id %}" class="btn btn-tool edit">
+                        <i class="fas fa-edit me-2"></i> {% trans "Edit Trip" %}
+                    </a>
+                    <a href="{% url 'delete_trip' trip.id %}" class="btn btn-tool delete">
+                        <i class="fas fa-trash-alt me-2"></i> {% trans "Delete Trip" %}
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+        
         <div class="trip-dates">
             <div class="row">
                 <div class="col-md-6">
@@ -256,30 +361,34 @@
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h5>{{ data.participant.user.get_full_name|default:data.participant.user.username }}</h5>
                         {% if data.participant.shares > 1 %}
-                            <span class="badge bg-secondary">{{ data.participant.shares }} {% trans "shares" %}</span>
+                            <span class="badge bg-secondary">
+                                {% if data.participant.shares > 1 %}
+                                    {{ data.participant.shares }} {% trans "shares" %}
+                                {% else %}
+                                    {{ data.participant.shares }} {% trans "share" %}
+                                {% endif %}
+                            </span>
                         {% endif %}
                     </div>
                     
                     <p><strong>{% trans "Contributions" %}:</strong></p>
-                    {% with participant_contributions=contributions_by_participant|get_item:participant_id %}
-                        {% if participant_contributions.contributions %}
-                            <div class="contribution-list">
-                                {% for contribution in participant_contributions.contributions %}
-                                    <div class="contribution-item">
-                                        <div class="d-flex justify-content-between">
-                                            <span>${{ contribution.amount }}</span>
-                                            <span class="text-muted">{{ contribution.date }}</span>
-                                        </div>
-                                        {% if contribution.notes %}
-                                            <small class="text-muted">{{ contribution.notes }}</small>
-                                        {% endif %}
+                    {% if data.contributions %}
+                        <div class="contribution-list">
+                            {% for contribution in data.contributions %}
+                                <div class="contribution-item">
+                                    <div class="d-flex justify-content-between">
+                                        <span>${{ contribution.amount }}</span>
+                                        <span class="text-muted">{{ contribution.date }}</span>
                                     </div>
-                                {% endfor %}
-                            </div>
-                        {% else %}
-                            <p class="text-muted">{% trans "No contributions" %}</p>
-                        {% endif %}
-                    {% endwith %}
+                                    {% if contribution.notes %}
+                                        <small class="text-muted">{{ contribution.notes }}</small>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="text-muted">{% trans "No contributions" %}</p>
+                    {% endif %}
                     
                     <table class="table table-sm mt-3">
                         <tr>
@@ -324,6 +433,9 @@
                         <th>{% trans "Amount" %}</th>
                         <th>{% trans "Shared With" %}</th>
                         <th>{% trans "Description" %}</th>
+                        {% if trip.user == request.user %}
+                            <th>{% trans "Actions" %}</th>
+                        {% endif %}
                     </tr>
                 </thead>
                 <tbody>
@@ -351,6 +463,18 @@
                             {% endif %}
                         </td>
                         <td>{{ expense.description }}</td>
+                        {% if trip.user == request.user %}
+                        <td>
+                            <div class="btn-group btn-group-sm">
+                                <a href="{% url 'edit_expense' trip.id expense.id %}" class="btn btn-action edit" title="{% trans 'Edit' %}">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="{% url 'delete_expense' trip.id expense.id %}" class="btn btn-action delete" title="{% trans 'Delete' %}">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            </div>
+                        </td>
+                        {% endif %}
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -377,11 +501,10 @@
 
 {% block additional_scripts %}
 <script>
-    // Custom template tag replacement
-    if (typeof Object.prototype.get_item != 'function') {
-        Object.prototype.get_item = function(key) {
-            return this[key];
-        }
-    }
+    // If using Bootstrap 5, initialize tooltips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[title]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
 </script>
 {% endblock %}

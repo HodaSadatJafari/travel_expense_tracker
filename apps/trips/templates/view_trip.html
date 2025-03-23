@@ -163,13 +163,98 @@
         color: var(--dark-color);
         font-family: 'Playfair Display', serif;
     }
+    
+    /* New styles for trip management */
+    .btn-toolbar {
+        background-color: white;
+        padding: 0.5rem;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow-sm);
+    }
+    
+    .btn-tool {
+        padding: 0.5rem 1rem;
+        border-radius: var(--radius-sm);
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: all 0.2s ease;
+        margin: 0 0.25rem;
+    }
+    
+    .btn-tool.edit {
+        background-color: #f8f9fa;
+        color: var(--dark-color);
+    }
+    
+    .btn-tool.edit:hover {
+        background-color: #e9ecef;
+    }
+    
+    .btn-tool.delete {
+        background-color: #ffebee;
+        color: #c62828;
+    }
+    
+    .btn-tool.delete:hover {
+        background-color: #ffcdd2;
+    }
+    
+    .btn-action {
+        padding: 0.25rem 0.5rem;
+        margin: 0 0.125rem;
+        border-radius: var(--radius-sm);
+        transition: all 0.2s ease;
+    }
+    
+    .btn-action.edit {
+        color: #0d6efd;
+        border: 1px solid #0d6efd;
+    }
+    
+    .btn-action.edit:hover {
+        background-color: #0d6efd;
+        color: white;
+    }
+    
+    .btn-action.delete {
+        color: #dc3545;
+        border: 1px solid #dc3545;
+    }
+    
+    .btn-action.delete:hover {
+        background-color: #dc3545;
+        color: white;
+    }
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container py-5">
+    {% if messages %}
+        <div class="messages mb-4">
+            {% for message in messages %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
     <div class="trip-header">
-        <h2 class="trip-title">{% trans "Trip Details" %}: {{ trip.name }}</h2>
+        <div class="d-flex justify-content-between align-items-start mb-3">
+            <h2 class="trip-title">{{ trip.name }}</h2>
+            
+            <div class="btn-toolbar">
+                <a href="{% url 'edit_trip' trip.id %}" class="btn btn-tool edit">
+                    <i class="fas fa-edit me-2"></i> {% trans "Edit Trip" %}
+                </a>
+                <a href="{% url 'delete_trip' trip.id %}" class="btn btn-tool delete">
+                    <i class="fas fa-trash-alt me-2"></i> {% trans "Delete Trip" %}
+                </a>
+            </div>
+        </div>
+        
         <div class="trip-dates">
             <div class="row">
                 <div class="col-md-6">
@@ -190,26 +275,39 @@
 
     <h3 class="section-heading">{% trans "Expenses" %}</h3>
     {% if expenses %}
-        <table class="table expenses-table">
-            <thead>
-                <tr>
-                    <th>{% trans "Date" %}</th>
-                    <th>{% trans "Category" %}</th>
-                    <th>{% trans "Amount" %}</th>
-                    <th>{% trans "Description" %}</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for expense in expenses %}
-                <tr>
-                    <td>{{ expense.date }}</td>
-                    <td>{{ expense.category }}</td>
-                    <td>${{ expense.amount }}</td>
-                    <td>{{ expense.description }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table expenses-table">
+                <thead>
+                    <tr>
+                        <th>{% trans "Date" %}</th>
+                        <th>{% trans "Category" %}</th>
+                        <th>{% trans "Amount" %}</th>
+                        <th>{% trans "Description" %}</th>
+                        <th>{% trans "Actions" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for expense in expenses %}
+                    <tr>
+                        <td>{{ expense.date }}</td>
+                        <td>{{ expense.category }}</td>
+                        <td>${{ expense.amount }}</td>
+                        <td>{{ expense.description }}</td>
+                        <td>
+                            <div class="btn-group btn-group-sm">
+                                <a href="{% url 'edit_expense' trip.id expense.id %}" class="btn btn-action edit" title="{% trans 'Edit' %}">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="{% url 'delete_expense' trip.id expense.id %}" class="btn btn-action delete" title="{% trans 'Delete' %}">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     {% else %}
         <div class="no-expenses">
             <p>{% trans "No expenses found for this trip." %}</p>
@@ -234,4 +332,14 @@
         <a href="{% url 'add_expense' trip.id %}" class="btn btn-add-expense">{% trans "Add Expense" %}</a>
     </div>
 </div>
+{% endblock %}
+
+{% block additional_scripts %}
+<script>
+    // Bootstrap tooltips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[title]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+</script>
 {% endblock %}

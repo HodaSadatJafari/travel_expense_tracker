@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block additional_styles %}
+<style>
+    .delete-container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 2rem;
+        background-color: white;
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-lg);
+        text-align: center;
+    }
+    
+    .warning-icon {
+        color: #e74c3c;
+        font-size: 4rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .delete-title {
+        color: var(--dark-color);
+        margin-bottom: 1rem;
+    }
+    
+    .delete-description {
+        color: var(--light-text);
+        margin-bottom: 2rem;
+    }
+    
+    .btn-delete {
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        font-weight: 600;
+        border-radius: var(--radius-sm);
+        transition: all 0.3s ease;
+    }
+    
+    .btn-delete:hover {
+        background-color: #c0392b;
+    }
+    
+    .btn-cancel {
+        background-color: #f8f9fa;
+        color: var(--dark-color);
+        border: 1px solid var(--border-color);
+        padding: 0.75rem 1.5rem;
+        font-weight: 600;
+        border-radius: var(--radius-sm);
+        transition: all 0.3s ease;
+        margin-right: 1rem;
+    }
+    
+    .btn-cancel:hover {
+        background-color: #e9ecef;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="delete-container">
+        <div class="warning-icon">
+            <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <h2 class="delete-title">{% trans "Delete Trip" %}</h2>
+        <p class="delete-description">
+            {% trans "Are you sure you want to delete" %} <strong>"{{ trip.name }}"</strong>?
+            {% trans "This will permanently delete all associated expenses, contributions, and participant data. This action cannot be undone." %}
+        </p>
+        
+        <form method="post">
+            {% csrf_token %}
+            <div class="d-flex justify-content-center">
+                <a href="{% if trip.is_group_trip %}{% url 'view_group_trip' trip.id %}{% else %}{% url 'view_trip' trip.id %}{% endif %}" class="btn btn-cancel">
+                    {% trans "Cancel" %}
+                </a>
+                <button type="submit" class="btn btn-delete">
+                    {% trans "Delete Trip" %}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

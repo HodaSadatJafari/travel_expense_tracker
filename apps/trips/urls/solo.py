@@ -1,6 +1,6 @@
 from django.urls import path
 
-from apps.trips.views.solo_trips import add_trip, view_trip, add_expense
+from apps.trips.views.solo import add_trip, view_trip
 
 urlpatterns = [
     # solo trips
@@ -13,10 +13,5 @@ urlpatterns = [
         "<int:trip_id>/",
         view_trip,
         name="view_trip",
-    ),
-    path(
-        "<int:trip_id>/add_expense/",
-        add_expense,
-        name="add_expense",
     ),
 ]

@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block additional_styles %}
+<style>
+    .form-container {
+        max-width: 700px;
+        margin: 0 auto;
+        padding: 2rem;
+        background-color: white;
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-lg);
+    }
+    
+    .form-title {
+        font-family: 'Playfair Display', serif;
+        font-weight: 800;
+        color: var(--dark-color);
+        margin-bottom: 1.5rem;
+        position: relative;
+        display: inline-block;
+    }
+    
+    .form-title:after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background-color: var(--primary-color);
+        border-radius: 2px;
+    }
+    
+    .form-group {
+        margin-bottom: 1.75rem;
+    }
+    
+    .form-label {
+        font-weight: 600;
+        color: var(--dark-color);
+        margin-bottom: 0.75rem;
+        display: block;
+    }
+    
+    .form-control {
+        padding: 0.75rem 1rem;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--border-color);
+        width: 100%;
+        transition: all 0.3s ease;
+    }
+    
+    .form-control:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 0.25rem rgba(148, 210, 189, 0.25);
+        outline: none;
+    }
+    
+    .btn-submit {
+        background-color: var(--primary-color);
+        color: var(--dark-color);
+        border: none;
+        padding: 0.75rem 1.5rem;
+        font-weight: 600;
+        border-radius: var(--radius-sm);
+        box-shadow: 0 4px 14px rgba(148, 210, 189, 0.4);
+        transition: all 0.3s ease;
+    }
+    
+    .btn-submit:hover {
+        background-color: var(--primary-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(148, 210, 189, 0.5);
+    }
+    
+    .btn-cancel {
+        background-color: transparent;
+        color: var(--light-text);
+        border: 1px solid var(--border-color);
+        padding: 0.75rem 1.5rem;
+        font-weight: 600;
+        border-radius: var(--radius-sm);
+        transition: all 0.3s ease;
+        margin-right: 1rem;
+    }
+    
+    .btn-cancel:hover {
+        background-color: #f8f9fa;
+        color: var(--dark-color);
+    }
+    
+    .error-feedback {
+        color: #e74c3c;
+        font-size: 0.85rem;
+        margin-top: 0.5rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="form-container">
+        <h2 class="form-title">{% trans "Edit Trip" %}</h2>
+        
+        <form method="post">
+            {% csrf_token %}
+            
+            {% if form.non_field_errors %}
+            <div class="alert alert-danger">
+                {% for error in form.non_field_errors %}
+                    {{ error }}
+                {% endfor %}
+            </div>
+            {% endif %}
+            
+            <div class="form-group">
+                <label for="{{ form.name.id_for_label }}" class="form-label">{% trans "Trip Name" %}</label>
+                {{ form.name }}
+                {% for error in form.name.errors %}
+                    <div class="error-feedback">{{ error }}</div>
+                {% endfor %}
+            </div>
+            
+            <div class="form-group">
+                <label for="{{ form.start_date.id_for_label }}" class="form-label">{% trans "Start Date" %}</label>
+                {{ form.start_date }}
+                {% for error in form.start_date.errors %}
+                    <div class="error-feedback">{{ error }}</div>
+                {% endfor %}
+            </div>
+            
+            <div class="form-group">
+                <label for="{{ form.end_date.id_for_label }}" class="form-label">{% trans "End Date" %}</label>
+                {{ form.end_date }}
+                {% for error in form.end_date.errors %}
+                    <div class="error-feedback">{{ error }}</div>
+                {% endfor %}
+            </div>
+            
+            <div class="d-flex justify-content-end">
+                <a href="{% if trip.is_group_trip %}{% url 'view_group_trip' trip.id %}{% else %}{% url 'view_trip' trip.id %}{% endif %}" class="btn btn-cancel">
+                    {% trans "Cancel" %}
+                </a>
+                <button type="submit" class="btn btn-submit">
+                    {% trans "Save Changes" %}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

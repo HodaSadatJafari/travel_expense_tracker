@@ -1,10 +1,8 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from django.utils.translation import gettext_lazy as _
 
 from apps.trips.models import Trip
-
-from ..forms import TripForm
 
 
 @login_required

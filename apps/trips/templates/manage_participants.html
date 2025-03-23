@@ -48,6 +48,12 @@
         padding: 1rem;
         margin-bottom: 1rem;
         border-left: 4px solid var(--primary-color);
+        transition: all 0.3s ease;
+    }
+    
+    .participant-card:hover {
+        box-shadow: var(--shadow);
+        transform: translateY(-2px);
     }
     
     .form-group {
@@ -116,11 +122,114 @@
         border-radius: 50px;
         font-weight: 600;
     }
+    
+    .btn-remove {
+        color: #dc3545;
+        border: 1px solid #dc3545;
+        background-color: transparent;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        padding: 0;
+        font-size: 0.85rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+    }
+    
+    .btn-remove:hover {
+        background-color: #dc3545;
+        color: white;
+    }
+    
+    .btn-edit {
+        color: #0d6efd;
+        border: 1px solid #0d6efd;
+        background-color: transparent;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        padding: 0;
+        font-size: 0.85rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+        margin-right: 0.5rem;
+    }
+    
+    .btn-edit:hover {
+        background-color: #0d6efd;
+        color: white;
+    }
+    
+    .edit-form {
+        display: none;
+        background-color: #f0f8ff;
+        border-radius: var(--radius-sm);
+        padding: 1rem;
+        margin-top: 1rem;
+        border-left: 4px solid #0d6efd;
+    }
+    
+    .edit-form.show {
+        display: block;
+    }
+    
+    .participant-actions {
+        display: flex;
+        align-items: center;
+    }
+    
+    .participant-info {
+        flex: 1;
+    }
+    
+    .modal {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+    
+    .modal-content {
+        border-radius: var(--radius-lg);
+        border: none;
+        box-shadow: var(--shadow-lg);
+    }
+    
+    .modal-header {
+        border-bottom-color: var(--border-color);
+        background-color: #f8f9fa;
+        border-top-left-radius: var(--radius-lg);
+        border-top-right-radius: var(--radius-lg);
+    }
+    
+    .modal-footer {
+        border-top-color: var(--border-color);
+        background-color: #f8f9fa;
+        border-bottom-left-radius: var(--radius-lg);
+        border-bottom-right-radius: var(--radius-lg);
+    }
+    
+    .warn-text {
+        color: #dc3545;
+        font-weight: 500;
+    }
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="container py-5">
+    {% if messages %}
+        <div class="messages mb-4">
+            {% for message in messages %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="section-header">{% trans "Manage Participants" %}</h2>
         <div>
@@ -198,19 +307,65 @@
                 
                 {% if participants %}
                     {% for participant in participants %}
-                        <div class="participant-card">
+                        <div class="participant-card" id="participant-{{ participant.id }}">
                             <div class="d-flex justify-content-between align-items-center">
-                                <div>
+                                <div class="participant-info">
                                     <h5 class="mb-1">
                                         {{ participant.user.get_full_name|default:participant.user.username }}
                                     </h5>
                                     {% if participant.user.email %}
                                         <div class="text-muted small">{{ participant.user.email }}</div>
                                     {% endif %}
+                                    <span class="shares-badge mt-1">
+                                        {% if participant.shares > 1 %}
+                                            {{ participant.shares }} {% trans "shares" %}
+                                        {% else %}
+                                            {{ participant.shares }} {% trans "share" %}
+                                        {% endif %}
+                                    </span>
                                 </div>
-                                <span class="shares-badge">
-                                    {{ participant.shares }} {% if participant.shares > 1 %}{% trans "shares" %}{% else %}{% trans "share" %}{% endif %}
-                                </span>
+                                <div class="participant-actions">
+                                    {% if participant.user != request.user %}  <!-- Don't allow editing/removing the trip owner -->
+                                        <button type="button" class="btn btn-edit" onclick="toggleEditForm('{{ participant.id }}')" title="{% trans 'Edit participant' %}">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-remove" onclick="confirmRemove('{{ participant.id }}')" title="{% trans 'Remove participant' %}">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    {% else %}
+                                        <span class="badge bg-info">{% trans "You (Trip Owner)" %}</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            
+                            <!-- Edit form - hidden by default -->
+                            <div class="edit-form" id="edit-form-{{ participant.id }}">
+                                <form method="post" action="{% url 'edit_participant' trip.id participant.id %}">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">{% trans "First Name" %}</label>
+                                            <input type="text" name="first_name" class="form-control" value="{{ participant.user.first_name }}">
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">{% trans "Last Name" %}</label>
+                                            <input type="text" name="last_name" class="form-control" value="{{ participant.user.last_name }}">
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">{% trans "Email" %}</label>
+                                        <input type="email" name="email" class="form-control" value="{{ participant.user.email }}">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">{% trans "Shares" %}</label>
+                                        <input type="number" name="shares" class="form-control" value="{{ participant.shares }}" min="1">
+                                        <div class="help-text">{% trans "Changing shares will affect how expenses are split" %}</div>
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                        <button type="button" class="btn btn-secondary me-2" onclick="toggleEditForm('{{ participant.id }}')">{% trans "Cancel" %}</button>
+                                        <button type="submit" class="btn btn-primary">{% trans "Save Changes" %}</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     {% endfor %}
@@ -223,4 +378,55 @@
         </div>
     </div>
 </div>
+
+<!-- Remove Participant Confirmation Modal -->
+<div class="modal fade" id="removeParticipantModal" tabindex="-1" aria-labelledby="removeParticipantModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="removeParticipantModalLabel">{% trans "Remove Participant" %}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>{% trans "Are you sure you want to remove this participant from the trip?" %}</p>
+                <p class="warn-text">{% trans "This will also remove all their contributions and expense shares." %}</p>
+                <p>{% trans "If this person paid for any expenses, those will be reassigned to you as the trip owner." %}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans "Cancel" %}</button>
+                <form id="removeParticipantForm" method="post" action="">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">{% trans "Remove Participant" %}</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block additional_scripts %}
+<script>
+    // Toggle edit form visibility
+    function toggleEditForm(participantId) {
+        const editForm = document.getElementById(`edit-form-${participantId}`);
+        if (editForm.classList.contains('show')) {
+            editForm.classList.remove('show');
+        } else {
+            // Hide any other open edit forms
+            const allEditForms = document.querySelectorAll('.edit-form.show');
+            allEditForms.forEach(form => form.classList.remove('show'));
+            
+            // Show this form
+            editForm.classList.add('show');
+        }
+    }
+    
+    // Show confirmation modal for removing participant
+    function confirmRemove(participantId) {
+        const modal = new bootstrap.Modal(document.getElementById('removeParticipantModal'));
+        const form = document.getElementById('removeParticipantForm');
+        form.action = "{% url 'remove_participant' trip.id 0 %}".replace('0', participantId);
+        modal.show();
+    }
+</script>
 {% endblock %}

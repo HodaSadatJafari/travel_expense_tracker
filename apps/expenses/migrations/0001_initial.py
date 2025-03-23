@@ -10,24 +10,67 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('trips', '0001_initial'),
+        ("trips", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Expense',
+            name="Expense",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(db_index=True, default=django.utils.timezone.now, editable=False, verbose_name='created at')),
-                ('updated_at', models.DateTimeField(auto_now=True, verbose_name='updated at')),
-                ('category', models.CharField(choices=[('FOOD', 'Food'), ('ACCOMMODATION', 'Accommodation'), ('TRANSPORT', 'Transport'), ('ACTIVITIES', 'Activities'), ('GAS', 'Gas'), ('CAR', 'Car'), ('MIC', 'Miscellaneous')], max_length=50)),
-                ('amount', models.DecimalField(decimal_places=2, max_digits=10)),
-                ('description', models.CharField(blank=True, max_length=255, null=True)),
-                ('date', models.DateField()),
-                ('trip', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='expenses', to='trips.trip')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "created_at",
+                    models.DateTimeField(
+                        db_index=True,
+                        default=django.utils.timezone.now,
+                        editable=False,
+                        verbose_name="created at",
+                    ),
+                ),
+                (
+                    "updated_at",
+                    models.DateTimeField(auto_now=True, verbose_name="updated at"),
+                ),
+                (
+                    "category",
+                    models.CharField(
+                        choices=[
+                            ("FOOD", "Food"),
+                            ("ACCOMMODATION", "Accommodation"),
+                            ("TRANSPORT", "Transport"),
+                            ("ACTIVITIES", "Activities"),
+                            ("GAS", "Gas"),
+                            ("CAR", "Car"),
+                            ("MIC", "Miscellaneous"),
+                        ],
+                        max_length=50,
+                    ),
+                ),
+                ("amount", models.DecimalField(decimal_places=2, max_digits=10)),
+                (
+                    "description",
+                    models.CharField(blank=True, max_length=255, null=True),
+                ),
+                ("date", models.DateField()),
+                (
+                    "trip",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="expenses",
+                        to="trips.trip",
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
     ]

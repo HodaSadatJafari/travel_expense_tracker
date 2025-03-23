@@ -1,15 +1,14 @@
 from decimal import Decimal
 
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.db.models import Sum
 from django.http import HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import gettext_lazy as _
 
 from apps.core.utils import get_or_create_user
-from apps.expenses.forms import ContributionForm, GroupExpenseForm
 from apps.expenses.models import Contribution, Expense, ExpenseShare
-from apps.trips.forms import GroupTripForm, ParticipantForm
+from apps.trips.forms.group import GroupTripForm, ParticipantForm
 from apps.trips.models import Trip, TripParticipant
 
 
@@ -94,71 +93,6 @@ def manage_participants(request, trip_id):
 
 
 @login_required
-def add_contribution(request, trip_id):
-    trip = get_object_or_404(Trip, id=trip_id, user=request.user)
-
-    if request.method == "POST":
-        form = ContributionForm(request.POST, trip=trip)
-        if form.is_valid():
-            contribution = form.save()
-            return redirect("view_group_trip", trip_id=trip.id)
-    else:
-        form = ContributionForm(trip=trip)
-
-    return render(request, "add_contribution.html", {"form": form, "trip": trip})
-
-
-@login_required
-def add_group_expense(request, trip_id):
-    trip = get_object_or_404(Trip, id=trip_id, user=request.user)
-    participants = TripParticipant.objects.filter(trip=trip)
-
-    if request.method == "POST":
-        form = GroupExpenseForm(request.POST, trip=trip)
-        if form.is_valid():
-            expense = form.save(commit=False)
-            expense.trip = trip
-            expense.save()
-
-            # Process expense shares based on selection
-            if expense.is_shared:
-                # Get selected participants or all if none specified
-                selected_participant_ids = request.POST.getlist("shared_with", [])
-                share_with_participants = participants
-
-                if selected_participant_ids:
-                    # Filter to only selected participants
-                    share_with_participants = participants.filter(
-                        id__in=selected_participant_ids
-                    )
-
-                # Calculate total shares among selected participants
-                total_shares = sum(p.shares for p in share_with_participants)
-
-                if total_shares > 0:
-                    # Calculate share per unit
-                    share_per_unit = expense.amount / total_shares
-
-                    # Create expense shares
-                    for participant in share_with_participants:
-                        ExpenseShare.objects.create(
-                            expense=expense,
-                            participant=participant,
-                            amount=share_per_unit * participant.shares,
-                        )
-
-            return redirect("view_group_trip", trip_id=trip.id)
-    else:
-        form = GroupExpenseForm(trip=trip)
-
-    return render(
-        request,
-        "add_group_expense.html",
-        {"form": form, "trip": trip, "participants": participants},
-    )
-
-
-@login_required
 def view_group_trip(request, trip_id):
     trip = get_object_or_404(Trip, id=trip_id)
     # Ensure user is owner or participant
@@ -230,3 +164,92 @@ def view_group_trip(request, trip_id):
             "remaining_fund": remaining_fund,
         },
     )
+
+
+@login_required
+def remove_participant(request, trip_id, participant_id):
+    trip = get_object_or_404(Trip, id=trip_id, user=request.user)
+    participant = get_object_or_404(TripParticipant, id=participant_id, trip=trip)
+
+    # Don't allow removing the trip owner
+    if participant.user != request.user:
+        if request.method == "POST":
+            # Remove their contributions
+            Contribution.objects.filter(participant=participant).delete()
+
+            # Remove their expense shares
+            ExpenseShare.objects.filter(participant=participant).delete()
+
+            # Reassign their expenses to the trip owner if needed
+            owner_participant = TripParticipant.objects.get(
+                trip=trip, user=request.user
+            )
+            Expense.objects.filter(paid_by=participant).update(
+                paid_by=owner_participant
+            )
+
+            # Finally remove the participant
+            participant.delete()
+
+            messages.success(request, _("Participant has been removed from the trip."))
+
+    return redirect("manage_participants", trip_id=trip.id)
+
+
+@login_required
+def edit_participant(request, trip_id, participant_id):
+    trip = get_object_or_404(Trip, id=trip_id, user=request.user)
+    participant = get_object_or_404(TripParticipant, id=participant_id, trip=trip)
+
+    # Don't allow editing self (trip owner)
+    if participant.user == request.user:
+        messages.error(request, _("You cannot edit your own participant data."))
+        return redirect("manage_participants", trip_id=trip.id)
+
+    if request.method == "POST":
+        # Update user data
+        user = participant.user
+        user.first_name = request.POST.get("first_name", user.first_name)
+        user.last_name = request.POST.get("last_name", user.last_name)
+
+        email = request.POST.get("email")
+        if email and email != user.email:
+            # Check if email is already used by another user
+            if User.objects.filter(email=email).exclude(id=user.id).exists():
+                messages.error(
+                    request, _("This email is already in use by another user.")
+                )
+                return redirect("manage_participants", trip_id=trip.id)
+            user.email = email
+
+        user.save()
+
+        # Update participant data
+        shares = request.POST.get("shares")
+        if shares and shares.isdigit() and int(shares) > 0:
+            participant.shares = int(shares)
+            participant.save()
+
+            # Recalculate expense shares if shares change
+            expenses = Expense.objects.filter(trip=trip, is_shared=True)
+            for expense in expenses:
+                # Get all participants sharing this expense
+                expense_shares = ExpenseShare.objects.filter(expense=expense)
+                participants_sharing = [share.participant for share in expense_shares]
+
+                if participant in participants_sharing:
+                    # Recalculate total shares
+                    total_shares = sum(p.shares for p in participants_sharing)
+
+                    # Calculate share per unit
+                    share_per_unit = expense.amount / total_shares
+
+                    # Update all shares for this expense
+                    for p in participants_sharing:
+                        share = ExpenseShare.objects.get(expense=expense, participant=p)
+                        share.amount = share_per_unit * p.shares
+                        share.save()
+
+        messages.success(request, _("Participant information updated successfully."))
+
+    return redirect("manage_participants", trip_id=trip.id)
