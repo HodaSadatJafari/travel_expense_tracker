@@ -13,7 +13,7 @@ from apps.trips.models import Trip, TripParticipant
 
 
 @login_required
-def create_group_trip(request):
+def add_group_trip(request):
     if request.method == "POST":
         form = GroupTripForm(request.POST)
         if form.is_valid():
@@ -40,7 +40,7 @@ def create_group_trip(request):
     else:
         form = GroupTripForm()
 
-    return render(request, "create_group_trip.html", {"form": form})
+    return render(request, "add_group_trip.html", {"form": form})
 
 
 @login_required

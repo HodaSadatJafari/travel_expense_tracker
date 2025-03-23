@@ -229,10 +229,10 @@
     <header class="mb-5">
         <h1 class="section-heading">{% trans "My Trips" %}</h1>
         <div class="d-flex gap-3">
-            <a href="{% url 'add_trip' %}" class="btn btn-create">
+            <a href="{% url 'add_solo_trip' %}" class="btn btn-create">
                 <i class="fas fa-plus me-2"></i> {% trans "Create Trip" %}
             </a>
-            <a href="{% url 'create_group_trip' %}" class="btn btn-create btn-create-group">
+            <a href="{% url 'add_group_trip' %}" class="btn btn-create btn-create-group">
                 <i class="fas fa-users me-2"></i> {% trans "Create Group Trip" %}
             </a>
         </div>
@@ -293,7 +293,7 @@
                             </div>
                             
                             <div class="trip-card-footer">
-                                <a href="{% url 'view_trip' trip.id %}" class="trip-action">
+                                <a href="{% url 'view_solo_trip' trip.id %}" class="trip-action">
                                     <i class="fas fa-eye"></i> {% trans "View Details" %}
                                 </a>
                             </div>
@@ -303,7 +303,7 @@
                 
                 <!-- Create Trip Card -->
                 <div class="col-lg-4 col-md-6 mb-4">
-                    <a href="{% url 'add_trip' %}" class="create-trip-card">
+                    <a href="{% url 'add_solo_trip' %}" class="create-trip-card">
                         <div class="create-trip-icon">
                             <i class="fas fa-plus-circle"></i>
                         </div>
@@ -316,7 +316,7 @@
                         <i class="fas fa-suitcase"></i>
                         <h3>{% trans "No Individual Trips Yet" %}</h3>
                         <p>{% trans "Start tracking your travel expenses by creating your first trip." %}</p>
-                        <a href="{% url 'add_trip' %}" class="btn btn-create mt-3">
+                        <a href="{% url 'add_solo_trip' %}" class="btn btn-create mt-3">
                             <i class="fas fa-plus me-2"></i> {% trans "Create Trip" %}
                         </a>
                     </div>
@@ -469,7 +469,7 @@
                 
                 <!-- Create Group Trip Card -->
                 <div class="col-lg-4 col-md-6 mb-4">
-                    <a href="{% url 'create_group_trip' %}" class="create-trip-card">
+                    <a href="{% url 'add_group_trip' %}" class="create-trip-card">
                         <div class="create-trip-icon">
                             <i class="fas fa-users"></i>
                         </div>
@@ -482,7 +482,7 @@
                         <i class="fas fa-users"></i>
                         <h3>{% trans "No Group Trips Yet" %}</h3>
                         <p>{% trans "Create a group trip to share expenses with friends and family." %}</p>
-                        <a href="{% url 'create_group_trip' %}" class="btn btn-create btn-create-group mt-3">
+                        <a href="{% url 'add_group_trip' %}" class="btn btn-create btn-create-group mt-3">
                             <i class="fas fa-plus me-2"></i> {% trans "Create Group Trip" %}
                         </a>
                     </div>

@@ -8,7 +8,7 @@ from apps.trips.models import Trip, TripParticipant
 
 
 @login_required
-def add_expense(request, trip_id):
+def add_solo_expense(request, trip_id):
     trip = get_object_or_404(Trip, id=trip_id)
 
     # Check if this is the user's trip
@@ -44,6 +44,6 @@ def add_expense(request, trip_id):
         )
 
         messages.success(request, _("Expense added successfully!"))
-        return redirect("view_trip", trip_id=trip.id)
+        return redirect("view_solo_trip", trip_id=trip.id)
 
-    return render(request, "add_expense.html", {"trip": trip})
+    return render(request, "add_solo_expense.html", {"trip": trip})

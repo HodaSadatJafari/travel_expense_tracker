@@ -64,7 +64,7 @@ def edit_expense(request, trip_id, expense_id):
         if trip.is_group_trip:
             return redirect("view_group_trip", trip_id=trip.id)
         else:
-            return redirect("view_trip", trip_id=trip.id)
+            return redirect("view_solo_trip", trip_id=trip.id)
 
     # Prepare context for rendering the form
     context = {
@@ -85,9 +85,9 @@ def edit_expense(request, trip_id, expense_id):
 
     # Render appropriate template based on trip type
     if trip.is_group_trip:
-        return render(request, "edit_expense_group.html", context)
+        return render(request, "edit_group_expense.html", context)
     else:
-        return render(request, "edit_expense.html", context)
+        return render(request, "edit_solo_expense.html", context)
 
 
 @login_required
@@ -103,6 +103,6 @@ def delete_expense(request, trip_id, expense_id):
         if trip.is_group_trip:
             return redirect("view_group_trip", trip_id=trip.id)
         else:
-            return redirect("view_trip", trip_id=trip.id)
+            return redirect("view_solo_trip", trip_id=trip.id)
 
     return render(request, "delete_expense.html", {"trip": trip, "expense": expense})

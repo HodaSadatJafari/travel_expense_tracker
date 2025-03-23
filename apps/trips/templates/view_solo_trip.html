@@ -329,7 +329,7 @@
 
     <!-- Button to add a new expense for this trip -->
     <div class="text-center mt-4 mb-5">
-        <a href="{% url 'add_expense' trip.id %}" class="btn btn-add-expense">{% trans "Add Expense" %}</a>
+        <a href="{% url 'add_solo_expense' trip.id %}" class="btn btn-add-expense">{% trans "Add Expense" %}</a>
     </div>
 </div>
 {% endblock %}

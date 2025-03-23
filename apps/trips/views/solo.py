@@ -8,7 +8,7 @@ from apps.trips.models import Trip, TripParticipant
 
 
 @login_required
-def add_trip(request):
+def add_solo_trip(request):
     if request.method == "POST":
         form = TripForm(request.POST)
         if form.is_valid():
@@ -29,11 +29,11 @@ def add_trip(request):
     else:
         form = TripForm()
 
-    return render(request, "add_trip.html", {"form": form})
+    return render(request, "add_solo_trip.html", {"form": form})
 
 
 @login_required
-def view_trip(request, trip_id):
+def view_solo_trip(request, trip_id):
     trip = Trip.objects.get(id=trip_id, user=request.user)
     expenses = trip.expenses.all().order_by("-date")  # Retrieve expenses for this trip
 
@@ -52,4 +52,4 @@ def view_trip(request, trip_id):
         "expenses": expenses,
         "expense_summary": expense_summary,
     }
-    return render(request, "view_trip.html", context)
+    return render(request, "view_solo_trip.html", context)

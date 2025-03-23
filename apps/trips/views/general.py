@@ -31,7 +31,7 @@ def edit_trip(request, trip_id):
             if trip.is_group_trip:
                 return redirect("view_group_trip", trip_id=trip.id)
             else:
-                return redirect("view_trip", trip_id=trip.id)
+                return redirect("view_solo_trip", trip_id=trip.id)
     else:
         form = EditTripForm(instance=trip)
 

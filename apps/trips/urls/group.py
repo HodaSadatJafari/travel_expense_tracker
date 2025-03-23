@@ -1,7 +1,7 @@
 from django.urls import path
 
 from apps.trips.views.group import (
-    create_group_trip,
+    add_group_trip,
     edit_participant,
     manage_participants,
     remove_participant,
@@ -10,28 +10,28 @@ from apps.trips.views.group import (
 
 urlpatterns = [
     path(
-        "group-trip/add/",
-        create_group_trip,
-        name="create_group_trip",
+        "group/add/",
+        add_group_trip,
+        name="add_group_trip",
     ),
     path(
-        "group-trip/<int:trip_id>/participants/",
+        "group/<int:trip_id>/participants/",
         manage_participants,
         name="manage_participants",
     ),
     path(
-        "group-trip/<int:trip_id>/",
+        "group/<int:trip_id>/",
         view_group_trip,
         name="view_group_trip",
     ),
     # Participant management
     path(
-        "group-trip/<int:trip_id>/participants/remove/<int:participant_id>/",
+        "group/<int:trip_id>/participants/remove/<int:participant_id>/",
         remove_participant,
         name="remove_participant",
     ),
     path(
-        "group-trip/<int:trip_id>/participants/edit/<int:participant_id>/",
+        "group/<int:trip_id>/participants/edit/<int:participant_id>/",
         edit_participant,
         name="edit_participant",
     ),
