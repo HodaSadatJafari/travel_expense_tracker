@@ -1,0 +1,226 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block additional_styles %}
+<style>
+    .container {
+        max-width: 900px;
+    }
+    
+    .section-header {
+        font-family: 'Playfair Display', serif;
+        font-weight: 800;
+        color: var(--dark-color);
+        margin-bottom: 1.5rem;
+        position: relative;
+        display: inline-block;
+    }
+    
+    .section-header:after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background-color: var(--primary-color);
+        border-radius: 2px;
+    }
+    
+    .form-container {
+        background-color: white;
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-lg);
+        padding: 2rem;
+        margin-bottom: 2rem;
+    }
+    
+    .participant-list {
+        background-color: white;
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-lg);
+        padding: 2rem;
+    }
+    
+    .participant-card {
+        background-color: #f8f9fa;
+        border-radius: var(--radius-sm);
+        padding: 1rem;
+        margin-bottom: 1rem;
+        border-left: 4px solid var(--primary-color);
+    }
+    
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+    
+    .form-label {
+        font-weight: 600;
+        color: var(--dark-color);
+        margin-bottom: 0.75rem;
+        display: block;
+    }
+    
+    .form-control {
+        padding: 0.75rem 1rem;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--border-color);
+        transition: all 0.3s ease;
+    }
+    
+    .btn-add {
+        background-color: var(--primary-color);
+        color: var(--dark-color);
+        border: none;
+        padding: 0.75rem 1.5rem;
+        font-weight: 600;
+        border-radius: var(--radius-sm);
+        box-shadow: 0 4px 14px rgba(148, 210, 189, 0.4);
+        transition: all 0.3s ease;
+    }
+    
+    .btn-add:hover {
+        background-color: var(--primary-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(148, 210, 189, 0.5);
+    }
+    
+    .btn-continue {
+        background-color: var(--secondary-color);
+        color: var(--dark-color);
+        border: none;
+        padding: 0.75rem 1.5rem;
+        font-weight: 600;
+        border-radius: var(--radius-sm);
+        box-shadow: 0 4px 14px rgba(189, 178, 255, 0.4);
+        transition: all 0.3s ease;
+    }
+    
+    .btn-continue:hover {
+        background-color: #a99eff;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(189, 178, 255, 0.5);
+    }
+    
+    .help-text {
+        font-size: 0.85rem;
+        color: var(--light-text);
+        margin-top: 0.5rem;
+    }
+    
+    .shares-badge {
+        background-color: #e9ecef;
+        color: var(--dark-color);
+        font-size: 0.85rem;
+        padding: 0.25rem 0.5rem;
+        border-radius: 50px;
+        font-weight: 600;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="section-header">{% trans "Manage Participants" %}</h2>
+        <div>
+            <a href="{% url 'view_group_trip' trip.id %}" class="btn btn-continue">
+                {% trans "Continue to Trip" %} <i class="fas fa-arrow-right ms-1"></i>
+            </a>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form-container">
+                <h4 class="mb-4">{% trans "Add Participant" %}</h4>
+                
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="{{ form.first_name.id_for_label }}" class="form-label">{% trans "First Name" %}</label>
+                        {{ form.first_name }}
+                        {% if form.first_name.help_text %}
+                            <div class="help-text">{{ form.first_name.help_text }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="{{ form.last_name.id_for_label }}" class="form-label">{% trans "Last Name" %}</label>
+                        {{ form.last_name }}
+                        {% if form.last_name.help_text %}
+                            <div class="help-text">{{ form.last_name.help_text }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="{{ form.email.id_for_label }}" class="form-label">{% trans "Email Address" %} ({% trans "Optional" %})</label>
+                        {{ form.email }}
+                        {% if form.email.help_text %}
+                            <div class="help-text">{{ form.email.help_text }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="{{ form.shares.id_for_label }}" class="form-label">{% trans "Shares" %}</label>
+                        {{ form.shares }}
+                        {% if form.shares.help_text %}
+                            <div class="help-text">{{ form.shares.help_text }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="{{ form.initial_contribution.id_for_label }}" class="form-label">{% trans "Initial Contribution" %} ({% trans "Optional" %})</label>
+                        {{ form.initial_contribution }}
+                        {% if form.initial_contribution.help_text %}
+                            <div class="help-text">{{ form.initial_contribution.help_text }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {% for error in form.non_field_errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    
+                    <button type="submit" class="btn btn-add">
+                        <i class="fas fa-plus me-2"></i>{% trans "Add Participant" %}
+                    </button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="col-lg-6">
+            <div class="participant-list">
+                <h4 class="mb-4">{% trans "Current Participants" %}</h4>
+                
+                {% if participants %}
+                    {% for participant in participants %}
+                        <div class="participant-card">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h5 class="mb-1">
+                                        {{ participant.user.get_full_name|default:participant.user.username }}
+                                    </h5>
+                                    {% if participant.user.email %}
+                                        <div class="text-muted small">{{ participant.user.email }}</div>
+                                    {% endif %}
+                                </div>
+                                <span class="shares-badge">
+                                    {{ participant.shares }} {% if participant.shares > 1 %}{% trans "shares" %}{% else %}{% trans "share" %}{% endif %}
+                                </span>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="text-center py-4 text-muted">
+                        <p>{% trans "No participants added yet." %}</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

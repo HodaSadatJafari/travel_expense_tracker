@@ -15,9 +15,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
+from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
 from django.urls import include, path
-from django.conf.urls.i18n import i18n_patterns
 from django.views.i18n import set_language
 
 urlpatterns = [
@@ -29,6 +29,8 @@ urlpatterns = [
 urlpatterns += i18n_patterns(
     path("", include("apps.core.urls")),
     path("expenses/", include("apps.expenses.urls")),
-    path("trips/", include("apps.trips.urls")),
+    path("", include("apps.trips.urls.dashboard")),
+    path("trips/", include("apps.trips.urls.solo_trips")),
+    path("trips/", include("apps.trips.urls.group_trips")),
     path("admin/", admin.site.urls),
 )

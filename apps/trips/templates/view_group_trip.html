@@ -1,0 +1,387 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load trip_tags %}
+{% block additional_styles %}
+<style>
+    .trip-header {
+        padding: 2.5rem 0;
+        margin-bottom: 2rem;
+        background-color: var(--light-color);
+        border-radius: var(--radius);
+    }
+    
+    .trip-title {
+        font-family: 'Playfair Display', serif;
+        font-weight: 800;
+        color: var(--dark-color);
+        margin-bottom: 1rem;
+        position: relative;
+        display: inline-block;
+    }
+    
+    .trip-title:after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background-color: var(--primary-color);
+        border-radius: 2px;
+    }
+    
+    .trip-dates {
+        background-color: white;
+        padding: 1.5rem;
+        border-radius: var(--radius-sm);
+        box-shadow: var(--shadow);
+        margin-bottom: 2.5rem;
+        border-left: 4px solid var(--primary-color);
+    }
+    
+    .section-heading {
+        font-family: 'Playfair Display', serif;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        color: var(--dark-color);
+        position: relative;
+        display: inline-block;
+    }
+    
+    .section-heading:after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 40px;
+        height: 3px;
+        background-color: var(--primary-color);
+        border-radius: 2px;
+    }
+    
+    .trip-fund-card {
+        background: linear-gradient(135deg, #e0f2f1 0%, #c8e6e3 100%);
+        border-radius: var(--radius);
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        box-shadow: var(--shadow);
+    }
+    
+    .contribution-list {
+        max-height: 200px;
+        overflow-y: auto;
+        background-color: white;
+        border-radius: var(--radius-sm);
+        box-shadow: var(--shadow-sm);
+        margin-top: 1rem;
+    }
+    
+    .contribution-item {
+        padding: 0.75rem 1rem;
+        border-bottom: 1px solid var(--border-color);
+    }
+    
+    .contribution-item:last-child {
+        border-bottom: none;
+    }
+    
+    .participant-card {
+        background-color: white;
+        border-radius: var(--radius-sm);
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        box-shadow: var(--shadow);
+        transition: all 0.3s ease;
+        border-left: 4px solid var(--primary-color);
+    }
+    
+    .participant-card:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-lg);
+    }
+    
+    .expense-table {
+        border-radius: var(--radius-sm);
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        margin-bottom: 3rem;
+    }
+    
+    .expense-table thead {
+        background-color: var(--primary-color);
+        color: var(--dark-color);
+    }
+    
+    .expense-table th {
+        font-weight: 600;
+        padding: 1rem;
+    }
+    
+    .expense-table td {
+        padding: 1rem;
+        vertical-align: middle;
+    }
+    
+    .expense-table tr:nth-child(even) {
+        background-color: var(--light-color);
+    }
+    
+    .expense-share-badge {
+        background-color: #f0f0f0;
+        color: var(--dark-color);
+        padding: 0.25rem 0.5rem;
+        border-radius: 50px;
+        font-size: 0.85rem;
+        margin-right: 0.25rem;
+        white-space: nowrap;
+        display: inline-block;
+        margin-bottom: 0.25rem;
+    }
+    
+    .balance-positive {
+        color: #2c6e6a;
+        font-weight: 700;
+    }
+    
+    .balance-negative {
+        color: #e63946;
+        font-weight: 700;
+    }
+    
+    .expense-type-shared {
+        background-color: rgba(148, 210, 189, 0.2);
+        border-radius: 4px;
+        padding: 0.25rem 0.5rem;
+        font-size: 0.8rem;
+        color: #2c6e6a;
+    }
+    
+    .expense-type-individual {
+        background-color: rgba(225, 225, 225, 0.5);
+        border-radius: 4px;
+        padding: 0.25rem 0.5rem;
+        font-size: 0.8rem;
+        color: #555;
+    }
+    
+    .btn-add {
+        background-color: var(--primary-color);
+        color: var(--dark-color);
+        border: none;
+        padding: 0.75rem 1.5rem;
+        font-weight: 600;
+        border-radius: var(--radius-sm);
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 14px rgba(148, 210, 189, 0.4);
+    }
+    
+    .btn-add:hover {
+        background-color: var(--primary-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(148, 210, 189, 0.5);
+    }
+    
+    .empty-state {
+        text-align: center;
+        padding: 3rem;
+        background-color: var(--light-color);
+        border-radius: var(--radius-sm);
+        color: var(--light-text);
+        margin-bottom: 2rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="trip-header">
+        <h2 class="trip-title">{{ trip.name }} <span class="badge bg-primary">{% trans "Group Trip" %}</span></h2>
+        <div class="trip-dates">
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>{% trans "Start Date" %}:</strong> {{ trip.start_date }}</p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>{% trans "End Date" %}:</strong> {{ trip.end_date }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Trip Fund Summary -->
+    <div class="trip-fund-card">
+        <h3 class="mb-3">{% trans "Trip Fund Summary" %}</h3>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">{% trans "Total Contributions" %}</h5>
+                        <p class="display-6">${{ total_contributions }}</p>
+                        <a href="{% url 'add_contribution' trip.id %}" class="btn btn-sm btn-primary mt-2">
+                            <i class="fas fa-plus"></i> {% trans "Add Contribution" %}
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">{% trans "Total Expenses" %}</h5>
+                        <p class="display-6">${{ total_expenses }}</p>
+                        <a href="{% url 'add_group_expense' trip.id %}" class="btn btn-sm btn-primary mt-2">
+                            <i class="fas fa-plus"></i> {% trans "Add Expense" %}
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">{% trans "Remaining Fund" %}</h5>
+                        <p class="display-6 {% if remaining_fund >= 0 %}text-success{% else %}text-danger{% endif %}">
+                            ${{ remaining_fund }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Participants & Balances -->
+    <h3 class="section-heading">{% trans "Participants & Balances" %}</h3>
+    <div class="row">
+        {% for participant_id, data in balances.items %}
+            <div class="col-md-6 mb-4">
+                <div class="participant-card">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5>{{ data.participant.user.get_full_name|default:data.participant.user.username }}</h5>
+                        {% if data.participant.shares > 1 %}
+                            <span class="badge bg-secondary">{{ data.participant.shares }} {% trans "shares" %}</span>
+                        {% endif %}
+                    </div>
+                    
+                    <p><strong>{% trans "Contributions" %}:</strong></p>
+                    {% with participant_contributions=contributions_by_participant|get_item:participant_id %}
+                        {% if participant_contributions.contributions %}
+                            <div class="contribution-list">
+                                {% for contribution in participant_contributions.contributions %}
+                                    <div class="contribution-item">
+                                        <div class="d-flex justify-content-between">
+                                            <span>${{ contribution.amount }}</span>
+                                            <span class="text-muted">{{ contribution.date }}</span>
+                                        </div>
+                                        {% if contribution.notes %}
+                                            <small class="text-muted">{{ contribution.notes }}</small>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <p class="text-muted">{% trans "No contributions" %}</p>
+                        {% endif %}
+                    {% endwith %}
+                    
+                    <table class="table table-sm mt-3">
+                        <tr>
+                            <td>{% trans "Total Contributed" %}</td>
+                            <td class="text-end">${{ data.contributed }}</td>
+                        </tr>
+                        <tr>
+                            <td>{% trans "Paid for expenses" %}</td>
+                            <td class="text-end">${{ data.paid }}</td>
+                        </tr>
+                        <tr>
+                            <td>{% trans "Share of expenses" %}</td>
+                            <td class="text-end">${{ data.shares }}</td>
+                        </tr>
+                        <tr class="fw-bold">
+                            <td>{% trans "Balance" %}</td>
+                            <td class="text-end {% if data.balance >= 0 %}balance-positive{% else %}balance-negative{% endif %}">
+                                ${{ data.balance|floatformat:2 }}
+                                {% if data.balance >= 0 %}
+                                    <i class="fas fa-arrow-alt-circle-up ms-1"></i>
+                                {% else %}
+                                    <i class="fas fa-arrow-alt-circle-down ms-1"></i>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Expense List -->
+    <h3 class="section-heading">{% trans "Expenses" %}</h3>
+    {% if expenses %}
+        <div class="table-responsive">
+            <table class="table expense-table">
+                <thead>
+                    <tr>
+                        <th>{% trans "Date" %}</th>
+                        <th>{% trans "Paid By" %}</th>
+                        <th>{% trans "Category" %}</th>
+                        <th>{% trans "Amount" %}</th>
+                        <th>{% trans "Shared With" %}</th>
+                        <th>{% trans "Description" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for expense in expenses %}
+                    <tr>
+                        <td>{{ expense.date }}</td>
+                        <td>{{ expense.paid_by.user.get_full_name|default:expense.paid_by.user.username }}</td>
+                        <td>{{ expense.get_category_display }}</td>
+                        <td>${{ expense.amount }}</td>
+                        <td>
+                            {% if expense.is_shared %}
+                                {% if expense.shares.count == participants.count %}
+                                    <span class="expense-type-shared">{% trans "Everyone" %}</span>
+                                {% else %}
+                                    <div>
+                                        {% for share in expense.shares.all %}
+                                            <span class="expense-share-badge">
+                                                {{ share.participant.user.get_full_name|default:share.participant.user.username }}
+                                            </span>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            {% else %}
+                                <span class="expense-type-individual">{% trans "Individual" %}</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ expense.description }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <i class="fas fa-receipt"></i>
+            <p>{% trans "No expenses found for this trip." %}</p>
+        </div>
+    {% endif %}
+
+    <!-- Action buttons -->
+    <div class="d-flex justify-content-center gap-3 mt-4 mb-5">
+        <a href="{% url 'add_group_expense' trip.id %}" class="btn btn-add">
+            <i class="fas fa-plus me-2"></i>{% trans "Add Expense" %}
+        </a>
+        <a href="{% url 'add_contribution' trip.id %}" class="btn btn-add">
+            <i class="fas fa-plus me-2"></i>{% trans "Add Contribution" %}
+        </a>
+    </div>
+</div>
+{% endblock %}
+
+{% block additional_scripts %}
+<script>
+    // Custom template tag replacement
+    if (typeof Object.prototype.get_item != 'function') {
+        Object.prototype.get_item = function(key) {
+            return this[key];
+        }
+    }
+</script>
+{% endblock %}

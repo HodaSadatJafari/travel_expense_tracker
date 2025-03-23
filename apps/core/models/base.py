@@ -4,7 +4,6 @@ from django.utils.translation import gettext_lazy as _
 
 
 class BaseModel(models.Model):
-
     created_at = models.DateTimeField(
         db_index=True,
         default=timezone.now,

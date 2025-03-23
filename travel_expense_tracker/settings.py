@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 import os
 from pathlib import Path
+
 from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -147,5 +148,5 @@ STATICFILES_DIRS = [
 CSS_RTL = "rtl.css"
 RTL_LANGUAGES = ["fa"]
 
-LOGIN_REDIRECT_URL = "/trips"
+LOGIN_REDIRECT_URL = "/dashboard"
 LOGOUT_REDIRECT_URL = "/"
