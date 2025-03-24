@@ -12,7 +12,7 @@ A bilingual (English & Persian) Django web application to help users:
 
 ## Technologies Used
 - **Backend**: Python 3, Django
-- **Database**: PostgreSQL (right now is sqlite3)
+- **Database**: sqlite3
 - **Frontend**: HTML, CSS, Bootstrap
 - **Internationalization**: Django i18n (English & Persian)
 - **RTL Support**: Conditional CSS for Persian
