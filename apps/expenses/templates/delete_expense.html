@@ -105,7 +105,13 @@
             {% if trip.is_group_trip %}
             <div class="expense-detail-item">
                 <span class="expense-detail-label">{% trans "Paid By" %}:</span>
-                <span>{{ expense.paid_by.user.get_full_name|default:expense.paid_by.user.username }}</span>
+                    {% if expense.paid_from_group_fund %}
+                        {% trans "Group Fund" %}
+                    {% elif expense.paid_by and expense.paid_by.user %}
+                        {{ expense.paid_by.user.get_full_name|default:expense.paid_by.user.username }}
+                    {% else %}
+                        {% trans "Unknown" %}
+                    {% endif %}
             </div>
             {% endif %}
             {% if expense.description %}

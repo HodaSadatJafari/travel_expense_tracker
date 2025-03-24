@@ -1,0 +1,535 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block additional_styles %}
+<style>
+    :root {
+        --primary-color: #94d2bd;
+        --primary-dark: #75b8a1;
+        --secondary-color: #e9d8a6;
+        --dark-color: #2a3d45;
+        --light-color: #f8f9fa;
+        --border-color: #dee2e6;
+        --success-color: #198754;
+        --warning-color: #ffc107;
+        --danger-color: #dc3545;
+    }
+
+    .form-container {
+        background-color: white;
+        border-radius: 12px;
+        padding: 2.5rem;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        margin: 2rem auto;
+        border-top: 4px solid var(--primary-color);
+        max-width: 800px;
+    }
+    
+    .form-title {
+        font-family: 'Playfair Display', serif;
+        margin-bottom: 1.5rem;
+        color: var(--dark-color);
+        font-weight: 700;
+        position: relative;
+        display: inline-block;
+    }
+    
+    .form-title:after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background-color: var(--primary-color);
+        border-radius: 2px;
+    }
+    
+    .payment-source-group {
+        background-color: var(--light-color);
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin-bottom: 2rem;
+        border-left: 4px solid #6c757d;
+    }
+    
+    .payment-source-title {
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: var(--dark-color);
+    }
+    
+    .form-check {
+        margin-bottom: 0.75rem;
+        padding-left: 1.8rem;
+    }
+    
+    .form-check-input:checked {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+    }
+    
+    .form-group {
+        margin-bottom: 1.75rem;
+    }
+    
+    .form-group label {
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: var(--dark-color);
+        display: block;
+    }
+    
+    .help-text {
+        color: #6c757d;
+        font-size: 0.875rem;
+        margin-top: 0.5rem;
+    }
+    
+    .form-control, .form-select {
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        padding: 0.75rem;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+    
+    .form-control:focus, .form-select:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 0.25rem rgba(148, 210, 189, 0.25);
+    }
+    
+    .input-group-text {
+        background-color: #e9ecef;
+        border: 1px solid var(--border-color);
+        border-radius: 6px 0 0 6px;
+    }
+    
+    /* Shared with section */
+    .shared-with-section {
+        background-color: var(--light-color);
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin-bottom: 2rem;
+        border-left: 4px solid var(--primary-color);
+    }
+    
+    .shared-with-title {
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+        color: var(--dark-color);
+    }
+    
+    .participant-checkbox {
+        background-color: white;
+        border-radius: 6px;
+        padding: 0.75rem;
+        margin-bottom: 0.75rem;
+        border: 1px solid var(--border-color);
+        transition: all 0.2s;
+    }
+    
+    .participant-checkbox:hover {
+        background-color: var(--light-color);
+        border-color: var(--primary-color);
+    }
+    
+    .participant-checkbox input[type="checkbox"] {
+        margin-right: 0.75rem;
+        width: 18px;
+        height: 18px;
+    }
+    
+    .participant-checkbox label {
+        margin-bottom: 0;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+    }
+    
+    .badge {
+        font-size: 0.75rem;
+        padding: 0.35em 0.65em;
+        margin-left: 0.5rem;
+    }
+    
+    /* Button styles */
+    .btn-action {
+        padding: 0.75rem 1.5rem;
+        font-weight: 600;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-submit {
+        background-color: var(--primary-color);
+        border: none;
+        color: var(--dark-color);
+        width: 100%;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    
+    .btn-submit:hover {
+        background-color: var(--primary-dark);
+        box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+        transform: translateY(-2px);
+    }
+    
+    .btn-cancel {
+        background-color: #f8f9fa;
+        border: 1px solid var(--border-color);
+        color: #495057;
+        width: 100%;
+    }
+    
+    .btn-cancel:hover {
+        background-color: #e9ecef;
+    }
+    
+    /* Form validation */
+    .form-control.is-invalid, .form-select.is-invalid {
+        border-color: var(--danger-color);
+    }
+    
+    .invalid-feedback {
+        display: none;
+        width: 100%;
+        margin-top: 0.25rem;
+        font-size: 0.875em;
+        color: var(--danger-color);
+    }
+    
+    /* Info alert */
+    .alert-info {
+        background-color: #d1ecf1;
+        border-color: #bee5eb;
+        color: #0c5460;
+    }
+    
+    /* Example calculation */
+    .example-calculation {
+        background-color: #fff3cd;
+        border: 1px solid #ffeeba;
+        border-radius: 6px;
+        padding: 1rem;
+        margin-top: 1rem;
+        position: relative;
+    }
+    
+    .example-calculation:before {
+        content: '{% trans "Example" %}';
+        position: absolute;
+        top: -10px;
+        left: 10px;
+        background-color: #fff;
+        padding: 0 5px;
+        font-size: 0.75rem;
+        font-weight: bold;
+        color: #856404;
+    }
+    
+    /* Select2 customization if you use it */
+    .select2-container--default .select2-selection--single {
+        height: calc(1.5em + 0.75rem + 2px);
+        padding: 0.375rem 0.75rem;
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+    }
+    
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        line-height: 1.5;
+        color: #495057;
+    }
+    
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        height: calc(1.5em + 0.75rem);
+    }
+    
+    /* RTL Support */
+    [dir="rtl"] .form-check {
+        padding-right: 1.8rem;
+        padding-left: 0;
+    }
+    
+    [dir="rtl"] .participant-checkbox input[type="checkbox"] {
+        margin-right: 0;
+        margin-left: 0.75rem;
+    }
+    
+    [dir="rtl"] .badge {
+        margin-left: 0;
+        margin-right: 0.5rem;
+    }
+    
+    [dir="rtl"] .me-2 {
+        margin-right: 0 !important;
+        margin-left: 0.5rem !important;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="form-container">
+       
+        <h2 class="form-title">{% trans "Add Expense" %}</h2>
+        
+        <form method="post" id="expenseForm">
+            {% csrf_token %}
+            
+            <!-- Payment Source Selection -->
+            <div class="payment-source-group">
+                <div class="payment-source-title">{% trans "How was this expense paid?" %}</div>
+                
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="payment_source" id="group_payment" value="group" 
+                           {% if request.GET.type == 'group' %}checked{% endif %} 
+                           onchange="togglePaymentFields()">
+                    <label class="form-check-label" for="group_payment">
+                        {% trans "Paid from group fund" %}
+                    </label>
+                    <div class="help-text">{% trans "This expense was paid directly from the group's collective fund" %}</div>
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="payment_source" id="individual_payment" value="individual" 
+                           {% if request.GET.type == 'individual' %}checked{% endif %} 
+                           onchange="togglePaymentFields()">
+                    <label class="form-check-label" for="individual_payment">
+                        {% trans "Paid by an individual" %}
+                    </label>
+                    <div class="help-text">{% trans "This expense was paid by one of the trip participants" %}</div>
+                </div>
+                
+            </div>
+            
+            <!-- Individual Payer Selection -->
+            <div class="form-group" id="paid_by_container">
+                <label for="paid_by">{% trans "Paid By" %}</label>
+                <select id="paid_by" name="paid_by" class="form-select">
+                    {% for participant in participants %}
+                        <option value="{{ participant.id }}" {% if participant.user == request.user %}selected{% endif %}>
+                            {{ participant.user.get_full_name|default:participant.user.username }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <div class="help-text">{% trans "Select the participant who paid for this expense" %}</div>
+            </div>
+            
+            <!-- Expense Details -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="amount">{% trans "Amount" %}</label>
+                        <div class="input-group">
+                            <span class="input-group-text">$</span>
+                            <input type="number" id="amount" name="amount" class="form-control" step="0.01" min="0.01" required>
+                        </div>
+                        <div class="invalid-feedback">
+                            {% trans "Please enter a valid amount" %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="date">{% trans "Date" %}</label>
+                        <input type="date" id="date" name="date" class="form-control" required>
+                        <div class="invalid-feedback">
+                            {% trans "Please select a date" %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="category">{% trans "Category" %}</label>
+                <select id="category" name="category" class="form-select" required>
+                    <option value="" selected disabled>{% trans "Select a category" %}</option>
+                    <option value="ACCOMMODATION">{% trans "Accommodation" %}</option>
+                    <option value="FOOD">{% trans "Food" %}</option>
+                    <option value="TRANSPORTATION">{% trans "Transportation" %}</option>
+                    <option value="ACTIVITIES">{% trans "Activities" %}</option>
+                    <option value="SHOPPING">{% trans "Shopping" %}</option>
+                    <option value="OTHER">{% trans "Other" %}</option>
+                </select>
+                <div class="invalid-feedback">
+                    {% trans "Please select a category" %}
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="description">{% trans "Description" %} ({% trans "optional" %})</label>
+                <input type="text" id="description" name="description" class="form-control" placeholder="{% trans 'e.g. Dinner at Luigi\'s Restaurant' %}">
+                <div class="help-text">{% trans "Brief description of what this expense was for" %}</div>
+            </div>
+            
+            <!-- Sharing Options -->
+            <div class="form-group">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="is_shared" name="is_shared" checked onchange="toggleSharedWith()">
+                    <label class="form-check-label" for="is_shared">
+                        {% trans "Share this expense with other participants" %}
+                    </label>
+                </div>
+            </div>
+            
+            <div id="shared_with_section" class="shared-with-section">
+                <div class="shared-with-title">{% trans "Share With" %}</div>
+                <p class="text-muted mb-3">
+                    {% trans "Select specific participants to share this expense with. Leave all unchecked to share with everyone." %}
+                </p>
+                
+                <div class="alert alert-info mb-4">
+                    <i class="fas fa-info-circle me-2"></i>
+                    {% trans "The expense will be split according to each participant's share count. Each participant will pay their proportional share of the expense." %}
+                </div>
+                
+                <div class="example-calculation">
+                    <p><strong>{% trans "How expense sharing works:" %}</strong></p>
+                    <p>{% trans "Example: If Hoda pays $200 for a restaurant and shares it with Safa (both with 1 share each), the total is split equally:" %}</p>
+                    <ul>
+                        <li>{% trans "Hoda's share: $100 (already paid by Hoda)" %}</li>
+                        <li>{% trans "Safa's share: $100 (owes to Hoda)" %}</li>
+                    </ul>
+                    <p>{% trans "Result: Safa owes Hoda $100" %}</p>
+                </div>
+                
+                <div class="row mt-4">
+                    {% for participant in participants %}
+                    <div class="col-md-6 mb-2">
+                        <div class="participant-checkbox">
+                            <input type="checkbox" id="participant_{{ participant.id }}" name="shared_with" value="{{ participant.id }}" class="form-check-input">
+                            <label class="form-check-label" for="participant_{{ participant.id }}">
+                                {{ participant.user.get_full_name|default:participant.user.username }}
+                                {% if participant.shares > 1 %}
+                                    <span class="badge bg-secondary">
+                                        {{ participant.shares }} {% trans "shares" %}
+                                    </span>
+                                {% endif %}
+                            </label>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <div class="help-text mt-3">
+                    <i class="fas fa-lightbulb me-2"></i>
+                    {% trans "The expense will be divided proportionally based on each participant's number of shares. If someone has 2 shares and another has 1 share, the first person pays twice as much." %}
+                </div>
+            </div>
+            
+            <div class="row mt-4">
+                <div class="col-md-6 mb-3">
+                    <button type="submit" class="btn btn-action btn-submit">
+                        <i class="fas fa-save me-2"></i>
+                        {% trans "Add Expense" %}
+                    </button>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <a href="{% url 'view_group_trip' trip.id %}" class="btn btn-action btn-cancel">
+                        <i class="fas fa-times me-2"></i>{% trans "Cancel" %}
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block additional_scripts %}
+<script>
+    // Toggle shared_with section based on checkbox
+    function toggleSharedWith() {
+        const isShared = document.getElementById('is_shared').checked;
+        const sharedWithSection = document.getElementById('shared_with_section');
+        
+        if (isShared) {
+            sharedWithSection.style.display = 'block';
+        } else {
+            sharedWithSection.style.display = 'none';
+        }
+    }
+    
+    // Toggle payment fields based on selected payment source
+    function togglePaymentFields() {
+        const individualPayment = document.getElementById('individual_payment').checked;
+        const paidByContainer = document.getElementById('paid_by_container');
+        
+        if (individualPayment) {
+            paidByContainer.style.display = 'block';
+            document.getElementById('paid_by').setAttribute('required', 'required');
+        } else {
+            paidByContainer.style.display = 'none';
+            document.getElementById('paid_by').removeAttribute('required');
+        }
+    }
+    
+    // Form validation
+    function validateForm(event) {
+        const form = document.getElementById('expenseForm');
+        
+        if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+            
+            // Add validation classes to form elements
+            const formControls = form.querySelectorAll('.form-control, .form-select');
+            formControls.forEach(control => {
+                if (!control.validity.valid) {
+                    control.classList.add('is-invalid');
+                } else {
+                    control.classList.remove('is-invalid');
+                    control.classList.add('is-valid');
+                }
+            });
+            
+            return false;
+        }
+        
+        return true;
+    }
+    
+    // Select all participants
+    function selectAllParticipants() {
+        const checkboxes = document.querySelectorAll('input[name="shared_with"]');
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = true;
+        });
+    }
+    
+    // Clear all selections
+    function clearAllParticipants() {
+        const checkboxes = document.querySelectorAll('input[name="shared_with"]');
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = false;
+        });
+    }
+    
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize form state
+        toggleSharedWith();
+        togglePaymentFields();
+        
+        // Set today's date as default
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('date').value = today;
+        
+        // Add form validation
+        const form = document.getElementById('expenseForm');
+        form.addEventListener('submit', validateForm);
+        
+        // Handle input validation on change
+        const formControls = form.querySelectorAll('.form-control, .form-select');
+        formControls.forEach(control => {
+            control.addEventListener('change', function() {
+                if (!this.validity.valid) {
+                    this.classList.add('is-invalid');
+                } else {
+                    this.classList.remove('is-invalid');
+                    this.classList.add('is-valid');
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

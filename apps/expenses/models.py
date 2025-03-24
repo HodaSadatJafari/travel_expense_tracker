@@ -31,29 +31,41 @@ CATEGORY_CHOICES = [
 ]
 
 
-class Expense(BaseModel):
-    trip = models.ForeignKey(Trip, related_name="expenses", on_delete=models.CASCADE)
+class Expense(models.Model):
+    # Existing fields
+    trip = models.ForeignKey(Trip, on_delete=models.CASCADE)
     paid_by = models.ForeignKey(
-        TripParticipant, related_name="paid_expenses", on_delete=models.CASCADE
+        TripParticipant, on_delete=models.CASCADE, null=True, blank=True
     )
-    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
-    description = models.CharField(max_length=255, blank=True, null=True)
     date = models.DateField()
-    is_shared = models.BooleanField(default=True)  # Whether this expense is shared
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    category = models.CharField(max_length=20, choices=CATEGORY_CHOICES)
+    description = models.TextField(blank=True)
+    is_shared = models.BooleanField(default=False)
+    paid_from_group_fund = models.BooleanField(default=False)
 
-    def __str__(self):
-        return f"{self.category}: ${self.amount} on {self.date} by {self.paid_by.user.username}"
+    def save(self, *args, **kwargs):
+        # Ensure that an expense can't be both paid from group fund and by an individual
+        if self.paid_from_group_fund:
+            self.paid_by = None
+        super().save(*args, **kwargs)
 
 
 class ExpenseShare(BaseModel):
     expense = models.ForeignKey(
-        Expense, related_name="shares", on_delete=models.CASCADE
+        Expense,
+        related_name="shares",
+        on_delete=models.CASCADE,
     )
     participant = models.ForeignKey(
-        TripParticipant, related_name="expense_shares", on_delete=models.CASCADE
+        TripParticipant,
+        related_name="expense_shares",
+        on_delete=models.CASCADE,
     )
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    amount = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+    )
 
     class Meta:
         unique_together = ("expense", "participant")

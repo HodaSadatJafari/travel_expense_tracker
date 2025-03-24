@@ -1,9 +1,29 @@
 {% extends 'base.html' %}
 {% load i18n %}
-{% load trip_tags %}
 
 {% block additional_styles %}
 <style>
+    /* Base styles */
+    :root {
+        --primary-color: #94d2bd;
+        --primary-dark: #75b8a1; 
+        --secondary-color: #e9d8a6;
+        --dark-color: #2a3d45;
+        --light-color: #f8f9fa;
+        --border-color: #dee2e6;
+        --text-color: #495057;
+        --light-text: #6c757d;
+        --success-color: #198754;
+        --warning-color: #ffc107;
+        --danger-color: #dc3545;
+        --info-color: #0dcaf0;
+        --radius: 8px;
+        --radius-sm: 4px;
+        --radius-lg: 12px;
+        --shadow: 0 4px 6px rgba(0,0,0,0.1);
+        --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+    }
+
     .trip-header {
         padding: 2.5rem 0;
         margin-bottom: 2rem;
@@ -31,19 +51,118 @@
         border-radius: 2px;
     }
     
-    .trip-dates {
-        background-color: white;
-        padding: 1.5rem;
-        border-radius: var(--radius-sm);
+    /* Group fund section */
+    .group-fund-section {
+        background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
+        border-radius: var(--radius);
+        padding: 2rem;
+        margin-bottom: 2rem;
         box-shadow: var(--shadow);
-        margin-bottom: 2.5rem;
+        border-left: 5px solid #17a2b8;
+    }
+    
+    /* Card styles */
+    .card {
+        box-shadow: var(--shadow);
+        transition: all 0.3s ease;
+        border-radius: var(--radius-sm);
+        border: none;
+    }
+    
+    .card:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-lg);
+    }
+    
+    .card-title {
+        font-weight: 700;
+        color: var(--text-color);
+    }
+    
+    /* Settlements section */
+    .settlements-card {
+        background-color: white;
+        border-radius: var(--radius);
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: var(--shadow);
+        border-top: 4px solid var(--secondary-color);
+    }
+    
+    .settlement-item {
+        padding: 1rem;
+        border-bottom: 1px solid var(--border-color);
+        transition: all 0.3s ease;
+    }
+    
+    .settlement-item:last-child {
+        border-bottom: none;
+    }
+    
+    .settlement-amount {
+        font-weight: 700;
+        color: var(--dark-color);
+    }
+    
+    /* Financial summaries */
+    .participant-card {
+        background-color: white;
+        border-radius: var(--radius);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        box-shadow: var(--shadow);
+        transition: all 0.3s ease;
         border-left: 4px solid var(--primary-color);
     }
     
+    .participant-card:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-lg);
+    }
+    
+    .financial-summary-card {
+        background-color: var(--light-color);
+        border-radius: var(--radius);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .finance-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid var(--border-color);
+    }
+    
+    .finance-row:last-child {
+        border-bottom: none;
+        padding-top: 1rem;
+        font-weight: bold;
+    }
+    
+    .finance-label {
+        font-weight: 500;
+    }
+    
+    .finance-value {
+        font-family: 'Courier New', monospace;
+    }
+    
+    .balance-positive {
+        color: var(--success-color);
+        font-weight: 700;
+    }
+    
+    .balance-negative {
+        color: var(--danger-color);
+        font-weight: 700;
+    }
+    
+    /* Section headings */
     .section-heading {
         font-family: 'Playfair Display', serif;
         font-weight: 700;
-        margin-bottom: 1.5rem;
+        margin: 2.5rem 0 1.5rem;
         color: var(--dark-color);
         position: relative;
         display: inline-block;
@@ -60,52 +179,45 @@
         border-radius: 2px;
     }
     
-    .trip-fund-card {
-        background: linear-gradient(135deg, #e0f2f1 0%, #c8e6e3 100%);
-        border-radius: var(--radius);
-        padding: 1.5rem;
-        margin-bottom: 2rem;
-        box-shadow: var(--shadow);
-    }
-    
-    .contribution-list {
-        max-height: 200px;
-        overflow-y: auto;
-        background-color: white;
-        border-radius: var(--radius-sm);
-        box-shadow: var(--shadow-sm);
-        margin-top: 1rem;
-    }
-    
-    .contribution-item {
-        padding: 0.75rem 1rem;
-        border-bottom: 1px solid var(--border-color);
-    }
-    
-    .contribution-item:last-child {
-        border-bottom: none;
-    }
-    
-    .participant-card {
-        background-color: white;
-        border-radius: var(--radius-sm);
-        padding: 1.5rem;
+    /* Tabs styling */
+    .nav-tabs {
+        border-bottom: 2px solid #e9ecef;
         margin-bottom: 1rem;
-        box-shadow: var(--shadow);
-        transition: all 0.3s ease;
-        border-left: 4px solid var(--primary-color);
     }
     
-    .participant-card:hover {
-        transform: translateY(-3px);
-        box-shadow: var(--shadow-lg);
+    .nav-tabs .nav-link {
+        border: none;
+        border-bottom: 2px solid transparent;
+        margin-bottom: -2px;
+        padding: 0.5rem 1rem;
+        font-weight: 600;
+        color: var(--light-text);
     }
     
+    .nav-tabs .nav-link.active {
+        color: var(--primary-color);
+        border-bottom: 2px solid var(--primary-color);
+        background-color: transparent;
+    }
+    
+    .nav-tabs .nav-link:hover:not(.active) {
+        color: var(--text-color);
+        border-bottom: 2px solid var(--border-color);
+    }
+    
+    .tab-content {
+        padding: 1rem 0;
+    }
+    
+    .expense-tab-content {
+        padding: 1rem;
+        background-color: var(--light-color);
+        border-radius: 0 0 var(--radius) var(--radius);
+    }
+    
+    /* Expense table */
     .expense-table {
-        border-radius: var(--radius-sm);
-        overflow: hidden;
-        box-shadow: var(--shadow);
-        margin-bottom: 3rem;
+        margin-bottom: 2rem;
     }
     
     .expense-table thead {
@@ -113,158 +225,149 @@
         color: var(--dark-color);
     }
     
-    .expense-table th {
-        font-weight: 600;
-        padding: 1rem;
+    .expense-table tbody tr {
+        transition: all 0.2s ease;
     }
     
-    .expense-table td {
-        padding: 1rem;
-        vertical-align: middle;
+    .expense-table tbody tr:hover {
+        background-color: rgba(148, 210, 189, 0.1);
     }
     
-    .expense-table tr:nth-child(even) {
-        background-color: var(--light-color);
-    }
-    
-    .expense-share-badge {
-        background-color: #f0f0f0;
-        color: var(--dark-color);
+    /* Expense type indicators */
+    .expense-type-indicator {
+        font-size: 0.8rem;
         padding: 0.25rem 0.5rem;
         border-radius: 50px;
-        font-size: 0.85rem;
-        margin-right: 0.25rem;
-        white-space: nowrap;
-        display: inline-block;
-        margin-bottom: 0.25rem;
+        margin-right: 0.5rem;
+        font-weight: 500;
     }
     
-    .balance-positive {
-        color: #2c6e6a;
-        font-weight: 700;
-    }
-    
-    .balance-negative {
-        color: #e63946;
-        font-weight: 700;
-    }
-    
-    .expense-type-shared {
-        background-color: rgba(148, 210, 189, 0.2);
-        border-radius: 4px;
-        padding: 0.25rem 0.5rem;
-        font-size: 0.8rem;
-        color: #2c6e6a;
+    .expense-type-group {
+        background-color: #d1ecf1;
+        color: #0c5460;
     }
     
     .expense-type-individual {
-        background-color: rgba(225, 225, 225, 0.5);
-        border-radius: 4px;
-        padding: 0.25rem 0.5rem;
-        font-size: 0.8rem;
-        color: #555;
+        background-color: var(--light-color);
+        color: var(--text-color);
     }
     
+    /* Action buttons */
     .btn-add {
         background-color: var(--primary-color);
         color: var(--dark-color);
         border: none;
+        border-radius: var(--radius-sm);
         padding: 0.75rem 1.5rem;
         font-weight: 600;
-        border-radius: var(--radius-sm);
+        box-shadow: var(--shadow);
         transition: all 0.3s ease;
-        box-shadow: 0 4px 14px rgba(148, 210, 189, 0.4);
     }
     
     .btn-add:hover {
         background-color: var(--primary-dark);
         transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(148, 210, 189, 0.5);
-    }
-    
-    .empty-state {
-        text-align: center;
-        padding: 3rem;
-        background-color: var(--light-color);
-        border-radius: var(--radius-sm);
-        color: var(--light-text);
-        margin-bottom: 2rem;
-    }
-    
-    .management-toolbar {
-        display: flex;
-        justify-content: flex-end;
-        margin-bottom: 1rem;
-    }
-    
-    .btn-toolbar {
-        background-color: white;
-        padding: 0.5rem;
-        border-radius: var(--radius);
-        box-shadow: var(--shadow-sm);
+        box-shadow: var(--shadow-lg);
+        color: var(--dark-color);
     }
     
     .btn-tool {
-        padding: 0.5rem 1rem;
+        background-color: transparent;
+        border: 1px solid var(--border-color);
+        color: var(--text-color);
+        margin-left: 0.5rem;
+        padding: 0.375rem 0.75rem;
         border-radius: var(--radius-sm);
-        font-weight: 600;
-        font-size: 0.9rem;
         transition: all 0.2s ease;
-        margin: 0 0.25rem;
-    }
-    
-    .btn-tool.edit {
-        background-color: #f8f9fa;
-        color: var(--dark-color);
-    }
-    
-    .btn-tool.edit:hover {
-        background-color: #e9ecef;
-    }
-    
-    .btn-tool.delete {
-        background-color: #ffebee;
-        color: #c62828;
-    }
-    
-    .btn-tool.delete:hover {
-        background-color: #ffcdd2;
-    }
-    
-    .btn-tool.primary {
-        background-color: var(--primary-color);
-        color: var(--dark-color);
     }
     
     .btn-tool.primary:hover {
-        background-color: var(--primary-dark);
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+        color: #fff;
+    }
+    
+    .btn-tool.edit:hover {
+        background-color: var(--secondary-color);
+        border-color: var(--secondary-color);
+        color: var(--dark-color);
+    }
+    
+    .btn-tool.delete:hover {
+        background-color: var(--danger-color);
+        border-color: var(--danger-color);
+        color: #fff;
     }
     
     .btn-action {
-        padding: 0.25rem 0.5rem;
-        margin: 0 0.125rem;
+        padding: 0.375rem 0.5rem;
         border-radius: var(--radius-sm);
-        transition: all 0.2s ease;
+        margin-right: 0.25rem;
     }
     
     .btn-action.edit {
-        color: #0d6efd;
-        border: 1px solid #0d6efd;
-    }
-    
-    .btn-action.edit:hover {
-        background-color: #0d6efd;
-        color: white;
+        color: var(--text-color);
+        background-color: var(--secondary-color);
     }
     
     .btn-action.delete {
-        color: #dc3545;
-        border: 1px solid #dc3545;
+        color: #fff;
+        background-color: var(--danger-color);
     }
     
-    .btn-action.delete:hover {
-        background-color: #dc3545;
-        color: white;
+    /* Person settlements */
+    .person-settlements {
+        background-color: #f8f9fa;
+        border-radius: var(--radius);
+        padding: 1.5rem;
+        border-top: 3px solid #6c757d;
+    }
+    
+    .person-settlements h5 {
+        font-weight: 600;
+        color: var(--dark-color);
+        margin-bottom: 1rem;
+    }
+    
+    .list-group-item {
+        transition: all 0.2s ease;
+    }
+    
+    .list-group-item:hover {
+        background-color: rgba(248, 249, 250, 0.7);
+    }
+    
+    /* RTL Support */
+    [dir="rtl"] .trip-title:after,
+    [dir="rtl"] .section-heading:after {
+        left: auto;
+        right: 0;
+    }
+    
+    [dir="rtl"] .group-fund-section,
+    [dir="rtl"] .participant-card {
+        border-left: none;
+        border-right: 4px solid var(--primary-color);
+    }
+    
+    [dir="rtl"] .btn-tool {
+        margin-left: 0;
+        margin-right: 0.5rem;
+    }
+    
+    [dir="rtl"] .btn-action {
+        margin-right: 0;
+        margin-left: 0.25rem;
+    }
+    
+    [dir="rtl"] .me-2 {
+        margin-right: 0 !important;
+        margin-left: 0.5rem !important;
+    }
+    
+    [dir="rtl"] .ms-2 {
+        margin-left: 0 !important;
+        margin-right: 0.5rem !important;
     }
 </style>
 {% endblock %}
@@ -282,6 +385,7 @@
         </div>
     {% endif %}
 
+    <!-- Trip header section -->
     <div class="trip-header">
         <div class="d-flex justify-content-between align-items-start mb-3">
             <h2 class="trip-title">{{ trip.name }} <span class="badge bg-primary">{% trans "Group Trip" %}</span></h2>
@@ -301,50 +405,48 @@
             {% endif %}
         </div>
         
-        <div class="trip-dates">
-            <div class="row">
-                <div class="col-md-6">
-                    <p><strong>{% trans "Start Date" %}:</strong> {{ trip.start_date }}</p>
-                </div>
-                <div class="col-md-6">
-                    <p><strong>{% trans "End Date" %}:</strong> {{ trip.end_date }}</p>
-                </div>
+        <div class="row">
+            <div class="col-md-6">
+                <p><strong>{% trans "Start Date" %}:</strong> {{ trip.start_date }}</p>
+            </div>
+            <div class="col-md-6">
+                <p><strong>{% trans "End Date" %}:</strong> {{ trip.end_date }}</p>
             </div>
         </div>
     </div>
 
-    <!-- Trip Fund Summary -->
-    <div class="trip-fund-card">
-        <h3 class="mb-3">{% trans "Trip Fund Summary" %}</h3>
+    <!-- Group Fund Summary -->
+    <div class="group-fund-section">
+        <h3 class="mb-3">{% trans "Group Fund" %}</h3>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-4 mb-3">
                 <div class="card h-100">
                     <div class="card-body text-center">
                         <h5 class="card-title">{% trans "Total Contributions" %}</h5>
-                        <p class="display-6">${{ total_contributions }}</p>
+                        <p class="display-6">${{ total_contributions|floatformat:2 }}</p>
                         <a href="{% url 'add_contribution' trip.id %}" class="btn btn-sm btn-primary mt-2">
                             <i class="fas fa-plus"></i> {% trans "Add Contribution" %}
                         </a>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 mb-3">
                 <div class="card h-100">
                     <div class="card-body text-center">
-                        <h5 class="card-title">{% trans "Total Expenses" %}</h5>
-                        <p class="display-6">${{ total_expenses }}</p>
-                        <a href="{% url 'add_group_expense' trip.id %}" class="btn btn-sm btn-primary mt-2">
-                            <i class="fas fa-plus"></i> {% trans "Add Expense" %}
+                        <h5 class="card-title">{% trans "Group Expenses" %}</h5>
+                        <p class="display-6">${{ group_expenses_total|floatformat:2 }}</p>
+                        <a href="{% url 'add_expense' trip.id %}?type=group" class="btn btn-sm btn-primary mt-2">
+                            <i class="fas fa-plus"></i> {% trans "Add Group Expense" %}
                         </a>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 mb-3">
                 <div class="card h-100">
                     <div class="card-body text-center">
                         <h5 class="card-title">{% trans "Remaining Fund" %}</h5>
                         <p class="display-6 {% if remaining_fund >= 0 %}text-success{% else %}text-danger{% endif %}">
-                            ${{ remaining_fund }}
+                            ${{ remaining_fund|floatformat:2 }}
                         </p>
                     </div>
                 </div>
@@ -352,144 +454,597 @@
         </div>
     </div>
 
-    <!-- Participants & Balances -->
-    <h3 class="section-heading">{% trans "Participants & Balances" %}</h3>
+    <!-- Settlements Section -->
+    <h3 class="section-heading">{% trans "Settlements" %}</h3>
+    
+    <div class="settlements-card">
+        {% if settlements %}
+            <p class="mb-4">{% trans "To settle all debts, the following payments should be made:" %}</p>
+            
+            <div class="list-group">
+                {% for settlement in settlements %}
+                    <div class="settlement-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <i class="fas fa-exchange-alt me-2 text-muted"></i>
+                            <strong>{{ settlement.from_user }}</strong> 
+                            {% trans "pays" %} 
+                            <strong>{{ settlement.to_user }}</strong>
+                        </div>
+                        <span class="settlement-amount">${{ settlement.amount|floatformat:2 }}</span>
+                    </div>
+                {% endfor %}
+            </div>
+            
+            <div class="alert alert-info mt-4">
+                <i class="fas fa-info-circle me-2"></i>
+                {% trans "These payments will fully settle all debts between participants for both group fund contributions and individual expenses." %}
+            </div>
+        {% else %}
+            <div class="text-center py-4 text-muted">
+                <i class="fas fa-check-circle fa-2x mb-3"></i>
+                <p>{% trans "All balances are settled! No payments needed." %}</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Participant Financial Details -->
+    <h3 class="section-heading">{% trans "Participant Financial Details" %}</h3>
+    
     <div class="row">
-        {% for participant_id, data in balances.items %}
+        {% for participant_id, data in participant_data.items %}
             <div class="col-md-6 mb-4">
                 <div class="participant-card">
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h5>{{ data.participant.user.get_full_name|default:data.participant.user.username }}</h5>
-                        {% if data.participant.shares > 1 %}
-                            <span class="badge bg-secondary">
-                                {% if data.participant.shares > 1 %}
-                                    {{ data.participant.shares }} {% trans "shares" %}
-                                {% else %}
-                                    {{ data.participant.shares }} {% trans "share" %}
-                                {% endif %}
-                            </span>
-                        {% endif %}
+                        <h4>{{ data.participant.user.get_full_name|default:data.participant.user.username }}</h4>
+                        <span class="badge bg-secondary">
+                            {% if data.participant.shares > 1 %}
+                                {{ data.participant.shares }} {% trans "shares" %}
+                            {% else %}
+                                {{ data.participant.shares }} {% trans "share" %}
+                            {% endif %}
+                        </span>
                     </div>
                     
-                    <p><strong>{% trans "Contributions" %}:</strong></p>
-                    {% if data.contributions %}
-                        <div class="contribution-list">
-                            {% for contribution in data.contributions %}
-                                <div class="contribution-item">
-                                    <div class="d-flex justify-content-between">
-                                        <span>${{ contribution.amount }}</span>
-                                        <span class="text-muted">{{ contribution.date }}</span>
+                    <!-- Financial summary -->
+                    <div class="financial-summary-card">
+                        <h5 class="mb-3">{% trans "Financial Summary" %}</h5>
+                        
+                        <!-- Group Fund Balance -->
+                        <div class="finance-row">
+                            <div class="finance-label">{% trans "Contributed to Fund" %}</div>
+                            <div class="finance-value">${{ data.contributed|floatformat:2 }}</div>
+                        </div>
+                        
+                        <div class="finance-row">
+                            <div class="finance-label">{% trans "Share of Group Expenses" %}</div>
+                            <div class="finance-value">${{ data.group_expenses_share|floatformat:2 }}</div>
+                        </div>
+                        
+                        <div class="finance-row">
+                            <div class="finance-label">{% trans "Group Fund Balance" %}</div>
+                            <div class="finance-value {% if data.fund_balance >= 0 %}balance-positive{% else %}balance-negative{% endif %}">
+                                ${{ data.fund_balance|floatformat:2 }}
+                            </div>
+                        </div>
+                        
+                        <!-- Individual Expense Balance -->
+                        <div class="finance-row">
+                            <div class="finance-label">{% trans "Paid for Individual Expenses" %}</div>
+                            <div class="finance-value">${{ data.paid_personally|floatformat:2 }}</div>
+                        </div>
+                        
+                        <div class="finance-row">
+                            <div class="finance-label">{% trans "Fair Share of Individual Expenses" %}</div>
+                            <div class="finance-value">${{ data.personal_share|floatformat:2 }}</div>
+                        </div>
+                        
+                        <div class="finance-row">
+                            <div class="finance-label">{% trans "Individual Expenses Balance" %}</div>
+                            <div class="finance-value {% if data.personal_balance >= 0 %}balance-positive{% else %}balance-negative{% endif %}">
+                                ${{ data.personal_balance|floatformat:2 }}
+                                {% if data.personal_balance > 0 %}
+                                    <span class="badge bg-success rounded-pill ms-2">{% trans "Owed" %}</span>
+                                {% elif data.personal_balance < 0 %}
+                                    <span class="badge bg-warning text-dark rounded-pill ms-2">{% trans "Owes" %}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <!-- Total Balance -->
+                        <!-- <div class="finance-row">
+                            <div class="finance-label font-weight-bold">{% trans "Total Balance" %}</div>
+                            <div class="finance-value {% if data.balance >= 0 %}balance-positive{% else %}balance-negative{% endif %}">
+                                ${{ data.balance|floatformat:2 }}
+                                {% if data.balance > 0 %}
+                                    <i class="fas fa-arrow-alt-circle-up ms-1" data-bs-toggle="tooltip" title="{% trans 'Net amount owed to this person' %}"></i>
+                                {% elif data.balance < 0 %}
+                                    <i class="fas fa-arrow-alt-circle-down ms-1" data-bs-toggle="tooltip" title="{% trans 'Net amount this person owes others' %}"></i>
+                                {% else %}
+                                    <i class="fas fa-equals ms-1" data-bs-toggle="tooltip" title="{% trans 'Balanced' %}"></i>
+                                {% endif %}
+                            </div>
+                        </div> -->
+                    </div>
+
+                    <!-- Individual settlements -->
+                    {% if data.detailed_settlements %}
+                    <div class="person-settlements mb-4">
+                        <h5>{% trans "Your Settlements" %}</h5>
+                        <div class="list-group">
+                            {% for settlement in data.detailed_settlements %}
+                                <div class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div>
+                                        {% if settlement.you_pay %}
+                                            <span class="text-warning">
+                                                <i class="fas fa-arrow-right me-2"></i>
+                                                {% trans "You pay" %} <strong>{{ settlement.other_person }}</strong>:
+                                            </span>
+                                        {% else %}
+                                            <span class="text-success">
+                                                <i class="fas fa-arrow-left me-2"></i>
+                                                <strong>{{ settlement.other_person }}</strong> {% trans "pays you" %}:
+                                            </span>
+                                        {% endif %}
                                     </div>
-                                    {% if contribution.notes %}
-                                        <small class="text-muted">{{ contribution.notes }}</small>
-                                    {% endif %}
+                                    <span class="badge bg-{% if settlement.you_pay %}warning{% else %}success{% endif %} rounded-pill">
+                                        ${{ settlement.amount|floatformat:2 }}
+                                    </span>
                                 </div>
                             {% endfor %}
                         </div>
-                    {% else %}
-                        <p class="text-muted">{% trans "No contributions" %}</p>
+                    </div>
                     {% endif %}
                     
-                    <table class="table table-sm mt-3">
-                        <tr>
-                            <td>{% trans "Total Contributed" %}</td>
-                            <td class="text-end">${{ data.contributed }}</td>
-                        </tr>
-                        <tr>
-                            <td>{% trans "Paid for expenses" %}</td>
-                            <td class="text-end">${{ data.paid }}</td>
-                        </tr>
-                        <tr>
-                            <td>{% trans "Share of expenses" %}</td>
-                            <td class="text-end">${{ data.shares }}</td>
-                        </tr>
-                        <tr class="fw-bold">
-                            <td>{% trans "Balance" %}</td>
-                            <td class="text-end {% if data.balance >= 0 %}balance-positive{% else %}balance-negative{% endif %}">
-                                ${{ data.balance|floatformat:2 }}
-                                {% if data.balance >= 0 %}
-                                    <i class="fas fa-arrow-alt-circle-up ms-1"></i>
-                                {% else %}
-                                    <i class="fas fa-arrow-alt-circle-down ms-1"></i>
-                                {% endif %}
-                            </td>
-                        </tr>
-                    </table>
+                    <!-- Tabbed details -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="contributions-tab-{{ participant_id }}" data-bs-toggle="tab"
+                                   data-bs-target="#contributions-{{ participant_id }}" type="button" role="tab"
+                                   aria-controls="contributions" aria-selected="true">
+                                {% trans "Contributions" %}
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="group-expenses-tab-{{ participant_id }}" data-bs-toggle="tab"
+                                   data-bs-target="#group-expenses-{{ participant_id }}" type="button" role="tab"
+                                   aria-controls="group-expenses" aria-selected="false">
+                                {% trans "Group Expenses" %}
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="expenses-paid-tab-{{ participant_id }}" data-bs-toggle="tab"
+                                   data-bs-target="#expenses-paid-{{ participant_id }}" type="button" role="tab"
+                                   aria-controls="expenses-paid" aria-selected="false">
+                                {% trans "Paid For Others" %}
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="expenses-shared-tab-{{ participant_id }}" data-bs-toggle="tab"
+                                   data-bs-target="#expenses-shared-{{ participant_id }}" type="button" role="tab"
+                                   aria-controls="expenses-shared" aria-selected="false">
+                                {% trans "Owes to Others" %}
+                            </button>
+                        </li>
+                    </ul>
+                    
+                    <div class="tab-content expense-tab-content">
+                        <!-- Contributions tab -->
+                        <div class="tab-pane fade show active" id="contributions-{{ participant_id }}" role="tabpanel" 
+                             aria-labelledby="contributions-tab-{{ participant_id }}">
+                            {% if data.contributions %}
+                                <div class="contribution-list">
+                                    <table class="table table-hover mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>{% trans "Date" %}</th>
+                                                <th>{% trans "Amount" %}</th>
+                                                <th>{% trans "Notes" %}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for contribution in data.contributions %}
+                                                <tr>
+                                                    <td>{{ contribution.date }}</td>
+                                                    <td>${{ contribution.amount|floatformat:2 }}</td>
+                                                    <td>{{ contribution.notes|default:"-" }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            {% else %}
+                                <p class="text-muted">{% trans "No contributions" %}</p>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Group Expense Shares -->
+                        <div class="tab-pane fade" id="group-expenses-{{ participant_id }}" role="tabpanel" 
+                             aria-labelledby="group-expenses-tab-{{ participant_id }}">
+                            {% if data.group_expenses_shared %}
+                                <div class="expense-share-list">
+                                    <table class="table table-hover mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>{% trans "Date" %}</th>
+                                                <th>{% trans "Category" %}</th>
+                                                <th>{% trans "Description" %}</th>
+                                                <th>{% trans "Your Share" %}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for expense_data in data.group_expenses_shared %}
+                                                <tr>
+                                                    <td>{{ expense_data.expense.date }}</td>
+                                                    <td>{{ expense_data.expense.get_category_display }}</td>
+                                                    <td>{{ expense_data.expense.description|default:"-" }}</td>
+                                                    <td>${{ expense_data.amount|floatformat:2 }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            {% else %}
+                                <p class="text-muted">{% trans "No group expense shares" %}</p>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Paid For Others tab -->
+                        <div class="tab-pane fade" id="expenses-paid-{{ participant_id }}" role="tabpanel" 
+                             aria-labelledby="expenses-paid-tab-{{ participant_id }}">
+                            {% if data.expenses_paid_for_others %}
+                                <div class="expense-share-list">
+                                    <table class="table table-hover mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>{% trans "Date" %}</th>
+                                                <th>{% trans "Category" %}</th>
+                                                <th>{% trans "Description" %}</th>
+                                                <th>{% trans "Total Paid" %}</th>
+                                                <th>{% trans "Your Share" %}</th>
+                                                <th>{% trans "Others Owe You" %}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for expense in data.expenses_paid_for_others %}
+                                                <tr>
+                                                    <td>{{ expense.date }}</td>
+                                                    <td>{{ expense.get_category_display }}</td>
+                                                    <td>{{ expense.description|default:"-" }}</td>
+                                                    <td>${{ expense.amount|floatformat:2 }}</td>
+                                                    <td>${{ expense.your_share|floatformat:2 }}</td>
+                                                    <td>${{ expense.for_others|floatformat:2 }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                        <tfoot>
+                                            <tr class="table-light">
+                                                <td colspan="5" class="text-end"><strong>{% trans "Total others owe you:" %}</strong></td>
+                                                <td><strong>${{ data.others_owe|floatformat:2 }}</strong></td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            {% else %}
+                                <p class="text-muted">{% trans "You haven't paid for others" %}</p>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Expense Shares tab -->
+                        <div class="tab-pane fade" id="expenses-shared-{{ participant_id }}" role="tabpanel" 
+                             aria-labelledby="expenses-shared-tab-{{ participant_id }}">
+                            {% if data.expenses_shared %}
+                                <div class="expense-share-list">
+                                    <table class="table table-hover mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>{% trans "Date" %}</th>
+                                                <th>{% trans "Paid By" %}</th>
+                                                <th>{% trans "Description" %}</th>
+                                                <th>{% trans "Total Amount" %}</th>
+                                                <th>{% trans "Your Share" %}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for shared_expense in data.expenses_shared %}
+                                                <tr>
+                                                    <td>{{ shared_expense.expense.date }}</td>
+                                                    <td>
+                                                        {% if shared_expense.expense.paid_by.user != data.participant.user %}
+                                                            {% if shared_expense.expense.paid_by %}
+                                                                <strong>{{ shared_expense.expense.paid_by.user.get_full_name|default:shared_expense.expense.paid_by.user.username }}</strong>
+                                                            {% else %}
+                                                                <strong>{% trans "Group Fund" %}</strong>
+                                                            {% endif %}
+                                                        {% else %}
+                                                            {% trans "You" %}
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>
+                                                        {{ shared_expense.expense.get_category_display }}: 
+                                                        {{ shared_expense.expense.description|default:"-" }}
+                                                    </td>
+                                                    <td>${{ shared_expense.expense.amount|floatformat:2 }}</td>
+                                                    <td>${{ shared_expense.amount|floatformat:2 }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                        <tfoot>
+                                            <tr class="table-light">
+                                                <td colspan="4" class="text-end"><strong>{% trans "Total you owe others:" %}</strong></td>
+                                                <td><strong>${{ data.owes_others|floatformat:2 }}</strong></td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            {% else %}
+                                <p class="text-muted">{% trans "You don't owe anything to others" %}</p>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
             </div>
         {% endfor %}
     </div>
 
-    <!-- Expense List -->
-    <h3 class="section-heading">{% trans "Expenses" %}</h3>
-    {% if expenses %}
-        <div class="table-responsive">
-            <table class="table expense-table">
-                <thead>
-                    <tr>
-                        <th>{% trans "Date" %}</th>
-                        <th>{% trans "Paid By" %}</th>
-                        <th>{% trans "Category" %}</th>
-                        <th>{% trans "Amount" %}</th>
-                        <th>{% trans "Shared With" %}</th>
-                        <th>{% trans "Description" %}</th>
-                        {% if trip.user == request.user %}
-                            <th>{% trans "Actions" %}</th>
-                        {% endif %}
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for expense in expenses %}
-                    <tr>
-                        <td>{{ expense.date }}</td>
-                        <td>{{ expense.paid_by.user.get_full_name|default:expense.paid_by.user.username }}</td>
-                        <td>{{ expense.get_category_display }}</td>
-                        <td>${{ expense.amount }}</td>
-                        <td>
-                            {% if expense.is_shared %}
-                                {% if expense.shares.count == participants.count %}
-                                    <span class="expense-type-shared">{% trans "Everyone" %}</span>
-                                {% else %}
-                                    <div>
-                                        {% for share in expense.shares.all %}
-                                            <span class="expense-share-badge">
-                                                {{ share.participant.user.get_full_name|default:share.participant.user.username }}
-                                            </span>
-                                        {% endfor %}
-                                    </div>
+    <!-- All Expenses Section -->
+    <h3 class="section-heading">{% trans "All Expenses" %}</h3>
+    <ul class="nav nav-tabs mb-3" id="expensesTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="all-expenses-tab" data-bs-toggle="tab" 
+                    data-bs-target="#all-expenses" type="button" role="tab" aria-controls="all-expenses" 
+                    aria-selected="true">{% trans "All Expenses" %}</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="group-expenses-tab" data-bs-toggle="tab" 
+                    data-bs-target="#group-expenses-tab-content" type="button" role="tab" 
+                    aria-controls="group-expenses" aria-selected="false">{% trans "Group Fund Expenses" %}</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="individual-expenses-tab" data-bs-toggle="tab" 
+                    data-bs-target="#individual-expenses-tab-content" type="button" role="tab" 
+                    aria-controls="individual-expenses" aria-selected="false">{% trans "Individual Expenses" %}</button>
+        </li>
+    </ul>
+    
+    <div class="tab-content" id="expensesTabsContent">
+        <!-- All Expenses Tab -->
+        <div class="tab-pane fade show active" id="all-expenses" role="tabpanel" aria-labelledby="all-expenses-tab">
+            {% if expenses %}
+                <div class="table-responsive">
+                    <table class="table expense-table">
+                        <thead>
+                            <tr>
+                                <th>{% trans "Date" %}</th>
+                                <th>{% trans "Type" %}</th>
+                                <th>{% trans "Paid By" %}</th>
+                                <th>{% trans "Category" %}</th>
+                                <th>{% trans "Amount" %}</th>
+                                <th>{% trans "Shared With" %}</th>
+                                <th>{% trans "Description" %}</th>
+                                {% if trip.user == request.user %}
+                                    <th>{% trans "Actions" %}</th>
                                 {% endif %}
-                            {% else %}
-                                <span class="expense-type-individual">{% trans "Individual" %}</span>
-                            {% endif %}
-                        </td>
-                        <td>{{ expense.description }}</td>
-                        {% if trip.user == request.user %}
-                        <td>
-                            <div class="btn-group btn-group-sm">
-                                <a href="{% url 'edit_expense' trip.id expense.id %}" class="btn btn-action edit" title="{% trans 'Edit' %}">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <a href="{% url 'delete_expense' trip.id expense.id %}" class="btn btn-action delete" title="{% trans 'Delete' %}">
-                                    <i class="fas fa-trash-alt"></i>
-                                </a>
-                            </div>
-                        </td>
-                        {% endif %}
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for expense in expenses %}
+                            <tr>
+                                <td>{{ expense.date }}</td>
+                                <td>
+                                    {% if expense.paid_from_group_fund %}
+                                        <span class="expense-type-indicator expense-type-group">{% trans "Group" %}</span>
+                                    {% else %}
+                                        <span class="expense-type-indicator expense-type-individual">{% trans "Individual" %}</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if expense.paid_from_group_fund %}
+                                        {% trans "Group Fund" %}
+                                    {% else %}
+                                        {{ expense.paid_by.user.get_full_name|default:expense.paid_by.user.username }}
+                                    {% endif %}
+                                </td>
+                                <td>{{ expense.get_category_display }}</td>
+                                <td>${{ expense.amount|floatformat:2 }}</td>
+                                <td>
+                                    {% if expense.is_shared %}
+                                        {% with expense_shares=expense.shares.all %}
+                                            {% if expense_shares %}
+                                                {% if expense_shares.count == participants.count %}
+                                                    <span class="badge bg-info">{% trans "All Participants" %}</span>
+                                                {% else %}
+                                                    <div>
+                                                        {% for share in expense_shares %}
+                                                            <span class="badge bg-light text-dark me-1">
+                                                                {{ share.participant.user.get_full_name|default:share.participant.user.username }}
+                                                                {% if share.participant.shares > 1 %}({{ share.participant.shares }}){% endif %}
+                                                            </span>
+                                                        {% endfor %}
+                                                    </div>
+                                                {% endif %}
+                                            {% else %}
+                                                <span class="badge bg-info">{% trans "All Participants" %}</span>
+                                            {% endif %}
+                                        {% endwith %}
+                                    {% else %}
+                                        <span class="badge bg-secondary">{% trans "Not Shared" %}</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ expense.description|default:"-" }}</td>
+                                {% if trip.user == request.user %}
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <a href="{% url 'edit_expense' trip.id expense.id %}" class="btn btn-action edit" title="{% trans 'Edit' %}">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a href="{% url 'delete_expense' trip.id expense.id %}" class="btn btn-action delete" title="{% trans 'Delete' %}">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="text-center py-4 text-muted">
+                    <p>{% trans "No expenses found for this trip." %}</p>
+                </div>
+            {% endif %}
         </div>
-    {% else %}
-        <div class="empty-state">
-            <i class="fas fa-receipt"></i>
-            <p>{% trans "No expenses found for this trip." %}</p>
+        
+        <!-- Group Fund Expenses Tab -->
+        <div class="tab-pane fade" id="group-expenses-tab-content" role="tabpanel" aria-labelledby="group-expenses-tab">
+            {% if group_expenses %}
+                <div class="table-responsive">
+                    <table class="table expense-table">
+                        <thead>
+                            <tr>
+                                <th>{% trans "Date" %}</th>
+                                <th>{% trans "Category" %}</th>
+                                <th>{% trans "Amount" %}</th>
+                                <th>{% trans "Shared With" %}</th>
+                                <th>{% trans "Description" %}</th>
+                                {% if trip.user == request.user %}
+                                    <th>{% trans "Actions" %}</th>
+                                {% endif %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for expense in group_expenses %}
+                            <tr>
+                                <td>{{ expense.date }}</td>
+                                <td>{{ expense.get_category_display }}</td>
+                                <td>${{ expense.amount|floatformat:2 }}</td>
+                                <td>
+                                    {% if expense.is_shared %}
+                                        {% with expense_shares=expense.shares.all %}
+                                            {% if expense_shares %}
+                                                {% if expense_shares.count == participants.count %}
+                                                    <span class="badge bg-info">{% trans "All Participants" %}</span>
+                                                {% else %}
+                                                    <div>
+                                                        {% for share in expense_shares %}
+                                                            <span class="badge bg-light text-dark me-1">
+                                                                {{ share.participant.user.get_full_name|default:share.participant.user.username }}
+                                                                {% if share.participant.shares > 1 %}({{ share.participant.shares }}){% endif %}
+                                                            </span>
+                                                        {% endfor %}
+                                                    </div>
+                                                {% endif %}
+                                            {% else %}
+                                                <span class="badge bg-info">{% trans "All Participants" %}</span>
+                                            {% endif %}
+                                        {% endwith %}
+                                    {% else %}
+                                        <span class="badge bg-secondary">{% trans "Not Shared" %}</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ expense.description|default:"-" }}</td>
+                                {% if trip.user == request.user %}
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <a href="{% url 'edit_expense' trip.id expense.id %}" class="btn btn-action edit" title="{% trans 'Edit' %}">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a href="{% url 'delete_expense' trip.id expense.id %}" class="btn btn-action delete" title="{% trans 'Delete' %}">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="text-center py-4 text-muted">
+                    <p>{% trans "No group fund expenses found for this trip." %}</p>
+                </div>
+            {% endif %}
         </div>
-    {% endif %}
+        
+        <!-- Individual Expenses Tab -->
+        <div class="tab-pane fade" id="individual-expenses-tab-content" role="tabpanel" aria-labelledby="individual-expenses-tab">
+            {% if individual_expenses %}
+                <div class="table-responsive">
+                    <table class="table expense-table">
+                        <thead>
+                            <tr>
+                                <th>{% trans "Date" %}</th>
+                                <th>{% trans "Paid By" %}</th>
+                                <th>{% trans "Category" %}</th>
+                                <th>{% trans "Amount" %}</th>
+                                <th>{% trans "Shared With" %}</th>
+                                <th>{% trans "Description" %}</th>
+                                {% if trip.user == request.user %}
+                                    <th>{% trans "Actions" %}</th>
+                                {% endif %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for expense in individual_expenses %}
+                            <tr>
+                                <td>{{ expense.date }}</td>
+                                <td>{{ expense.paid_by.user.get_full_name|default:expense.paid_by.user.username }}</td>
+                                <td>{{ expense.get_category_display }}</td>
+                                <td>${{ expense.amount|floatformat:2 }}</td>
+                                <td>
+                                    {% if expense.is_shared %}
+                                        {% with expense_shares=expense.shares.all %}
+                                            {% if expense_shares %}
+                                                {% if expense_shares.count == participants.count %}
+                                                    <span class="badge bg-info">{% trans "All Participants" %}</span>
+                                                {% else %}
+                                                    <div>
+                                                        {% for share in expense_shares %}
+                                                            <span class="badge bg-light text-dark me-1">
+                                                                {{ share.participant.user.get_full_name|default:share.participant.user.username }}
+                                                                {% if share.participant.shares > 1 %}({{ share.participant.shares }}){% endif %}
+                                                            </span>
+                                                        {% endfor %}
+                                                    </div>
+                                                {% endif %}
+                                            {% else %}
+                                                <span class="badge bg-info">{% trans "All Participants" %}</span>
+                                            {% endif %}
+                                        {% endwith %}
+                                    {% else %}
+                                        <span class="badge bg-secondary">{% trans "Not Shared" %}</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ expense.description|default:"-" }}</td>
+                                {% if trip.user == request.user %}
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <a href="{% url 'edit_expense' trip.id expense.id %}" class="btn btn-action edit" title="{% trans 'Edit' %}">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a href="{% url 'delete_expense' trip.id expense.id %}" class="btn btn-action delete" title="{% trans 'Delete' %}">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="text-center py-4 text-muted">
+                    <p>{% trans "No individual expenses found for this trip." %}</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
 
     <!-- Action buttons -->
     <div class="d-flex justify-content-center gap-3 mt-4 mb-5">
-        <a href="{% url 'add_group_expense' trip.id %}" class="btn btn-add">
+        <a href="{% url 'add_expense' trip.id %}?type=group" class="btn btn-add">
             <i class="fas fa-plus me-2"></i>{% trans "Add Expense" %}
         </a>
         <a href="{% url 'add_contribution' trip.id %}" class="btn btn-add">
@@ -501,10 +1056,24 @@
 
 {% block additional_scripts %}
 <script>
-    // If using Bootstrap 5, initialize tooltips
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[title]'))
-    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-      return new bootstrap.Tooltip(tooltipTriggerEl)
-    })
+    // Initialize Bootstrap tooltips
+    document.addEventListener('DOMContentLoaded', function() {
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        });
+        
+        // Get expense type from URL query param and show appropriate tab
+        const urlParams = new URLSearchParams(window.location.search);
+        const expenseType = urlParams.get('tab');
+        
+        if (expenseType === 'group') {
+            const groupExpensesTab = document.getElementById('group-expenses-tab');
+            new bootstrap.Tab(groupExpensesTab).show();
+        } else if (expenseType === 'individual') {
+            const individualExpensesTab = document.getElementById('individual-expenses-tab');
+            new bootstrap.Tab(individualExpensesTab).show();
+        }
+    });
 </script>
 {% endblock %}

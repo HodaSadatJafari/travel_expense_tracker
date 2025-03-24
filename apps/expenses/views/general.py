@@ -106,3 +106,89 @@ def delete_expense(request, trip_id, expense_id):
             return redirect("view_solo_trip", trip_id=trip.id)
 
     return render(request, "delete_expense.html", {"trip": trip, "expense": expense})
+
+
+@login_required
+def add_expense(request, trip_id):
+    trip = get_object_or_404(Trip, id=trip_id)
+    participants = TripParticipant.objects.filter(trip=trip)
+
+    # Check permission
+    if (
+        trip.user != request.user
+        and not participants.filter(user=request.user).exists()
+    ):
+        messages.error(
+            request, _("You don't have permission to add expenses to this trip.")
+        )
+        return redirect("dashboard")
+
+    # Pre-set expense type from URL param
+    expense_type = request.GET.get("type", "individual")
+
+    if request.method == "POST":
+        # Get form data
+        payment_source = request.POST.get("payment_source")
+        paid_from_group_fund = payment_source == "group"
+
+        category = request.POST.get("category")
+        amount = request.POST.get("amount")
+        description = request.POST.get("description", "")
+        date = request.POST.get("date")
+        is_shared = request.POST.get("is_shared") == "on"
+
+        # Create expense
+        expense = Expense.objects.create(
+            trip=trip,
+            paid_from_group_fund=paid_from_group_fund,
+            paid_by=(
+                None
+                if paid_from_group_fund
+                else TripParticipant.objects.get(id=request.POST.get("paid_by"))
+            ),
+            category=category,
+            amount=amount,
+            description=description,
+            date=date,
+            is_shared=is_shared,
+        )
+
+        # Handle shares
+        if is_shared:
+            shared_with_ids = request.POST.getlist("shared_with", [])
+
+            # If no specific participants are selected, share with all participants
+            if not shared_with_ids:
+                total_shares = sum(p.shares for p in participants)
+                share_per_unit = float(expense.amount) / total_shares
+
+                # Create expense shares for all participants
+                for participant in participants:
+                    ExpenseShare.objects.create(
+                        expense=expense,
+                        participant=participant,
+                        amount=share_per_unit * participant.shares,
+                    )
+            else:
+                selected_participants = participants.filter(id__in=shared_with_ids)
+                total_shares = sum(p.shares for p in selected_participants)
+                share_per_unit = float(expense.amount) / total_shares
+
+                # Create expense shares for selected participants
+                for participant in selected_participants:
+                    ExpenseShare.objects.create(
+                        expense=expense,
+                        participant=participant,
+                        amount=share_per_unit * participant.shares,
+                    )
+
+        messages.success(request, _("Expense added successfully."))
+        return redirect("view_group_trip", trip_id=trip.id)
+
+    context = {
+        "trip": trip,
+        "participants": participants,
+        "default_expense_type": expense_type,
+    }
+
+    return render(request, "add_expense.html", context)
