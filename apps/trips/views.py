@@ -16,7 +16,7 @@ def dashboard(request):
     return render(request, "dashboard.html", {"trips": user_trips})
 
 
-# @login_required
+@login_required
 def add_trip(request):
     if request.method == "POST":
         form = TripForm(request.POST)
@@ -33,7 +33,7 @@ def add_trip(request):
     return render(request, "add_trip.html", {"form": form})
 
 
-# @login_required
+@login_required
 def view_trip(request, trip_id):
     trip = Trip.objects.get(id=trip_id, user=request.user)
     expenses = trip.expenses.all().order_by("-date")  # Retrieve expenses for this trip
