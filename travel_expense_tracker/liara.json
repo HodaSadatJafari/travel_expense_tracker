@@ -2,7 +2,7 @@
     "disks": [
         {
             "name": "database",
-            "mountTo": "db.sqlite3"
+            "mountTo": "database"
         }
     ],
     "app": "expense-tracker"
