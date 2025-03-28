@@ -29,6 +29,7 @@ urlpatterns = [
 urlpatterns += i18n_patterns(
     path("", include("apps.core.urls")),
     path("expenses/", include("apps.expenses.urls.general")),
+    path("expenses/", include("apps.expenses.urls.solo")),
     path("expenses/", include("apps.expenses.urls.group")),
     path("", include("apps.trips.urls.dashboard")),
     path("trips/", include("apps.trips.urls.general")),
