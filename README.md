@@ -22,3 +22,9 @@ A bilingual (English & Persian) Django web application to help users:
    ```bash
    git clone https://github.com/HodaSadatJafari/travel_expense_tracker.git
    cd travel-expense-tracker
+
+
+## Branches
+1. **Main**: Contains latest changes
+2. **Phase1**: Basic implementation with OpenAI models (GPT-4o, o1, o3-mini, o3-mini-high)
+3. **Phase2**: More sophisticated implementation with Claude 3.7. Contains solo trip expense tracker only.
