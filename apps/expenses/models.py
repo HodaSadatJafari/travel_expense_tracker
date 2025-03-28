@@ -33,7 +33,7 @@ CATEGORY_CHOICES = [
 
 class Expense(models.Model):
     # Existing fields
-    trip = models.ForeignKey(Trip, on_delete=models.CASCADE)
+    trip = models.ForeignKey(Trip, related_name="expenses", on_delete=models.CASCADE)
     paid_by = models.ForeignKey(
         TripParticipant, on_delete=models.CASCADE, null=True, blank=True
     )
