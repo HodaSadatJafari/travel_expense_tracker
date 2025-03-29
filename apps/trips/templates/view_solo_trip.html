@@ -3,9 +3,10 @@
 
 {% block additional_styles %}
 <style>
+    /* Mobile-first base styles */
     .trip-header {
-        padding: 2.5rem 0;
-        margin-bottom: 2rem;
+        padding: 1.5rem 0;
+        margin-bottom: 1.5rem;
         background-color: var(--light-color);
         border-radius: var(--radius);
     }
@@ -17,14 +18,15 @@
         margin-bottom: 1rem;
         position: relative;
         display: inline-block;
+        font-size: 1.75rem;
     }
     
     .trip-title:after {
         content: '';
         position: absolute;
-        bottom: -8px;
+        bottom: -6px;
         left: 0;
-        width: 60px;
+        width: 40px;
         height: 3px;
         background-color: var(--primary-color);
         border-radius: 2px;
@@ -32,25 +34,27 @@
     
     .trip-dates {
         background-color: white;
-        padding: 1.5rem;
+        padding: 1.25rem;
         border-radius: var(--radius-sm);
         box-shadow: var(--shadow);
-        margin-bottom: 2.5rem;
+        margin-bottom: 1.5rem;
         border-left: 4px solid var(--primary-color);
     }
     
     .section-heading {
         font-family: 'Playfair Display', serif;
         font-weight: 700;
-        margin-bottom: 1.5rem;
+        margin-bottom: 1.25rem;
         color: var(--dark-color);
+        font-size: 1.5rem;
     }
     
     .expenses-table {
         border-radius: var(--radius-sm);
         overflow: hidden;
         box-shadow: var(--shadow);
-        margin-bottom: 3rem;
+        margin-bottom: 2rem;
+        font-size: 0.875rem;
     }
     
     .expenses-table thead {
@@ -60,11 +64,12 @@
     
     .expenses-table th {
         font-weight: 600;
-        padding: 1rem;
+        padding: 0.75rem;
+        white-space: nowrap;
     }
     
     .expenses-table td {
-        padding: 1rem;
+        padding: 0.75rem;
         vertical-align: middle;
     }
     
@@ -76,13 +81,14 @@
         background-color: white;
         border-radius: var(--radius-sm);
         box-shadow: var(--shadow);
-        transition: all 0.3s ease;
+        transition: all 0.2s ease;
         height: 100%;
         border-top: 4px solid transparent;
+        padding: 1.25rem;
     }
     
     .category-card:hover {
-        transform: translateY(-5px);
+        transform: translateY(-3px);
         box-shadow: var(--shadow-lg);
     }
     
@@ -106,10 +112,11 @@
         font-weight: 600;
         color: var(--dark-color);
         margin-bottom: 0.5rem;
+        font-size: 1rem;
     }
     
     .category-amount {
-        font-size: 1.5rem;
+        font-size: 1.25rem;
         font-weight: 700;
         color: var(--dark-color);
     }
@@ -118,67 +125,75 @@
         background-color: var(--primary-color);
         color: var(--dark-color);
         border: none;
-        padding: 0.75rem 1.5rem;
+        padding: 0.75rem 1.25rem;
         font-weight: 600;
         border-radius: var(--radius-sm);
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 14px rgba(148, 210, 189, 0.4);
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 4px rgba(148, 210, 189, 0.4);
+        width: 100%;
+        max-width: 300px;
+        font-size: 0.875rem;
     }
     
     .btn-add-expense:hover {
         background-color: var(--primary-dark);
         transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(148, 210, 189, 0.5);
+        box-shadow: 0 4px 8px rgba(148, 210, 189, 0.5);
     }
     
     .no-expenses {
         background-color: var(--light-color);
-        padding: 2rem;
+        padding: 1.5rem;
         border-radius: var(--radius-sm);
         text-align: center;
         color: var(--light-text);
-        margin-bottom: 2rem;
+        margin-bottom: 1.5rem;
+        font-size: 0.875rem;
     }
     
     /* Total expense card styling */
     .total-expense-card {
         background: linear-gradient(135deg, #e0f2f1 0%, #c8e6e3 100%);
         border-radius: var(--radius);
-        padding: 2rem;
-        margin-bottom: 3rem;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
         box-shadow: var(--shadow);
-        border-left: 5px solid var(--primary-color);
+        border-left: 4px solid var(--primary-color);
     }
     
     .total-expense-label {
-        font-size: 1.1rem;
+        font-size: 1rem;
         color: var(--dark-color);
         margin-bottom: 0.5rem;
         font-weight: 500;
     }
     
     .total-expense-amount {
-        font-size: 2.5rem;
+        font-size: 2rem;
         font-weight: 800;
         color: var(--dark-color);
         font-family: 'Playfair Display', serif;
     }
     
-    /* New styles for trip management */
+    /* Trip management buttons */
     .btn-toolbar {
         background-color: white;
         padding: 0.5rem;
         border-radius: var(--radius);
         box-shadow: var(--shadow-sm);
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
     }
     
     .btn-tool {
         padding: 0.5rem 1rem;
         border-radius: var(--radius-sm);
         font-weight: 600;
-        font-size: 0.9rem;
+        font-size: 0.875rem;
         transition: all 0.2s ease;
-        margin: 0 0.25rem;
+        width: 100%;
+        text-align: center;
     }
     
     .btn-tool.edit {
@@ -204,6 +219,7 @@
         margin: 0 0.125rem;
         border-radius: var(--radius-sm);
         transition: all 0.2s ease;
+        font-size: 0.75rem;
     }
     
     .btn-action.edit {
@@ -224,6 +240,190 @@
     .btn-action.delete:hover {
         background-color: #dc3545;
         color: white;
+    }
+
+    /* Alert styles */
+    .alert {
+        font-size: 0.875rem;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        border-radius: var(--radius-sm);
+    }
+
+    /* Tablet breakpoint */
+    @media (min-width: 768px) {
+        .trip-header {
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .trip-title {
+            font-size: 2rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .trip-title:after {
+            bottom: -8px;
+            width: 50px;
+        }
+
+        .trip-dates {
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-heading {
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .expenses-table {
+            font-size: 1rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .expenses-table th,
+        .expenses-table td {
+            padding: 1rem;
+        }
+
+        .category-card {
+            padding: 1.5rem;
+        }
+
+        .category-title {
+            font-size: 1.125rem;
+        }
+
+        .category-amount {
+            font-size: 1.5rem;
+        }
+
+        .btn-add-expense {
+            padding: 0.875rem 1.5rem;
+            font-size: 1rem;
+            width: auto;
+        }
+
+        .no-expenses {
+            padding: 2rem;
+            font-size: 1rem;
+        }
+
+        .total-expense-card {
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .total-expense-label {
+            font-size: 1.1rem;
+        }
+
+        .total-expense-amount {
+            font-size: 2.5rem;
+        }
+
+        .btn-toolbar {
+            flex-direction: row;
+            gap: 0.25rem;
+        }
+
+        .btn-tool {
+            width: auto;
+            font-size: 0.9rem;
+        }
+
+        .btn-action {
+            font-size: 0.875rem;
+        }
+
+        .alert {
+            font-size: 1rem;
+            padding: 1.25rem;
+        }
+    }
+
+    /* Desktop breakpoint */
+    @media (min-width: 1024px) {
+        .trip-header {
+            padding: 2.5rem 0;
+        }
+
+        .trip-title {
+            font-size: 2.25rem;
+        }
+
+        .btn-add-expense {
+            box-shadow: 0 4px 14px rgba(148, 210, 189, 0.4);
+        }
+
+        .btn-add-expense:hover {
+            box-shadow: 0 6px 20px rgba(148, 210, 189, 0.5);
+        }
+    }
+
+    /* Touch feedback */
+    @media (hover: none) {
+        .btn-add-expense:active,
+        .btn-tool:active,
+        .btn-action:active {
+            transform: scale(0.98);
+        }
+
+        .category-card:active {
+            transform: translateY(-1px);
+        }
+    }
+
+    /* High contrast mode */
+    @media (prefers-contrast: high) {
+        .trip-header,
+        .trip-dates,
+        .category-card,
+        .total-expense-card {
+            border: 1px solid var(--dark-color);
+        }
+
+        .expenses-table {
+            border: 1px solid var(--dark-color);
+        }
+    }
+
+    /* RTL Support */
+    [dir="rtl"] .trip-title:after {
+        left: auto;
+        right: 0;
+    }
+
+    [dir="rtl"] .trip-dates {
+        border-left: none;
+        border-right: 4px solid var(--primary-color);
+    }
+
+    [dir="rtl"] .total-expense-card {
+        border-left: none;
+        border-right: 4px solid var(--primary-color);
+    }
+
+    [dir="rtl"] .category-card {
+        border-left: 4px solid transparent;
+        border-right: none;
+    }
+
+    [dir="rtl"] .category-card.teal {
+        border-left-color: var(--primary-color);
+    }
+
+    [dir="rtl"] .category-card.lavender {
+        border-left-color: var(--secondary-color);
+    }
+
+    [dir="rtl"] .category-card.yellow {
+        border-left-color: var(--accent-color);
+    }
+
+    [dir="rtl"] .category-card.pink {
+        border-left-color: #ddbea9;
     }
 </style>
 {% endblock %}

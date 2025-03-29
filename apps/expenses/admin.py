@@ -1,5 +1,6 @@
 from django.contrib import admin
-from apps.expenses.models import ExpenseShare, Expense
+
+from apps.expenses.models import Expense, ExpenseShare
 
 
 class ExpenseShareAdmin(admin.ModelAdmin):

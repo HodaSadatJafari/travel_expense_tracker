@@ -3,14 +3,20 @@
 
 {% block additional_styles %}
 <style>
+    /* Mobile first approach */
     .auth-section {
-        padding: 5rem 0;
+        padding: 2rem 1rem;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     
     .auth-container {
+        width: 100%;
         max-width: 450px;
         margin: 0 auto;
-        padding: 3rem;
+        padding: 2rem 1.5rem;
         border-radius: var(--radius-lg);
         background-color: var(--background);
         box-shadow: var(--shadow-xl);
@@ -29,7 +35,7 @@
     }
     
     .auth-header {
-        margin-bottom: 2.5rem;
+        margin-bottom: 2rem;
         text-align: center;
         position: relative;
     }
@@ -37,20 +43,23 @@
     .auth-header h2 {
         font-weight: 800;
         color: var(--dark-color);
-        font-size: 2.5rem;
+        font-size: 2rem;
         margin-bottom: 0.5rem;
+        word-wrap: break-word;
     }
     
     .auth-subheader {
         color: var(--light-text);
-        font-size: 1.1rem;
+        font-size: 1rem;
+        line-height: 1.5;
     }
     
     .form-control {
-        padding: 1rem;
+        width: 100%;
+        padding: 0.875rem;
         border-radius: var(--radius-sm);
         border: 1px solid var(--border-color);
-        margin-bottom: 1rem;
+        margin-bottom: 0.5rem;
         transition: all 0.3s ease;
         font-size: 1rem;
     }
@@ -59,17 +68,26 @@
         border-color: var(--secondary-color);
         box-shadow: 0 0 0 0.25rem rgba(189, 178, 255, 0.25);
     }
+
+    .form-control.is-invalid {
+        border-color: #dc2626;
+    }
+
+    .form-control.is-invalid:focus {
+        box-shadow: 0 0 0 0.25rem rgba(220, 38, 38, 0.25);
+    }
     
     .btn-login {
+        width: 100%;
         background: linear-gradient(to right, var(--secondary-color), #a99eff);
         border: none;
-        padding: 1rem;
+        padding: 0.875rem;
         font-weight: 600;
         color: var(--dark-color);
         border-radius: var(--radius-sm);
         margin-top: 1.5rem;
         transition: all 0.3s ease;
-        font-size: 1.1rem;
+        font-size: 1rem;
         box-shadow: 0 4px 14px rgba(189, 178, 255, 0.4);
     }
     
@@ -79,9 +97,9 @@
     }
     
     .signup-link {
-        margin-top: 2rem;
+        margin-top: 1.5rem;
         text-align: center;
-        padding-top: 2rem;
+        padding-top: 1.5rem;
         border-top: 1px solid var(--border-color);
     }
     
@@ -97,24 +115,98 @@
     }
     
     .form-group {
-        margin-bottom: 1.75rem;
+        margin-bottom: 1.5rem;
     }
     
     label {
         font-weight: 600;
-        margin-bottom: 0.75rem;
+        margin-bottom: 0.5rem;
         color: var(--text-color);
         display: block;
+        font-size: 0.875rem;
     }
     
     .alert-danger {
         background-color: #fee2e2;
-        color: #ef4444;
+        color: #dc2626;
         border: none;
-        padding: 1rem;
+        padding: 0.875rem;
         border-radius: var(--radius-sm);
         margin-bottom: 1.5rem;
-        border-left: 4px solid #ef4444;
+        border-left: 4px solid #dc2626;
+        font-size: 0.875rem;
+        word-wrap: break-word;
+    }
+
+    .password-input-wrapper {
+        position: relative;
+    }
+    
+    .toggle-password {
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        width: 20px;
+        height: 20px;
+        background-repeat: no-repeat;
+        background-position: center;
+        opacity: 0.6;
+        transition: opacity 0.3s ease;
+    }
+    
+    .toggle-password:hover {
+        opacity: 1;
+    }
+
+    .toggle-password.show {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z'%3E%3C/path%3E%3Ccircle cx='12' cy='12' r='3'%3E%3C/circle%3E%3C/svg%3E");
+    }
+
+    .toggle-password.hide {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24'%3E%3C/path%3E%3Cline x1='1' y1='1' x2='23' y2='23'%3E%3C/line%3E%3C/svg%3E");
+    }
+
+    /* Tablet and up */
+    @media (min-width: 768px) {
+        .auth-section {
+            padding: 5rem 2rem;
+        }
+
+        .auth-container {
+            padding: 3rem;
+        }
+
+        .auth-header h2 {
+            font-size: 2.5rem;
+        }
+
+        .auth-subheader {
+            font-size: 1.1rem;
+        }
+
+        .form-control {
+            padding: 1rem;
+            font-size: 1rem;
+        }
+
+        .btn-login {
+            padding: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .toggle-password {
+            width: 24px;
+            height: 24px;
+        }
+    }
+
+    /* Desktop and up */
+    @media (min-width: 1024px) {
+        .auth-container {
+            padding: 3.5rem;
+        }
     }
 </style>
 {% endblock %}
@@ -132,18 +224,21 @@
             
             {% if form.errors %}
             <div class="alert alert-danger" role="alert">
-                {% trans "Your username and password didn't match. Please try again." %}
+                {% trans "Your email and password didn't match. Please try again." %}
             </div>
             {% endif %}
             
             <div class="form-group">
-                <label for="id_username">{% trans "Username" %}</label>
-                <input type="text" name="username" id="id_username" class="form-control" required>
+                <label for="id_username">{% trans "Email Address" %}</label>
+                <input type="email" name="username" id="id_username" class="form-control" required>
             </div>
             
             <div class="form-group">
                 <label for="id_password">{% trans "Password" %}</label>
-                <input type="password" name="password" id="id_password" class="form-control" required>
+                <div class="password-input-wrapper">
+                    <input type="password" name="password" id="id_password" class="form-control" required>
+                    <span class="toggle-password show" onclick="togglePassword('id_password')"></span>
+                </div>
             </div>
             
             <button type="submit" class="btn btn-login btn-block w-100">{% trans "Log In" %}</button>
@@ -154,4 +249,21 @@
         </div>
     </div>
 </section>
+
+<script>
+function togglePassword(inputId) {
+    const passwordInput = document.getElementById(inputId);
+    const toggleButton = passwordInput.nextElementSibling;
+    
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        toggleButton.classList.remove('show');
+        toggleButton.classList.add('hide');
+    } else {
+        passwordInput.type = 'password';
+        toggleButton.classList.remove('hide');
+        toggleButton.classList.add('show');
+    }
+}
+</script>
 {% endblock %}

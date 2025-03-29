@@ -2,22 +2,17 @@ from decimal import Decimal
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from apps.core.models.users import CustomUser
+from django.db.models import F, Q, Sum
 from django.http import HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect, render
+from django.utils.translation import gettext as _
 from django.utils.translation import gettext_lazy as _
-from django.contrib.auth.models import User
 
 from apps.core.utils import get_or_create_user
 from apps.expenses.models import Contribution, Expense, ExpenseShare
 from apps.trips.forms.group import GroupTripForm, ParticipantForm
 from apps.trips.models import Trip, TripParticipant
-
-
-from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required
-from django.db.models import Sum, F, Q
-from django.contrib import messages
-from django.utils.translation import gettext as _
 
 
 @login_required
@@ -149,7 +144,7 @@ def edit_participant(request, trip_id, participant_id):
         email = request.POST.get("email")
         if email and email != user.email:
             # Check if email is already used by another user
-            if User.objects.filter(email=email).exclude(id=user.id).exists():
+            if CustomUser.objects.filter(email=email).exclude(id=user.id).exists():
                 messages.error(
                     request, _("This email is already in use by another user.")
                 )

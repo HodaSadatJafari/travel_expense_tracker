@@ -1,6 +1,7 @@
 from django.urls import path
 
-from apps.expenses.views.general import delete_expense, edit_expense, add_expense
+from apps.expenses.views.general import (add_expense, delete_expense,
+                                         edit_expense)
 
 urlpatterns = [
     path(

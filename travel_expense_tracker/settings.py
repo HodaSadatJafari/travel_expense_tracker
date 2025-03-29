@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     "apps.expenses",
 ]
 
+AUTH_USER_MODEL = "core.CustomUser"
+
 MIDDLEWARE = [
     "django.middleware.locale.LocaleMiddleware",
     "django.middleware.security.SecurityMiddleware",
