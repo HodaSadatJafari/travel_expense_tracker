@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from apps.core.models.users import CustomUser
 
 
 def get_or_create_user(first_name=None, last_name=None, email=None):
@@ -9,9 +9,9 @@ def get_or_create_user(first_name=None, last_name=None, email=None):
     # If email is provided, try to find existing user by email
     if email:
         try:
-            user = User.objects.get(email=email)
+            user = CustomUser.objects.get(email=email)
             return user, False
-        except User.DoesNotExist:
+        except CustomUser.DoesNotExist:
             pass  # Continue with user creation
 
     # Generate base username
@@ -30,7 +30,7 @@ def get_or_create_user(first_name=None, last_name=None, email=None):
     # Ensure username is unique
     username = base_username
     counter = 1
-    while User.objects.filter(username=username).exists():
+    while CustomUser.objects.filter(username=username).exists():
         username = f"{base_username}_{counter}"
         counter += 1
 
@@ -44,7 +44,7 @@ def get_or_create_user(first_name=None, last_name=None, email=None):
         email = f"{username}@placeholder.traveler"
 
     # Create the user
-    user = User.objects.create_user(
+    user = CustomUser.objects.create_user(
         username=username,
         email=email,
         password=temp_password,  # User should reset this

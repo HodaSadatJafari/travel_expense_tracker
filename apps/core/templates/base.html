@@ -15,6 +15,7 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
     
     <style>
         :root {
@@ -225,6 +226,57 @@
                 --radius: 0.75rem;
             }
         }
+        
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .user-avatar:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .profile-dropdown {
+            min-width: 250px;
+            padding: 0.5rem 0;
+        }
+
+        .profile-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .profile-header h6 {
+            margin: 0;
+            color: var(--dark-color);
+            font-weight: 600;
+        }
+
+        .profile-header p {
+            margin: 0;
+            color: var(--light-text);
+            font-size: 0.875rem;
+        }
+
+        .profile-dropdown .dropdown-item i {
+            margin-right: 0.5rem;
+            color: var(--light-text);
+        }
+
+        html[dir="rtl"] .profile-dropdown .dropdown-item i {
+            margin-right: 0;
+            margin-left: 0.5rem;
+        }
     </style>
     {% block additional_styles %}{% endblock %}
 </head>
@@ -240,6 +292,30 @@
                     {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'dashboard' %}">{% translate "Dashboard" %}</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <div class="user-avatar me-2">
+                                {{ user.username|make_list|first|upper }}
+                            </div>
+                        </a>
+                        <ul class="dropdown-menu profile-dropdown" aria-labelledby="userDropdown">
+                            <div class="profile-header">
+                                <h6>{{ user.get_full_name|default:user.username }}</h6>
+                                <p>{{ user.email }}</p>
+                            </div>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-person"></i>{% translate "Profile" %}</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-gear"></i>{% translate "Settings" %}</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <form method="post" action="{% url 'logout' %}" class="d-inline">
+                                    {% csrf_token %}
+                                    <button type="submit" class="dropdown-item border-0 bg-transparent w-100 text-start">
+                                        <i class="bi bi-box-arrow-right"></i>{% translate "Logout" %}
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
                     </li>
                     {% else %}
                     <li class="nav-item">

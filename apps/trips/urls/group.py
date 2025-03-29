@@ -1,12 +1,8 @@
 from django.urls import path
 
-from apps.trips.views.group import (
-    add_group_trip,
-    edit_participant,
-    manage_participants,
-    remove_participant,
-    view_group_trip,
-)
+from apps.trips.views.group import (add_group_trip, edit_participant,
+                                    manage_participants, remove_participant,
+                                    view_group_trip)
 
 urlpatterns = [
     path(

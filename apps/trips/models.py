@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from apps.core.models.users import CustomUser
 from django.db import models
 
 from apps.core.models.base import BaseModel
@@ -7,7 +7,7 @@ from apps.core.models.base import BaseModel
 class Trip(BaseModel):
     name = models.CharField(max_length=100)
     user = models.ForeignKey(
-        User,
+        CustomUser,
         on_delete=models.CASCADE,
         help_text="Trip creator/owner",
     )
@@ -24,7 +24,7 @@ class TripParticipant(BaseModel):
         Trip, related_name="participants", on_delete=models.CASCADE
     )
     user = models.ForeignKey(
-        User, related_name="participated_trips", on_delete=models.CASCADE
+        CustomUser, related_name="participated_trips", on_delete=models.CASCADE
     )
     shares = models.PositiveIntegerField(
         default=1,
