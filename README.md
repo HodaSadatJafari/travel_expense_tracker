@@ -29,3 +29,4 @@ A bilingual (English & Persian) Django web application to help users:
 2. **Phase1**: Basic implementation with OpenAI models (GPT-4o, o1, o3-mini, o3-mini-high)
 3. **Phase2**: More sophisticated implementation with Claude 3.7. Contains solo trip expense tracker only.
 4. **Phase3**: More complicated implementation for group trip expense tracker. 
+4. **Phase4**: Sign up users by their email address. Add log out. Make all HTML files responsive.
