@@ -4,17 +4,19 @@
 
 {% block additional_styles %}
 <style>
+    /* Mobile First Base Styles */
     .dashboard-container {
-        padding: 3rem 0;
+        padding: var(--section-spacing) var(--container-padding);
     }
     
     .section-heading {
         font-family: 'Playfair Display', serif;
         font-weight: 700;
-        margin-bottom: 1.5rem;
+        margin-bottom: 1.25rem;
         color: var(--dark-color);
         position: relative;
         display: inline-block;
+        font-size: var(--font-size-2xl);
     }
     
     .section-heading:after {
@@ -28,20 +30,63 @@
         border-radius: 2px;
     }
     
+    /* Action Buttons */
+    .dashboard-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        margin-bottom: 2rem;
+    }
+    
+    .btn-create {
+        width: 100%;
+        background-color: var(--primary-color);
+        color: var(--dark-color);
+        border: none;
+        padding: 0.75rem 1rem;
+        font-weight: 600;
+        font-size: var(--font-size-base);
+        border-radius: var(--radius-sm);
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: var(--shadow);
+    }
+    
+    .btn-create:hover {
+        background-color: var(--primary-dark);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+    }
+    
+    .btn-create-group {
+        background-color: var(--secondary-color);
+    }
+    
+    .btn-create-group:hover {
+        background-color: #a99eff;
+    }
+    
+    .btn-create i {
+        margin-right: 0.5rem;
+        font-size: var(--font-size-base);
+    }
+    
+    /* Trip Cards */
     .trip-card {
         background-color: white;
         border-radius: var(--radius);
         box-shadow: var(--shadow);
         transition: all 0.3s ease;
-        margin-bottom: 1.5rem;
+        margin-bottom: 1rem;
         overflow: hidden;
         height: 100%;
-        border-top: 5px solid var(--primary-color);
+        border-top: 4px solid var(--primary-color);
     }
     
-    .trip-card:hover {
-        transform: translateY(-5px);
-        box-shadow: var(--shadow-lg);
+    .trip-card:active {
+        transform: scale(0.98);
     }
     
     .trip-card-group {
@@ -49,17 +94,17 @@
     }
     
     .trip-card-header {
-        padding: 1.5rem;
+        padding: 1.25rem;
         border-bottom: 1px solid var(--border-color);
         background-color: #fafbfc;
     }
     
     .trip-card-body {
-        padding: 1.5rem;
+        padding: 1.25rem;
     }
     
     .trip-card-footer {
-        padding: 1rem 1.5rem;
+        padding: 1rem 1.25rem;
         background-color: #fafbfc;
         border-top: 1px solid var(--border-color);
     }
@@ -68,28 +113,33 @@
         font-weight: 700;
         color: var(--dark-color);
         margin-bottom: 0.25rem;
-        font-size: 1.25rem;
+        font-size: var(--font-size-lg);
+        word-break: break-word;
     }
     
     .trip-date {
         color: var(--light-text);
-        font-size: 0.85rem;
+        font-size: var(--font-size-sm);
         display: flex;
         align-items: center;
+        flex-wrap: wrap;
     }
     
     .trip-date i {
         margin-right: 0.5rem;
+        flex-shrink: 0;
     }
     
+    /* Trip Details */
     .trip-details {
         margin-top: 1rem;
     }
     
     .trip-stat {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         margin-bottom: 0.75rem;
+        font-size: var(--font-size-base);
     }
     
     .trip-stat i {
@@ -97,34 +147,42 @@
         margin-right: 0.5rem;
         width: 16px;
         text-align: center;
+        margin-top: 0.25rem;
+        flex-shrink: 0;
     }
     
     .trip-stat.group i {
         color: var(--secondary-color);
     }
     
-    .badge-group {
-        background-color: var(--secondary-color);
-        color: var(--dark-color);
+    .trip-stat span {
+        flex: 1;
+    }
+    
+    /* Badges */
+    .badge-group, .badge-individual {
         font-weight: 500;
         padding: 0.25rem 0.5rem;
         border-radius: 4px;
-        font-size: 0.75rem;
+        font-size: var(--font-size-sm);
+        white-space: nowrap;
+    }
+    
+    .badge-group {
+        background-color: var(--secondary-color);
+        color: var(--dark-color);
     }
     
     .badge-individual {
         background-color: var(--primary-color);
         color: var(--dark-color);
-        font-weight: 500;
-        padding: 0.25rem 0.5rem;
-        border-radius: 4px;
-        font-size: 0.75rem;
     }
     
+    /* Trip Actions */
     .trip-action {
         color: var(--dark-color);
         font-weight: 600;
-        font-size: 0.9rem;
+        font-size: var(--font-size-base);
         display: inline-flex;
         align-items: center;
     }
@@ -133,47 +191,32 @@
         margin-right: 0.5rem;
     }
     
-    .btn-create {
-        background-color: var(--primary-color);
-        color: var(--dark-color);
-        border: none;
-        padding: 0.75rem 1.5rem;
-        font-weight: 600;
-        border-radius: var(--radius-sm);
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 14px rgba(148, 210, 189, 0.4);
-    }
-    
-    .btn-create:hover {
-        background-color: var(--primary-dark);
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(148, 210, 189, 0.5);
-    }
-    
-    .btn-create-group {
-        background-color: var(--secondary-color);
-        box-shadow: 0 4px 14px rgba(189, 178, 255, 0.4);
-    }
-    
-    .btn-create-group:hover {
-        background-color: #a99eff;
-        box-shadow: 0 6px 20px rgba(189, 178, 255, 0.5);
-    }
-    
+    /* Empty States */
     .empty-state {
         background-color: #f8f9fa;
         border-radius: var(--radius);
-        padding: 2rem;
+        padding: 2rem 1rem;
         text-align: center;
         color: var(--light-text);
     }
     
     .empty-state i {
-        font-size: 3rem;
+        font-size: 2.5rem;
         margin-bottom: 1rem;
         color: #dee2e6;
     }
     
+    .empty-state h3 {
+        font-size: var(--font-size-xl);
+        margin-bottom: 0.5rem;
+    }
+    
+    .empty-state p {
+        font-size: var(--font-size-base);
+        margin-bottom: 1.5rem;
+    }
+    
+    /* Participants */
     .trip-participants {
         margin-top: 1rem;
     }
@@ -182,7 +225,7 @@
         background-color: #f0f0f0;
         color: var(--dark-color);
         border-radius: 50px;
-        font-size: 0.85rem;
+        font-size: var(--font-size-sm);
         padding: 0.25rem 0.75rem;
         display: inline-flex;
         align-items: center;
@@ -190,10 +233,13 @@
     
     .participant-count i {
         margin-right: 0.5rem;
+        flex-shrink: 0;
     }
     
+    /* Create Trip Card */
     .create-trip-card {
         height: 100%;
+        min-height: 200px;
         background-color: #f8f9fa;
         border-radius: var(--radius);
         border: 2px dashed var(--border-color);
@@ -202,13 +248,14 @@
         align-items: center;
         justify-content: center;
         text-align: center;
-        padding: 2rem;
+        padding: 1.5rem;
         transition: all 0.3s ease;
     }
     
-    .create-trip-card:hover {
+    .create-trip-card:active {
         background-color: #f0f0f0;
         border-color: var(--primary-color);
+        transform: scale(0.98);
     }
     
     .create-trip-icon {
@@ -219,21 +266,95 @@
     
     .create-trip-text {
         font-weight: 600;
-        margin-bottom: 1rem;
+        color: var(--dark-color);
+        font-size: var(--font-size-base);
+    }
+    
+    /* Tablet Breakpoint */
+    @media (min-width: 768px) {
+        .dashboard-container {
+            padding: calc(var(--section-spacing) * 1.5) var(--container-padding);
+        }
+        
+        .dashboard-actions {
+            flex-direction: row;
+            gap: 1rem;
+        }
+        
+        .btn-create {
+            width: auto;
+            padding: 0.75rem 1.5rem;
+        }
+        
+        .section-heading {
+            font-size: var(--font-size-3xl);
+            margin-bottom: 1.5rem;
+        }
+        
+        .trip-card {
+            margin-bottom: 1.5rem;
+        }
+        
+        .trip-card-header,
+        .trip-card-body {
+            padding: 1.5rem;
+        }
+        
+        .trip-title {
+            font-size: var(--font-size-xl);
+        }
+        
+        .empty-state {
+            padding: 3rem;
+        }
+        
+        .empty-state i {
+            font-size: 3rem;
+        }
+    }
+    
+    /* Desktop Breakpoint */
+    @media (min-width: 1024px) {
+        .dashboard-container {
+            padding: calc(var(--section-spacing) * 2) var(--container-padding);
+        }
+        
+        .trip-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .create-trip-card:hover {
+            background-color: #f0f0f0;
+            border-color: var(--primary-color);
+            transform: translateY(-5px);
+        }
+    }
+    
+    /* High Contrast Mode */
+    @media (prefers-contrast: high) {
+        .trip-card {
+            border: 1px solid var(--dark-color);
+        }
+        
+        .badge-group,
+        .badge-individual {
+            border: 1px solid var(--dark-color);
+        }
     }
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="container dashboard-container">
-    <header class="mb-5">
+    <header class="mb-4">
         <h1 class="section-heading">{% trans "My Trips" %}</h1>
-        <div class="d-flex gap-3">
+        <div class="dashboard-actions">
             <a href="{% url 'add_solo_trip' %}" class="btn btn-create">
-                <i class="fas fa-plus me-2"></i> {% trans "Create Trip" %}
+                <i class="fas fa-plus"></i> {% trans "Create Trip" %}
             </a>
             <a href="{% url 'add_group_trip' %}" class="btn btn-create btn-create-group">
-                <i class="fas fa-users me-2"></i> {% trans "Create Group Trip" %}
+                <i class="fas fa-users"></i> {% trans "Create Group Trip" %}
             </a>
         </div>
     </header>
@@ -242,15 +363,15 @@
     <section class="mb-5">
         <h2 class="section-heading">{% trans "Individual Trips" %}</h2>
         
-        <div class="row">
+        <div class="row g-3">
             {% if individual_trips %}
                 {% for trip in individual_trips %}
-                    <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="col-12 col-sm-6 col-lg-4">
                         <div class="trip-card h-100">
                             <div class="trip-card-header">
                                 <div class="d-flex justify-content-between align-items-start">
                                     <h3 class="trip-title">{{ trip.name }}</h3>
-                                    <span class="badge-individual">{% trans "Individual" %}</span>
+                                    <span class="badge-individual ms-2">{% trans "Individual" %}</span>
                                 </div>
                                 <div class="trip-date">
                                     <i class="fas fa-calendar-alt"></i>
@@ -302,7 +423,7 @@
                 {% endfor %}
                 
                 <!-- Create Trip Card -->
-                <div class="col-lg-4 col-md-6 mb-4">
+                <div class="col-12 col-sm-6 col-lg-4">
                     <a href="{% url 'add_solo_trip' %}" class="create-trip-card">
                         <div class="create-trip-icon">
                             <i class="fas fa-plus-circle"></i>
@@ -316,8 +437,8 @@
                         <i class="fas fa-suitcase"></i>
                         <h3>{% trans "No Individual Trips Yet" %}</h3>
                         <p>{% trans "Start tracking your travel expenses by creating your first trip." %}</p>
-                        <a href="{% url 'add_solo_trip' %}" class="btn btn-create mt-3">
-                            <i class="fas fa-plus me-2"></i> {% trans "Create Trip" %}
+                        <a href="{% url 'add_solo_trip' %}" class="btn btn-create">
+                            <i class="fas fa-plus"></i> {% trans "Create Trip" %}
                         </a>
                     </div>
                 </div>
@@ -329,16 +450,16 @@
     <section class="mb-5">
         <h2 class="section-heading">{% trans "Group Trips" %}</h2>
         
-        <div class="row">
+        <div class="row g-3">
             {% if group_trips_owned or group_trips_participating %}
                 <!-- Group Trips I Own -->
                 {% for trip in group_trips_owned %}
-                    <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="col-12 col-sm-6 col-lg-4">
                         <div class="trip-card trip-card-group h-100">
                             <div class="trip-card-header">
                                 <div class="d-flex justify-content-between align-items-start">
                                     <h3 class="trip-title">{{ trip.name }}</h3>
-                                    <span class="badge-group">{% trans "Group" %}</span>
+                                    <span class="badge-group ms-2">{% trans "Group" %}</span>
                                 </div>
                                 <div class="trip-date">
                                     <i class="fas fa-calendar-alt"></i>
@@ -401,12 +522,12 @@
                 
                 <!-- Group Trips I'm Participating In -->
                 {% for trip in group_trips_participating %}
-                    <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="col-12 col-sm-6 col-lg-4">
                         <div class="trip-card trip-card-group h-100">
                             <div class="trip-card-header">
                                 <div class="d-flex justify-content-between align-items-start">
                                     <h3 class="trip-title">{{ trip.name }}</h3>
-                                    <span class="badge-group">{% trans "Group" %}</span>
+                                    <span class="badge-group ms-2">{% trans "Group" %}</span>
                                 </div>
                                 <div class="trip-date">
                                     <i class="fas fa-calendar-alt"></i>
@@ -468,7 +589,7 @@
                 {% endfor %}
                 
                 <!-- Create Group Trip Card -->
-                <div class="col-lg-4 col-md-6 mb-4">
+                <div class="col-12 col-sm-6 col-lg-4">
                     <a href="{% url 'add_group_trip' %}" class="create-trip-card">
                         <div class="create-trip-icon">
                             <i class="fas fa-users"></i>
@@ -482,8 +603,8 @@
                         <i class="fas fa-users"></i>
                         <h3>{% trans "No Group Trips Yet" %}</h3>
                         <p>{% trans "Create a group trip to share expenses with friends and family." %}</p>
-                        <a href="{% url 'add_group_trip' %}" class="btn btn-create btn-create-group mt-3">
-                            <i class="fas fa-plus me-2"></i> {% trans "Create Group Trip" %}
+                        <a href="{% url 'add_group_trip' %}" class="btn btn-create btn-create-group">
+                            <i class="fas fa-plus"></i> {% trans "Create Group Trip" %}
                         </a>
                     </div>
                 </div>
@@ -495,6 +616,15 @@
 
 {% block additional_scripts %}
 <script>
-    // If you need any specific dashboard functionality
+    // Add touch feedback for mobile devices
+    document.querySelectorAll('.trip-card, .create-trip-card').forEach(card => {
+        card.addEventListener('touchstart', function() {
+            this.style.transform = 'scale(0.98)';
+        });
+        
+        card.addEventListener('touchend', function() {
+            this.style.transform = '';
+        });
+    });
 </script>
 {% endblock %}

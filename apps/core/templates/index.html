@@ -3,9 +3,15 @@
 
 {% block additional_styles %}
 <style>
+    /* Base styles with mobile-first approach */
+    :root {
+        --container-padding: 1rem;
+    }
+
+    /* Hero Section */
     .hero-section {
         position: relative;
-        padding: 8rem 0 12rem;
+        padding: 4rem var(--container-padding) 8rem;
         background: linear-gradient(135deg, #94d2bd 0%, #76c2bd 100%);
         color: var(--dark-color);
         overflow: hidden;
@@ -23,20 +29,20 @@
     
     .hero-blob {
         position: absolute;
-        bottom: -150px;
-        right: -150px;
-        width: 600px;
-        height: 600px;
+        bottom: -75px;
+        right: -75px;
+        width: 300px;
+        height: 300px;
         background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 70%);
         border-radius: 50%;
     }
     
     .hero-blob-2 {
         position: absolute;
-        top: -100px;
-        left: -100px;
-        width: 400px;
-        height: 400px;
+        top: -50px;
+        left: -50px;
+        width: 200px;
+        height: 200px;
         background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 70%);
         border-radius: 50%;
     }
@@ -47,25 +53,28 @@
     }
     
     .hero-title {
-        font-size: 4rem;
+        font-size: 2.5rem;
         font-weight: 900;
-        line-height: 1.1;
-        margin-bottom: 1.5rem;
-        letter-spacing: -1px;
+        line-height: 1.2;
+        margin-bottom: 1.25rem;
+        letter-spacing: -0.5px;
     }
     
     .hero-subtitle {
-        font-size: 1.25rem;
+        font-size: 1.1rem;
         opacity: 0.85;
-        max-width: 600px;
-        margin: 0 auto 3rem;
+        margin: 0 auto 2rem;
+        max-width: 100%;
+        padding: 0 1rem;
     }
     
     .btn-hero {
-        padding: 1rem 2.5rem;
-        font-size: 1.1rem;
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
         border-radius: var(--radius);
         letter-spacing: 0.5px;
+        margin: 0.5rem;
+        min-width: 140px;
     }
     
     .btn-light {
@@ -95,9 +104,10 @@
         transform: translateY(-2px);
     }
     
+    /* Features Section */
     .features-section {
-        margin-top: -5rem;
-        padding-bottom: 5rem;
+        margin-top: -4rem;
+        padding: 0 var(--container-padding) 3rem;
         position: relative;
         z-index: 10;
     }
@@ -107,18 +117,18 @@
         border-radius: var(--radius-lg);
         overflow: hidden;
         box-shadow: var(--shadow-xl);
-        transition: all 0.4s ease;
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
         height: 100%;
         position: relative;
+        margin-bottom: 1.5rem;
     }
     
-    .feature-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+    .feature-card:active {
+        transform: scale(0.98);
     }
     
     .feature-header {
-        padding: 2rem;
+        padding: 1.5rem;
         position: relative;
         overflow: hidden;
     }
@@ -137,7 +147,7 @@
     }
     
     .feature-icon {
-        font-size: 3rem;
+        font-size: 2.5rem;
         margin-bottom: 1rem;
         position: relative;
         z-index: 1;
@@ -157,7 +167,7 @@
     }
     
     .feature-title {
-        font-size: 1.75rem;
+        font-size: 1.5rem;
         font-weight: 700;
         margin-bottom: 0;
         position: relative;
@@ -187,13 +197,14 @@
     }
     
     .feature-body {
-        padding: 2rem;
+        padding: 1.5rem;
     }
     
     .feature-text {
         color: var(--light-text);
-        font-size: 1rem;
-        line-height: 1.7;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-bottom: 0;
     }
     
     .section-title {
@@ -222,20 +233,20 @@
         margin-bottom: 3rem;
     }
     
-    /* Learn More Section */
+    /* Benefits Section */
     .benefit-item {
-        padding: 2rem;
+        padding: 1.5rem;
         border-radius: var(--radius);
         background-color: white;
         box-shadow: var(--shadow);
-        transition: all 0.3s ease;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
         height: 100%;
         border-top: 4px solid transparent;
+        margin-bottom: 1.5rem;
     }
     
-    .benefit-item:hover {
-        transform: translateY(-5px);
-        box-shadow: var(--shadow-lg);
+    .benefit-item:active {
+        transform: scale(0.98);
     }
     
     .benefit-item.teal {
@@ -255,15 +266,14 @@
     }
     
     .benefit-icon {
-        width: 60px;
-        height: 60px;
+        width: 50px;
+        height: 50px;
         display: flex;
         align-items: center;
         justify-content: center;
         border-radius: 50%;
-        margin-bottom: 1.5rem;
-        font-size: 1.5rem;
-        color: var(--dark-color);
+        margin-bottom: 1.25rem;
+        font-size: 1.25rem;
     }
     
     .benefit-icon.teal {
@@ -287,24 +297,24 @@
     }
     
     .benefit-title {
-        font-size: 1.25rem;
+        font-size: 1.15rem;
         font-weight: 700;
         margin-bottom: 0.75rem;
-        color: var(--dark-color);
     }
     
     .benefit-text {
-        color: var(--light-text);
-        font-size: 0.95rem;
+        font-size: 0.9rem;
         line-height: 1.6;
+        margin-bottom: 0;
     }
     
+    /* CTA Section */
     .cta-section {
         background-color: var(--dark-color);
         color: white;
-        padding: 5rem 0;
+        padding: 3rem 1rem;
         border-radius: var(--radius-lg);
-        margin-bottom: -8rem;
+        margin-bottom: -6rem;
         position: relative;
         overflow: hidden;
         box-shadow: var(--shadow-xl);
@@ -320,48 +330,198 @@
     }
     
     .cta-title {
-        font-size: 2.5rem;
+        font-size: 2rem;
         font-weight: 800;
         margin-bottom: 1rem;
         position: relative;
     }
     
     .cta-subtitle {
-        font-size: 1.1rem;
+        font-size: 1rem;
         opacity: 0.8;
-        max-width: 600px;
-        margin: 0 auto 2rem;
+        margin: 0 auto 1.5rem;
+        padding: 0 1rem;
     }
     
     .btn-cta {
-        padding: 1rem 2.5rem;
-        font-size: 1.1rem;
+        padding: 0.75rem 2rem;
+        font-size: 1rem;
         border-radius: var(--radius);
+        min-width: 140px;
     }
-    
-    @media (max-width: 768px) {
-        .hero-title {
-            font-size: 2.5rem;
+
+    /* Tablet Breakpoint */
+    @media (min-width: 768px) {
+        :root {
+            --container-padding: 2rem;
         }
         
         .hero-section {
-            padding: 6rem 0 10rem;
+            padding: 6rem var(--container-padding) 10rem;
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+            max-width: 80%;
+        }
+        
+        .hero-blob {
+            bottom: -100px;
+            right: -100px;
+            width: 400px;
+            height: 400px;
+        }
+        
+        .hero-blob-2 {
+            top: -75px;
+            left: -75px;
+            width: 300px;
+            height: 300px;
+        }
+        
+        .btn-hero {
+            padding: 0.875rem 2rem;
+            font-size: 1.05rem;
         }
         
         .feature-card {
-            margin-bottom: 2rem;
+            margin-bottom: 0;
         }
         
-        .section-title {
-            font-size: 2rem;
+        .feature-header {
+            padding: 2rem;
         }
         
-        .cta-title {
-            font-size: 2rem;
+        .feature-body {
+            padding: 2rem;
         }
         
         .benefit-item {
-            margin-bottom: 1.5rem;
+            margin-bottom: 0;
+        }
+        
+        .cta-section {
+            padding: 4rem 2rem;
+        }
+        
+        .cta-title {
+            font-size: 2.25rem;
+        }
+        
+        .cta-subtitle {
+            font-size: 1.1rem;
+            max-width: 90%;
+        }
+    }
+
+    /* Desktop Breakpoint */
+    @media (min-width: 1024px) {
+        :root {
+            --container-padding: 3rem;
+        }
+        
+        .hero-section {
+            padding: 8rem var(--container-padding) 12rem;
+        }
+        
+        .hero-title {
+            font-size: 4rem;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.25rem;
+            max-width: 600px;
+        }
+        
+        .hero-blob {
+            bottom: -150px;
+            right: -150px;
+            width: 600px;
+            height: 600px;
+        }
+        
+        .hero-blob-2 {
+            top: -100px;
+            left: -100px;
+            width: 400px;
+            height: 400px;
+        }
+        
+        .btn-hero {
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+        }
+        
+        .feature-title {
+            font-size: 1.75rem;
+        }
+        
+        .feature-text {
+            font-size: 1rem;
+        }
+        
+        .benefit-icon {
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+        }
+        
+        .benefit-title {
+            font-size: 1.25rem;
+        }
+        
+        .benefit-text {
+            font-size: 0.95rem;
+        }
+        
+        .cta-section {
+            padding: 5rem 3rem;
+        }
+        
+        .cta-title {
+            font-size: 2.5rem;
+        }
+        
+        .cta-subtitle {
+            font-size: 1.1rem;
+            max-width: 600px;
+        }
+        
+        .btn-cta {
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+        }
+    }
+
+    /* Large Desktop Breakpoint */
+    @media (min-width: 1440px) {
+        .container {
+            max-width: 1320px;
+        }
+    }
+
+    /* Touch Device Optimizations */
+    @media (hover: hover) {
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .benefit-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .btn-hero:hover {
+            transform: translateY(-2px);
         }
     }
 </style>
@@ -377,17 +537,17 @@
         <h1 class="hero-title">{% translate "Travel Without Financial Stress" %}</h1>
         <p class="hero-subtitle">{% translate "Track expenses, split costs with friends, and manage your trips all in one place" %}</p>
         <div>
-            <a class="btn btn-hero btn-light me-3" href="{% url 'signup' %}" role="button">{% translate "Get Started Free" %}</a>
+            <a class="btn btn-hero btn-light" href="{% url 'signup' %}" role="button">{% translate "Get Started Free" %}</a>
             <a class="btn btn-hero btn-outline" href="#features" role="button">{% translate "Learn More" %}</a>
         </div>
     </div>
 </section>
 
-<!-- Features Section with updated backgrounds -->
+<!-- Features Section -->
 <section id="features" class="features-section">
     <div class="container">
         <div class="row">
-            <div class="col-md-4 mb-4">
+            <div class="col-md-4">
                 <div class="feature-card">
                     <div class="feature-header teal">
                         <div class="feature-pattern"></div>
@@ -401,7 +561,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 mb-4">
+            <div class="col-md-4">
                 <div class="feature-card">
                     <div class="feature-header lavender">
                         <div class="feature-pattern"></div>
@@ -415,7 +575,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 mb-4">
+            <div class="col-md-4">
                 <div class="feature-card">
                     <div class="feature-header yellow">
                         <div class="feature-pattern"></div>
@@ -437,7 +597,7 @@
             <p class="section-subtitle mx-auto">{% translate "Our platform is designed specifically for travelers who want to focus on experiences, not spreadsheets." %}</p>
             
             <div class="row mt-5">
-                <div class="col-md-6 col-lg-3 mb-4">
+                <div class="col-sm-6 col-lg-3">
                     <div class="benefit-item teal">
                         <div class="benefit-icon teal mx-auto">
                             <i class="fas fa-globe"></i>
@@ -446,7 +606,7 @@
                         <p class="benefit-text">{% translate "Access from any device, anywhere in the world, even without an internet connection" %}</p>
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-3 mb-4">
+                <div class="col-sm-6 col-lg-3">
                     <div class="benefit-item lavender">
                         <div class="benefit-icon lavender mx-auto">
                             <i class="fas fa-lock"></i>
@@ -455,7 +615,7 @@
                         <p class="benefit-text">{% translate "Your financial data is encrypted and protected with bank-level security" %}</p>
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-3 mb-4">
+                <div class="col-sm-6 col-lg-3">
                     <div class="benefit-item yellow">
                         <div class="benefit-icon yellow mx-auto">
                             <i class="fas fa-bolt"></i>
@@ -464,7 +624,7 @@
                         <p class="benefit-text">{% translate "Add expenses in seconds with our intuitive and streamlined interface" %}</p>
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-3 mb-4">
+                <div class="col-sm-6 col-lg-3">
                     <div class="benefit-item pink">
                         <div class="benefit-icon pink mx-auto">
                             <i class="fas fa-heart"></i>
@@ -483,7 +643,7 @@
     <div class="cta-section text-center">
         <div class="cta-pattern"></div>
         <div class="row">
-            <div class="col-md-8 offset-md-2">
+            <div class="col-md-10 col-lg-8 mx-auto">
                 <h3 class="cta-title">{% translate "Ready to simplify your travel finances?" %}</h3>
                 <p class="cta-subtitle">{% translate "Join thousands of travelers who manage their expenses with ease" %}</p>
                 <a class="btn btn-cta btn-accent" href="{% url 'signup' %}" role="button">{% translate "Sign Up Free" %}</a>
@@ -495,5 +655,5 @@
 {% endblock %}
 
 {% block additional_scripts %}
-<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
 {% endblock %}

@@ -3,25 +3,28 @@
 
 {% block additional_styles %}
 <style>
+    /* Mobile-first base styles */
     .container {
-        max-width: 900px;
+        width: 100%;
+        padding: 1rem;
     }
     
     .section-header {
         font-family: 'Playfair Display', serif;
         font-weight: 800;
         color: var(--dark-color);
-        margin-bottom: 1.5rem;
+        margin-bottom: 1.25rem;
         position: relative;
         display: inline-block;
+        font-size: 1.75rem;
     }
     
     .section-header:after {
         content: '';
         position: absolute;
-        bottom: -10px;
+        bottom: -6px;
         left: 0;
-        width: 50px;
+        width: 40px;
         height: 3px;
         background-color: var(--primary-color);
         border-radius: 2px;
@@ -29,17 +32,17 @@
     
     .form-container {
         background-color: white;
-        border-radius: var(--radius-lg);
-        box-shadow: var(--shadow-lg);
-        padding: 2rem;
-        margin-bottom: 2rem;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
     }
     
     .participant-list {
         background-color: white;
-        border-radius: var(--radius-lg);
-        box-shadow: var(--shadow-lg);
-        padding: 2rem;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 1.5rem;
     }
     
     .participant-card {
@@ -48,7 +51,7 @@
         padding: 1rem;
         margin-bottom: 1rem;
         border-left: 4px solid var(--primary-color);
-        transition: all 0.3s ease;
+        transition: all 0.2s ease;
     }
     
     .participant-card:hover {
@@ -57,67 +60,73 @@
     }
     
     .form-group {
-        margin-bottom: 1.5rem;
+        margin-bottom: 1.25rem;
     }
     
     .form-label {
         font-weight: 600;
         color: var(--dark-color);
-        margin-bottom: 0.75rem;
+        margin-bottom: 0.5rem;
         display: block;
+        font-size: 0.875rem;
     }
     
     .form-control {
-        padding: 0.75rem 1rem;
+        padding: 0.75rem;
         border-radius: var(--radius-sm);
         border: 1px solid var(--border-color);
-        transition: all 0.3s ease;
+        transition: all 0.2s ease;
+        font-size: 0.875rem;
     }
     
     .btn-add {
         background-color: var(--primary-color);
         color: var(--dark-color);
         border: none;
-        padding: 0.75rem 1.5rem;
+        padding: 0.75rem 1.25rem;
         font-weight: 600;
         border-radius: var(--radius-sm);
-        box-shadow: 0 4px 14px rgba(148, 210, 189, 0.4);
-        transition: all 0.3s ease;
+        box-shadow: 0 2px 4px rgba(148, 210, 189, 0.4);
+        transition: all 0.2s ease;
+        width: 100%;
+        font-size: 0.875rem;
     }
     
     .btn-add:hover {
         background-color: var(--primary-dark);
         transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(148, 210, 189, 0.5);
+        box-shadow: 0 4px 8px rgba(148, 210, 189, 0.5);
     }
     
     .btn-continue {
         background-color: var(--secondary-color);
         color: var(--dark-color);
         border: none;
-        padding: 0.75rem 1.5rem;
+        padding: 0.75rem 1.25rem;
         font-weight: 600;
         border-radius: var(--radius-sm);
-        box-shadow: 0 4px 14px rgba(189, 178, 255, 0.4);
-        transition: all 0.3s ease;
+        box-shadow: 0 2px 4px rgba(189, 178, 255, 0.4);
+        transition: all 0.2s ease;
+        width: 100%;
+        font-size: 0.875rem;
     }
     
     .btn-continue:hover {
         background-color: #a99eff;
         transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(189, 178, 255, 0.5);
+        box-shadow: 0 4px 8px rgba(189, 178, 255, 0.5);
     }
     
     .help-text {
-        font-size: 0.85rem;
+        font-size: 0.75rem;
         color: var(--light-text);
-        margin-top: 0.5rem;
+        margin-top: 0.375rem;
     }
     
     .shares-badge {
         background-color: #e9ecef;
         color: var(--dark-color);
-        font-size: 0.85rem;
+        font-size: 0.75rem;
         padding: 0.25rem 0.5rem;
         border-radius: 50px;
         font-weight: 600;
@@ -128,10 +137,10 @@
         border: 1px solid #dc3545;
         background-color: transparent;
         border-radius: 50%;
-        width: 30px;
-        height: 30px;
+        width: 32px;
+        height: 32px;
         padding: 0;
-        font-size: 0.85rem;
+        font-size: 0.75rem;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -148,10 +157,10 @@
         border: 1px solid #0d6efd;
         background-color: transparent;
         border-radius: 50%;
-        width: 30px;
-        height: 30px;
+        width: 32px;
+        height: 32px;
         padding: 0;
-        font-size: 0.85rem;
+        font-size: 0.75rem;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -180,39 +189,211 @@
     .participant-actions {
         display: flex;
         align-items: center;
+        gap: 0.5rem;
     }
     
     .participant-info {
         flex: 1;
     }
     
-    .modal {
-        background-color: rgba(0, 0, 0, 0.5);
+    .participant-info h5 {
+        font-size: 1rem;
+        margin-bottom: 0.25rem;
     }
     
+    .participant-info .text-muted {
+        font-size: 0.75rem;
+    }
+    
+    .badge {
+        font-size: 0.75rem;
+        padding: 0.35em 0.65em;
+    }
+
+    /* Alert styles */
+    .alert {
+        font-size: 0.875rem;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        border-radius: var(--radius-sm);
+    }
+
+    /* Modal styles */
     .modal-content {
-        border-radius: var(--radius-lg);
+        border-radius: var(--radius);
         border: none;
-        box-shadow: var(--shadow-lg);
+        box-shadow: var(--shadow);
     }
     
     .modal-header {
         border-bottom-color: var(--border-color);
         background-color: #f8f9fa;
-        border-top-left-radius: var(--radius-lg);
-        border-top-right-radius: var(--radius-lg);
+        border-top-left-radius: var(--radius);
+        border-top-right-radius: var(--radius);
+        padding: 1rem;
+    }
+    
+    .modal-body {
+        padding: 1rem;
+        font-size: 0.875rem;
     }
     
     .modal-footer {
         border-top-color: var(--border-color);
         background-color: #f8f9fa;
-        border-bottom-left-radius: var(--radius-lg);
-        border-bottom-right-radius: var(--radius-lg);
+        border-bottom-left-radius: var(--radius);
+        border-bottom-right-radius: var(--radius);
+        padding: 1rem;
     }
-    
-    .warn-text {
-        color: #dc3545;
-        font-weight: 500;
+
+    /* Tablet breakpoint */
+    @media (min-width: 768px) {
+        .container {
+            max-width: 900px;
+            padding: 2rem;
+        }
+
+        .section-header {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-header:after {
+            bottom: -8px;
+            width: 50px;
+        }
+
+        .form-container,
+        .participant-list {
+            padding: 2rem;
+        }
+
+        .form-label {
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .form-control {
+            padding: 0.875rem;
+            font-size: 1rem;
+        }
+
+        .help-text {
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+        }
+
+        .btn-add,
+        .btn-continue {
+            padding: 0.875rem 1.5rem;
+            font-size: 1rem;
+            width: auto;
+        }
+
+        .shares-badge {
+            font-size: 0.875rem;
+        }
+
+        .btn-remove,
+        .btn-edit {
+            width: 36px;
+            height: 36px;
+            font-size: 0.875rem;
+        }
+
+        .participant-info h5 {
+            font-size: 1.125rem;
+        }
+
+        .participant-info .text-muted {
+            font-size: 0.875rem;
+        }
+
+        .badge {
+            font-size: 0.875rem;
+        }
+
+        .alert {
+            font-size: 1rem;
+            padding: 1.25rem;
+        }
+
+        .modal-header,
+        .modal-body,
+        .modal-footer {
+            padding: 1.25rem;
+        }
+
+        .modal-body {
+            font-size: 1rem;
+        }
+    }
+
+    /* Desktop breakpoint */
+    @media (min-width: 1024px) {
+        .btn-add {
+            box-shadow: 0 4px 14px rgba(148, 210, 189, 0.4);
+        }
+
+        .btn-add:hover {
+            box-shadow: 0 6px 20px rgba(148, 210, 189, 0.5);
+        }
+
+        .btn-continue {
+            box-shadow: 0 4px 14px rgba(189, 178, 255, 0.4);
+        }
+
+        .btn-continue:hover {
+            box-shadow: 0 6px 20px rgba(189, 178, 255, 0.5);
+        }
+    }
+
+    /* Touch feedback */
+    @media (hover: none) {
+        .btn-add:active,
+        .btn-continue:active,
+        .btn-remove:active,
+        .btn-edit:active {
+            transform: scale(0.98);
+        }
+
+        .participant-card:active {
+            transform: translateY(-1px);
+        }
+    }
+
+    /* High contrast mode */
+    @media (prefers-contrast: high) {
+        .form-container,
+        .participant-list,
+        .participant-card {
+            border: 1px solid var(--dark-color);
+        }
+
+        .form-control {
+            border: 1px solid var(--dark-color);
+        }
+    }
+
+    /* RTL Support */
+    [dir="rtl"] .section-header:after {
+        left: auto;
+        right: 0;
+    }
+
+    [dir="rtl"] .participant-card {
+        border-left: none;
+        border-right: 4px solid var(--primary-color);
+    }
+
+    [dir="rtl"] .btn-edit {
+        margin-right: 0;
+        margin-left: 0.5rem;
+    }
+
+    [dir="rtl"] .edit-form {
+        border-left: none;
+        border-right: 4px solid #0d6efd;
     }
 </style>
 {% endblock %}
