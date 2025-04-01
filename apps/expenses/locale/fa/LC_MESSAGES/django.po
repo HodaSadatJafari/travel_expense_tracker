@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-19 14:13+0330\n"
+"POT-Creation-Date: 2025-03-31 12:56+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,54 +17,320 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-#: apps/expenses/models.py:7 apps/expenses/templates/add_expense.html:11
+
+#: apps/expenses/models.py:24 apps/expenses/templates/add_expense.html:463
+#: apps/expenses/templates/add_solo_expense.html:135
+#: apps/expenses/templates/edit_solo_expense.html:131
 msgid "Food"
-msgstr ""
+msgstr "غذا"
 
-#: apps/expenses/models.py:8 apps/expenses/templates/add_expense.html:12
+#: apps/expenses/models.py:25 apps/expenses/templates/add_expense.html:462
+#: apps/expenses/templates/add_solo_expense.html:136
+#: apps/expenses/templates/edit_solo_expense.html:130
 msgid "Accommodation"
-msgstr ""
+msgstr "محل اقامت"
 
-#: apps/expenses/models.py:9 apps/expenses/templates/add_expense.html:13
+#: apps/expenses/models.py:26 apps/expenses/templates/add_solo_expense.html:137
 msgid "Transport"
-msgstr ""
+msgstr "حمل و نقل"
 
-#: apps/expenses/models.py:10 apps/expenses/templates/add_expense.html:14
+#: apps/expenses/models.py:27 apps/expenses/templates/add_expense.html:465
+#: apps/expenses/templates/add_solo_expense.html:138
+#: apps/expenses/templates/edit_solo_expense.html:133
 msgid "Activities"
-msgstr ""
+msgstr "فعالیت‌ها"
 
-#: apps/expenses/models.py:11
+#: apps/expenses/models.py:28
 msgid "Gas"
-msgstr ""
+msgstr "سوخت"
 
-#: apps/expenses/models.py:12
+#: apps/expenses/models.py:29
 msgid "Car"
-msgstr ""
+msgstr "ماشین"
 
-#: apps/expenses/models.py:13 apps/expenses/templates/add_expense.html:15
+#: apps/expenses/models.py:30 apps/expenses/templates/add_solo_expense.html:139
 msgid "Miscellaneous"
-msgstr ""
+msgstr "متفرقه"
 
-#: apps/expenses/templates/add_expense.html:5
-msgid "Add Expense for Trip: "
-msgstr ""
+#: apps/expenses/templates/add_contribution.html:196
+#: apps/expenses/templates/add_contribution.html:223
+msgid "Add Contribution"
+msgstr "افزودن مشارکت"
 
-#: apps/expenses/templates/add_expense.html:9
-msgid "Category"
-msgstr ""
+#: apps/expenses/templates/add_contribution.html:202
+msgid "Participant"
+msgstr "شرکت‌کننده"
 
-#: apps/expenses/templates/add_expense.html:20
+#: apps/expenses/templates/add_contribution.html:207
+#: apps/expenses/templates/add_expense.html:437
+#: apps/expenses/templates/add_solo_expense.html:144
+#: apps/expenses/templates/delete_expense.html:98
+#: apps/expenses/templates/edit_group_expense.html:391
+#: apps/expenses/templates/edit_solo_expense.html:140
 msgid "Amount"
-msgstr ""
+msgstr "مبلغ"
 
-#: apps/expenses/templates/add_expense.html:25
-msgid "Description"
-msgstr ""
-
-#: apps/expenses/templates/add_expense.html:30
+#: apps/expenses/templates/add_contribution.html:212
+#: apps/expenses/templates/add_expense.html:449
+#: apps/expenses/templates/add_solo_expense.html:156
+#: apps/expenses/templates/delete_expense.html:102
+#: apps/expenses/templates/edit_group_expense.html:399
+#: apps/expenses/templates/edit_solo_expense.html:151
 msgid "Date"
-msgstr ""
+msgstr "تاریخ"
 
-#: apps/expenses/templates/add_expense.html:34
+#: apps/expenses/templates/add_contribution.html:217
+#: apps/expenses/templates/edit_group_expense.html:407
+msgid "Notes"
+msgstr "یادداشت‌ها"
+
+#: apps/expenses/templates/add_contribution.html:217
+msgid "Optional"
+msgstr "اختیاری"
+
+#: apps/expenses/templates/add_contribution.html:219
+msgid "Any additional information about this contribution"
+msgstr "هرگونه اطلاعات اضافی در مورد این مشارکت"
+
+#: apps/expenses/templates/add_expense.html:230
+msgid "Example"
+msgstr "مثال"
+
+#: apps/expenses/templates/add_expense.html:389
+#: apps/expenses/templates/add_expense.html:539
+#: apps/expenses/templates/add_solo_expense.html:126
+#: apps/expenses/templates/add_solo_expense.html:160
 msgid "Add Expense"
+msgstr "افزودن هزینه"
+
+#: apps/expenses/templates/add_expense.html:396
+msgid "How was this expense paid?"
+msgstr "این هزینه چگونه پرداخت شد؟"
+
+#: apps/expenses/templates/add_expense.html:403
+msgid "Paid from group fund"
+msgstr "پرداخت شده از صندوق گروهی"
+
+#: apps/expenses/templates/add_expense.html:405
+msgid "This expense was paid directly from the group's collective fund"
+msgstr "این هزینه مستقیماً از صندوق جمعی گروه پرداخت شده است"
+
+#: apps/expenses/templates/add_expense.html:413
+msgid "Paid by an individual"
+msgstr "پرداخت شده توسط یک فرد"
+
+#: apps/expenses/templates/add_expense.html:415
+msgid "This expense was paid by one of the trip participants"
+msgstr "این هزینه توسط یکی از شرکت‌کنندگان سفر پرداخت شده است"
+
+#: apps/expenses/templates/add_expense.html:422
+#: apps/expenses/templates/delete_expense.html:107
+#: apps/expenses/templates/edit_group_expense.html:418
+msgid "Paid By"
+msgstr "پرداخت شده توسط"
+
+#: apps/expenses/templates/add_expense.html:430
+msgid "Select the participant who paid for this expense"
+msgstr "شرکت‌کننده‌ای که این هزینه را پرداخت کرده است انتخاب کنید"
+
+#: apps/expenses/templates/add_expense.html:443
+msgid "Please enter a valid amount"
+msgstr "لطفاً یک مبلغ معتبر وارد کنید"
+
+#: apps/expenses/templates/add_expense.html:452
+msgid "Please select a date"
+msgstr "لطفاً یک تاریخ انتخاب کنید"
+
+#: apps/expenses/templates/add_expense.html:459
+#: apps/expenses/templates/add_solo_expense.html:133
+#: apps/expenses/templates/delete_expense.html:94
+#: apps/expenses/templates/edit_group_expense.html:383
+#: apps/expenses/templates/edit_solo_expense.html:128
+msgid "Category"
+msgstr "دسته‌بندی"
+
+#: apps/expenses/templates/add_expense.html:461
+msgid "Select a category"
+msgstr "یک دسته‌بندی انتخاب کنید"
+
+#: apps/expenses/templates/add_expense.html:464
+#: apps/expenses/templates/edit_solo_expense.html:132
+msgid "Transportation"
+msgstr "حمل و نقل"
+
+#: apps/expenses/templates/add_expense.html:466
+#: apps/expenses/templates/edit_solo_expense.html:134
+msgid "Shopping"
+msgstr "خرید"
+
+#: apps/expenses/templates/add_expense.html:467
+#: apps/expenses/templates/edit_solo_expense.html:135
+msgid "Other"
+msgstr "سایر"
+
+#: apps/expenses/templates/add_expense.html:470
+msgid "Please select a category"
+msgstr "لطفاً یک دسته‌بندی انتخاب کنید"
+
+#: apps/expenses/templates/add_expense.html:475
+#: apps/expenses/templates/add_solo_expense.html:150
+#: apps/expenses/templates/delete_expense.html:119
+#: apps/expenses/templates/edit_solo_expense.html:145
+msgid "Description"
+msgstr "توضیحات"
+
+#: apps/expenses/templates/add_expense.html:475
+#: apps/expenses/templates/add_solo_expense.html:150
+#: apps/expenses/templates/edit_solo_expense.html:145
+msgid "optional"
+msgstr "اختیاری"
+
+#: apps/expenses/templates/add_expense.html:476
+msgid "e.g. Dinner at Luigi\\"
+msgstr "مثلاً: شام در رستوران لوئیجی"
+
+#: apps/expenses/templates/add_expense.html:477
+#: apps/expenses/templates/edit_solo_expense.html:147
+msgid "Brief description of what this expense was for"
+msgstr "توضیح مختصری از اینکه این هزینه برای چه بوده است"
+
+#: apps/expenses/templates/add_expense.html:485
+msgid "Share this expense with other participants"
+msgstr "این هزینه را با سایر شرکت‌کنندگان به اشتراک بگذارید"
+
+#: apps/expenses/templates/add_expense.html:491
+msgid "Share With"
+msgstr "اشتراک‌گذاری با"
+
+#: apps/expenses/templates/add_expense.html:493
+msgid ""
+"Select specific participants to share this expense with. Leave all unchecked "
+"to share with everyone."
 msgstr ""
+"شرکت‌کنندگان خاصی را برای اشتراک‌گذاری این هزینه انتخاب کنید. برای اشتراک‌گذاری با همه، "
+"هیچ‌کدام را انتخاب نکنید."
+
+#: apps/expenses/templates/add_expense.html:498
+msgid ""
+"The expense will be split according to each participant's share count. Each "
+"participant will pay their proportional share of the expense."
+msgstr ""
+"هزینه بر اساس تعداد سهم هر شرکت‌کننده تقسیم می‌شود. هر شرکت‌کننده سهم متناسب خود از هزینه را "
+"پرداخت خواهد کرد."
+
+#: apps/expenses/templates/add_expense.html:502
+msgid "How expense sharing works:"
+msgstr "نحوه اشتراک‌گذاری هزینه‌ها:"
+
+#: apps/expenses/templates/add_expense.html:503
+msgid ""
+"Example: If Hoda pays $200 for a restaurant and shares it with Safa (both "
+"with 1 share each), the total is split equally:"
+msgstr ""
+"مثال: اگر هدی ۲۰۰ دلار برای یک رستوران پرداخت کند و آن را با صفا به اشتراک بگذارد (هر دو با یک سهم)، "
+"کل مبلغ به طور مساوی تقسیم می‌شود:"
+
+#: apps/expenses/templates/add_expense.html:505
+msgid "Hoda's share: $100 (already paid by Hoda)"
+msgstr "سهم هدی: ۱۰۰ دلار (قبلاً توسط هدی پرداخت شده)"
+
+#: apps/expenses/templates/add_expense.html:506
+msgid "Safa's share: $100 (owes to Hoda)"
+msgstr "سهم صفا: ۱۰۰ دلار (بدهکار به هدی)"
+
+#: apps/expenses/templates/add_expense.html:508
+msgid "Result: Safa owes Hoda $100"
+msgstr "نتیجه: صفا ۱۰۰ دلار به هدی بدهکار است"
+
+#: apps/expenses/templates/add_expense.html:520
+msgid "shares"
+msgstr "سهم‌ها"
+
+#: apps/expenses/templates/add_expense.html:531
+msgid ""
+"The expense will be divided proportionally based on each participant's "
+"number of shares. If someone has 2 shares and another has 1 share, the first "
+"person pays twice as much."
+msgstr ""
+"هزینه به طور متناسب بر اساس تعداد سهم هر شرکت‌کننده تقسیم می‌شود. اگر کسی ۲ سهم داشته باشد "
+"و دیگری ۱ سهم، نفر اول دو برابر بیشتر پرداخت می‌کند."
+
+#: apps/expenses/templates/add_expense.html:544
+#: apps/expenses/templates/delete_expense.html:129
+#: apps/expenses/templates/edit_group_expense.html:435
+#: apps/expenses/templates/edit_solo_expense.html:160
+msgid "Cancel"
+msgstr "انصراف"
+
+#: apps/expenses/templates/add_solo_expense.html:146
+msgid "Enter the expense amount in your default currency"
+msgstr "مبلغ هزینه را در ارز پیش‌فرض خود وارد کنید"
+
+#: apps/expenses/templates/add_solo_expense.html:152
+msgid "Brief description of the expense"
+msgstr "توضیح مختصری از هزینه"
+
+#: apps/expenses/templates/delete_expense.html:87
+#: apps/expenses/templates/delete_expense.html:132
+msgid "Delete Expense"
+msgstr "حذف هزینه"
+
+#: apps/expenses/templates/delete_expense.html:89
+msgid ""
+"Are you sure you want to delete this expense? This action cannot be undone."
+msgstr "آیا مطمئن هستید که می‌خواهید این هزینه را حذف کنید؟ این عمل قابل بازگشت نیست."
+
+#: apps/expenses/templates/delete_expense.html:109
+msgid "Group Fund"
+msgstr "صندوق گروهی"
+
+#: apps/expenses/templates/delete_expense.html:113
+msgid "Unknown"
+msgstr "ناشناخته"
+
+#: apps/expenses/templates/edit_group_expense.html:369
+msgid "Edit Group Expense"
+msgstr "ویرایش هزینه گروهی"
+
+#: apps/expenses/templates/edit_group_expense.html:412
+msgid "Optional notes about the expense"
+msgstr "یادداشت‌های اختیاری درباره هزینه"
+
+#: apps/expenses/templates/edit_group_expense.html:416
+msgid "Payment Source"
+msgstr "منبع پرداخت"
+
+#: apps/expenses/templates/edit_group_expense.html:427
+msgid "Sharing Options"
+msgstr "گزینه‌های اشتراک‌گذاری"
+
+#: apps/expenses/templates/edit_group_expense.html:438
+msgid "Update Expense"
+msgstr "به‌روزرسانی هزینه"
+
+#: apps/expenses/templates/edit_solo_expense.html:122
+msgid "Edit Expense"
+msgstr "ویرایش هزینه"
+
+#: apps/expenses/templates/edit_solo_expense.html:157
+msgid "Save Changes"
+msgstr "ذخیره تغییرات"
+
+#: apps/expenses/views/general.py:61
+msgid "Expense updated successfully."
+msgstr "هزینه با موفقیت به‌روزرسانی شد."
+
+#: apps/expenses/views/general.py:100
+msgid "Expense has been deleted."
+msgstr "هزینه حذف شد."
+
+#: apps/expenses/views/general.py:122
+msgid "You don't have permission to add expenses to this trip."
+msgstr "شما مجوز افزودن هزینه به این سفر را ندارید."
+
+#: apps/expenses/views/general.py:185
+msgid "Expense added successfully."
+msgstr "هزینه با موفقیت اضافه شد."
+
+#~ msgid "Add Expense for Trip: "
+#~ msgstr "افزودن هزینه برای سفر: "
