@@ -5,16 +5,17 @@
 <style>
     /* Base styles */
     :root {
-        --primary-color: #007bff;
-        --primary-dark: #0056b3;
-        --secondary-color: #6c757d;
-        --danger-color: #dc3545;
-        --success-color: #28a745;
-        --warning-color: #ffc107;
+        --primary-color: #94d2bd;
+        --primary-dark: #76c2bd;
+        --secondary-color: #bdb2ff;
+        --accent-color: #ffd166;
+        --dark-color: #495057;
         --light-color: #f8f9fa;
-        --dark-color: #343a40;
-        --text-color: #212529;
-        --border-color: #dee2e6;
+        --text-color: #495057;
+        --light-text: #6c757d;
+        --background: #ffffff;
+        --border-color: #e9ecef;
+
         --radius: 0.5rem;
         --radius-sm: 0.25rem;
         --shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -45,7 +46,7 @@
     }
 
     .btn-tool {
-        width: 100%;
+
         margin: 0;
         justify-content: center;
         white-space: nowrap;
@@ -182,7 +183,8 @@
         }
 
         .btn-toolbar {
-            margin-top: 0;
+            flex-direction: row;
+            gap: 0.25rem;
         }
 
         .btn-tool {
@@ -262,10 +264,6 @@
         border-right: 4px solid var(--primary-color);
     }
 
-    [dir="rtl"] .btn-tool {
-        margin-left: 0;
-        margin-right: 0.5rem;
-    }
 
     [dir="rtl"] .btn-action {
         margin-right: 0;
@@ -282,6 +280,101 @@
         margin-right: 0.5rem !important;
     }
 
+    .btn-tool.edit {
+        background-color: #f0f9fa;
+        color: var(--dark-color);
+    }
+
+    .btn-tool.edit:hover {
+        background-color: #e9ecef;
+    }
+
+    .btn-tool.delete {
+        background-color: #ffebee;
+        color: #c62828;
+    }
+
+    .btn-tool.delete:hover {
+        background-color: #ffcdd2;
+    }
+
+    .btn-action {
+        padding: 0.25rem 0.5rem;
+        margin: 0 0.125rem;
+        border-radius: var(--radius-sm);
+        transition: all 0.2s ease;
+        font-size: 0.75rem;
+    }
+
+    .btn-action.edit {
+        color: #0d6efd;
+        border: 1px solid #0d6efd;
+    }
+
+    .btn-action.edit:hover {
+        background-color: #0d6efd;
+        color: white;
+    }
+
+    .btn-action.delete {
+        color: #dc3545;
+        border: 1px solid #dc3545;
+    }
+
+    .btn-action.delete:hover {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .btn-add {
+        background-color: var(--primary-color);
+        color: var(--dark-color);
+        border: none;
+        padding: 0.75rem 1.25rem;
+        font-weight: 600;
+        border-radius: var(--radius-sm);
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 4px rgba(148, 210, 189, 0.4);
+        width: 100%;
+        max-width: 300px;
+        font-size: 0.875rem;
+    }
+
+    .btn-add:hover {
+        background-color: var(--primary-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(148, 210, 189, 0.5);
+    }
+
+    /* Override Bootstrap's btn-primary with colors matching the theme */
+    .btn-primary {
+        background-color: #e0f2f1; /* Soft teal background */
+        border: 1px solid #76c2bd;
+        color: #2c6e6a; /* Darker teal */
+    }
+    
+    .btn-primary:hover {
+        background-color: #c5e8e7;
+        border-color: #76c2bd;
+        color: #2c6e6a;
+    }
+    
+    /* Override Bootstrap badge colors to match the theme */
+    .badge.bg-primary {
+        background-color: #e0f2f1 !important;
+        color: #2c6e6a;
+    }
+    
+    .badge.bg-secondary {
+        background-color: #ede9fe !important;
+        color: #5a45c0;
+    }
+    
+    .badge.bg-info {
+        background-color: #e0f2f1 !important;
+        color: #2c6e6a;
+    }
+    
     /* Print styles */
     @media print {
         .btn-toolbar,
@@ -301,6 +394,73 @@
 
         .card {
             break-inside: avoid;
+        }
+    }
+
+    /* Enhance mobile responsiveness */
+    @media (max-width: 767px) {
+        /* Make tables more readable on small screens */
+        .table td, .table th {
+            font-size: 0.875rem;
+            padding: 0.5rem;
+        }
+        
+        /* Improve spacing for financial summary cards */
+        .financial-summary-card {
+            padding: 0.75rem;
+        }
+        
+        /* Adjust button spacing in mobile view */
+        .btn-toolbar {
+            justify-content: center;
+            width: 100%;
+        }
+        
+        /* Make participant cards more compact */
+        .participant-card {
+            padding: 0.75rem;
+        }
+        
+        /* Adjust tab navigation for better mobile view */
+        .nav-tabs .nav-link {
+            padding: 0.5rem;
+            font-size: 0.8rem;
+        }
+    }
+
+    /* Enhance tablet responsiveness */
+    @media (min-width: 768px) and (max-width: 1023px) {
+        /* Adjust card layouts for medium screens */
+        .participant-card {
+            height: 100%;
+        }
+        
+        /* Improve button spacing */
+        .btn-toolbar {
+            gap: 0.75rem;
+        }
+    }
+
+    /* Enhance touch device interaction */
+    @media (hover: none) {
+        /* Improve touch targets */
+        .btn, .nav-link {
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .btn-action {
+            min-height: 32px;
+        }
+    }
+
+    /* High-density screens */
+    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+        /* Ensure crisp text rendering */
+        .trip-title, .section-heading {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
     }
 </style>
@@ -358,7 +518,7 @@
                     <div class="card-body text-center">
                         <h5 class="card-title">{% trans "Total Contributions" %}</h5>
                         <p class="display-6">${{ total_contributions|floatformat:2 }}</p>
-                        <a href="{% url 'add_contribution' trip.id %}" class="btn btn-sm btn-primary mt-2">
+                        <a href="{% url 'add_contribution' trip.id %}" class="btn btn-add">
                             <i class="fas fa-plus"></i> {% trans "Add Contribution" %}
                         </a>
                     </div>
@@ -369,8 +529,8 @@
                     <div class="card-body text-center">
                         <h5 class="card-title">{% trans "Group Expenses" %}</h5>
                         <p class="display-6">${{ group_expenses_total|floatformat:2 }}</p>
-                        <a href="{% url 'add_expense' trip.id %}?type=group" class="btn btn-sm btn-primary mt-2">
-                            <i class="fas fa-plus"></i> {% trans "Add Group Expense" %}
+                        <a href="{% url 'add_expense' trip.id %}?type=group" class="btn btn-add">
+                            <i class="fas fa-plus"></i> {% trans "Add Expense" %}
                         </a>
                     </div>
                 </div>
@@ -386,39 +546,6 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- Settlements Section -->
-    <h3 class="section-heading">{% trans "Settlements" %}</h3>
-    
-    <div class="settlements-card">
-        {% if settlements %}
-            <p class="mb-4">{% trans "To settle all debts, the following payments should be made:" %}</p>
-            
-            <div class="list-group">
-                {% for settlement in settlements %}
-                    <div class="settlement-item d-flex justify-content-between align-items-center">
-                        <div>
-                            <i class="fas fa-exchange-alt me-2 text-muted"></i>
-                            <strong>{{ settlement.from_user }}</strong> 
-                            {% trans "pays" %} 
-                            <strong>{{ settlement.to_user }}</strong>
-                        </div>
-                        <span class="settlement-amount">${{ settlement.amount|floatformat:2 }}</span>
-                    </div>
-                {% endfor %}
-            </div>
-            
-            <div class="alert alert-info mt-4">
-                <i class="fas fa-info-circle me-2"></i>
-                {% trans "These payments will fully settle all debts between participants for both group fund contributions and individual expenses." %}
-            </div>
-        {% else %}
-            <div class="text-center py-4 text-muted">
-                <i class="fas fa-check-circle fa-2x mb-3"></i>
-                <p>{% trans "All balances are settled! No payments needed." %}</p>
-            </div>
-        {% endif %}
     </div>
 
     <!-- Participant Financial Details -->

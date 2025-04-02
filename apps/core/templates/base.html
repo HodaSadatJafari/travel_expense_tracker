@@ -364,10 +364,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'dashboard' %}">{% translate "Dashboard" %}</a>
-                    </li>
+                    {% if user.is_authenticated %}                    
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <div class="user-avatar me-2">
@@ -379,8 +376,30 @@
                                 <h6>{{ user.get_full_name|default:user.username }}</h6>
                                 <p>{{ user.email }}</p>
                             </div>
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-person"></i>{% translate "Profile" %}</a></li>
+                            <li><a class="dropdown-item" href="{% url 'dashboard' %}"><i class="bi bi-person"></i>{% translate "Dashboard" %}</a></li>
                             <li><a class="dropdown-item" href="#"><i class="bi bi-gear"></i>{% translate "Settings" %}</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li class="dropdown-item fw-medium px-3">{% translate "Language" %}</li>
+                            <li>
+                                <form method="post" action="{% url 'set_language' %}" class="d-inline">
+                                    {% csrf_token %}
+                                    <input name="next" type="hidden" value="{{ request.path }}">
+                                    <input name="language" type="hidden" value="en">
+                                    <button type="submit" class="dropdown-item border-0 bg-transparent w-100 text-start">
+                                        <i class="bi bi-globe"></i>{% translate "English" %}
+                                    </button>
+                                </form>
+                            </li>
+                            <li>
+                                <form method="post" action="{% url 'set_language' %}" class="d-inline">
+                                    {% csrf_token %}
+                                    <input name="next" type="hidden" value="{{ request.path }}">
+                                    <input name="language" type="hidden" value="fa">
+                                    <button type="submit" class="dropdown-item border-0 bg-transparent w-100 text-start">
+                                        <i class="bi bi-globe"></i>{% translate "Persian" %}
+                                    </button>
+                                </form>
+                            </li>
                             <li><hr class="dropdown-divider"></li>
                             <li>
                                 <form method="post" action="{% url 'logout' %}" class="d-inline">
@@ -393,6 +412,33 @@
                         </ul>
                     </li>
                     {% else %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-globe"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="languageDropdown">
+                            <li>
+                                <form method="post" action="{% url 'set_language' %}" class="d-inline">
+                                    {% csrf_token %}
+                                    <input name="next" type="hidden" value="{{ request.path }}">
+                                    <input name="language" type="hidden" value="en">
+                                    <button type="submit" class="dropdown-item border-0 bg-transparent w-100 text-start">
+                                        {% translate "English" %}
+                                    </button>
+                                </form>
+                            </li>
+                            <li>
+                                <form method="post" action="{% url 'set_language' %}" class="d-inline">
+                                    {% csrf_token %}
+                                    <input name="next" type="hidden" value="{{ request.path }}">
+                                    <input name="language" type="hidden" value="fa">
+                                    <button type="submit" class="dropdown-item border-0 bg-transparent w-100 text-start">
+                                        {% translate "Persian" %}
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'login' %}">{% translate "Login" %}</a>
                     </li>
@@ -411,7 +457,7 @@
     
     <footer>
         <div class="container text-center">
-            <p>© {% now "Y" %} Travel Expense Tracker. {% translate "All rights reserved." %}</p>
+            <p>© {% now "Y" %} {% translate "Travel Expense Tracker.  All rights reserved." %}</p>
         </div>
     </footer>
 

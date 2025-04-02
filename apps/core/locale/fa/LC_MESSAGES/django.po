@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-19 14:13+0330\n"
+"POT-Creation-Date: 2025-03-31 13:21+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,32 +17,269 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-#: apps/core/models.py:12
-msgid "created at"
-msgstr ""
 
-#: apps/core/models.py:16
-msgid "updated at"
-msgstr ""
+#: apps/core/forms.py:12 apps/core/models/users.py:15
+#: apps/core/templates/registration/login.html:232
+#: apps/core/templates/signup.html:254
+msgid "Email Address"
+msgstr "آدرس ایمیل"
 
-#: apps/core/templates/landing_page.html:6
-msgid "Welcome to Travel Expense Tracker"
-msgstr ""
+#: apps/core/forms.py:14 apps/core/models/users.py:17
+#: apps/core/templates/signup.html:263
+msgid "Enter your email address"
+msgstr "آدرس ایمیل خود را وارد کنید"
 
-#: apps/core/templates/landing_page.html:7
+#: apps/core/forms.py:17 apps/core/templates/registration/login.html:237
+#: apps/core/templates/signup.html:268
+msgid "Password"
+msgstr "رمز عبور"
+
+#: apps/core/forms.py:20
+msgid "Enter your password"
+msgstr "رمز عبور خود را وارد کنید"
+
+#: apps/core/forms.py:31
 msgid ""
-"Track your travel expenses, share costs with friends, and manage your trips "
-"easily!"
+"This email is already registered. Please log in or use a different email "
+"address."
+msgstr ""
+"این ایمیل قبلاً ثبت شده است. لطفاً وارد شوید یا از آدرس ایمیل دیگری استفاده "
+"کنید."
+
+#: apps/core/forms.py:53
+msgid "A user with this phone number already exists."
+msgstr "کاربری با این شماره تلفن قبلاً وجود دارد."
+
+#: apps/core/forms.py:62
+msgid "Either email or phone number must be provided"
+msgstr "ایمیل یا شماره تلفن باید ارائه شود"
+
+#: apps/core/models/base.py:11
+msgid "created at"
+msgstr "ایجاد شده در"
+
+#: apps/core/models/base.py:15
+msgid "updated at"
+msgstr "به روز شده در"
+
+#: apps/core/models/users.py:8
+msgid "Phone Number"
+msgstr "شماره تلفن"
+
+#: apps/core/models/users.py:12
+msgid "Enter your phone number (optional)"
+msgstr "شماره تلفن خود را وارد کنید (اختیاری)"
+
+#: apps/core/templates/base.html:361
+msgid "Travel Expense Tracker"
+msgstr "ردیاب هزینه سفر"
+
+#: apps/core/templates/base.html:369
+msgid "Dashboard"
+msgstr "داشبورد"
+
+#: apps/core/templates/base.html:382
+msgid "Profile"
+msgstr "پروفایل"
+
+#: apps/core/templates/base.html:383
+msgid "Settings"
+msgstr "تنظیمات"
+
+#: apps/core/templates/base.html:385
+msgid "Language"
+msgstr "زبان"
+
+#: apps/core/templates/base.html:392
+msgid "English"
 msgstr ""
 
-#: apps/core/templates/landing_page.html:9
-msgid "Get started now and make your travel planning easier!"
+#: apps/core/templates/base.html:402
+msgid "Persian"
 msgstr ""
 
-#: apps/core/templates/landing_page.html:10 apps/core/views.py:14
-msgid "Sign Up"
-msgstr ""
+#: apps/core/templates/base.html:411
+msgid "Logout"
+msgstr "خروج"
 
-#: apps/core/templates/landing_page.html:11
+#: apps/core/templates/base.html:419
 msgid "Login"
+msgstr "ورود"
+
+#: apps/core/templates/base.html:422
+#: apps/core/templates/registration/login.html:248
+#: apps/core/templates/signup.html:246
+msgid "Sign Up"
+msgstr "ثبت نام"
+
+#: apps/core/templates/base.html:436
+msgid "Travel Expense Tracker.  All rights reserved."
+msgstr "ردیاب هزینه سفر. تمامی حقوق محفوظ است."
+
+#: apps/core/templates/index.html:537
+msgid "Travel Without Financial Stress"
+msgstr "سفر بدون استرس مالی"
+
+#: apps/core/templates/index.html:538
+msgid ""
+"Track expenses, split costs with friends, and manage your trips all in one "
+"place"
 msgstr ""
+"هزینه‌ها را ردیابی کنید، هزینه‌ها را با دوستان تقسیم کنید و همه سفرهای خود را "
+"در یک مکان مدیریت کنید"
+
+#: apps/core/templates/index.html:540
+msgid "Get Started Free"
+msgstr "شروع رایگان"
+
+#: apps/core/templates/index.html:541
+msgid "Learn More"
+msgstr "بیشتر بدانید"
+
+#: apps/core/templates/index.html:557
+msgid "Easy Expense Tracking"
+msgstr "ردیابی آسان هزینه‌ها"
+
+#: apps/core/templates/index.html:560
+msgid ""
+"Quickly log expenses in multiple currencies with automatic conversion. Keep "
+"all your travel spending organized in one place."
+msgstr ""
+"به سرعت هزینه‌ها را در چندین ارز با تبدیل خودکار ثبت کنید. تمام هزینه‌های سفر "
+"خود را در یک مکان سازماندهی کنید."
+
+#: apps/core/templates/index.html:571
+msgid "Fair Cost Splitting"
+msgstr "تقسیم منصفانه هزینه‌ها"
+
+#: apps/core/templates/index.html:574
+msgid ""
+"Automatically calculate who owes what with smart splitting algorithms. "
+"Settle debts easily and maintain friendships."
+msgstr ""
+"به طور خودکار محاسبه کنید چه کسی چه چیزی بدهکار است با الگوریتم‌های هوشمند "
+"تقسیم. به راحتی بدهی‌ها را تسویه کنید و دوستی‌ها را حفظ کنید."
+
+#: apps/core/templates/index.html:585
+msgid "Insightful Reports"
+msgstr "گزارش‌های بینشی"
+
+#: apps/core/templates/index.html:588
+msgid ""
+"Visualize spending patterns and keep your travel budget under control. Get "
+"detailed insights into your travel expenses."
+msgstr ""
+"الگوهای خرج کردن را تجسم کنید و بودجه سفر خود را تحت کنترل داشته باشید. "
+"بینش‌های دقیقی از هزینه‌های سفر خود دریافت کنید."
+
+#: apps/core/templates/index.html:596
+msgid "Why Choose Travel Expense Tracker?"
+msgstr "چرا ردیاب هزینه سفر را انتخاب کنید؟"
+
+#: apps/core/templates/index.html:597
+msgid ""
+"Our platform is designed specifically for travelers who want to focus on "
+"experiences, not spreadsheets."
+msgstr ""
+"پلتفرم ما به طور خاص برای مسافرانی طراحی شده است که می‌خواهند بر تجربیات "
+"تمرکز کنند، نه صفحات گسترده."
+
+#: apps/core/templates/index.html:605
+msgid "Works Everywhere"
+msgstr "در همه جا کار می‌کند"
+
+#: apps/core/templates/index.html:606
+msgid ""
+"Access from any device, anywhere in the world, even without an internet "
+"connection"
+msgstr ""
+"از هر دستگاهی، در هر جای دنیا، حتی بدون اتصال به اینترنت دسترسی داشته باشید"
+
+#: apps/core/templates/index.html:614
+msgid "Secure & Private"
+msgstr "امن و خصوصی"
+
+#: apps/core/templates/index.html:615
+msgid "Your financial data is encrypted and protected with bank-level security"
+msgstr "داده‌های مالی شما با امنیت سطح بانکی رمزگذاری و محافظت می‌شوند"
+
+#: apps/core/templates/index.html:623
+msgid "Lightning Fast"
+msgstr "فوق‌العاده سریع"
+
+#: apps/core/templates/index.html:624
+msgid "Add expenses in seconds with our intuitive and streamlined interface"
+msgstr "با رابط کاربری بدیهی و روان ما، در چند ثانیه هزینه‌ها را اضافه کنید"
+
+#: apps/core/templates/index.html:632
+msgid "Loved by Travelers"
+msgstr "مورد علاقه مسافران"
+
+#: apps/core/templates/index.html:633
+msgid "Join thousands of satisfied users who travel stress-free worldwide"
+msgstr "به هزاران کاربر راضی بپیوندید که بدون استرس در سراسر جهان سفر می‌کنند"
+
+#: apps/core/templates/index.html:648
+msgid "Ready to simplify your travel finances?"
+msgstr "آماده‌اید امور مالی سفر خود را ساده کنید؟"
+
+#: apps/core/templates/index.html:649
+msgid "Join thousands of travelers who manage their expenses with ease"
+msgstr "به هزاران مسافر بپیوندید که هزینه‌های خود را به راحتی مدیریت می‌کنند"
+
+#: apps/core/templates/index.html:650
+msgid "Sign Up Free"
+msgstr "ثبت‌نام رایگان"
+
+#: apps/core/templates/index.html:651
+msgid "No credit card required"
+msgstr "نیازی به کارت اعتباری نیست"
+
+#: apps/core/templates/registration/login.html:218
+msgid "Welcome Back"
+msgstr "خوش آمدید"
+
+#: apps/core/templates/registration/login.html:219
+msgid "Log in to your account"
+msgstr "به حساب کاربری خود وارد شوید"
+
+#: apps/core/templates/registration/login.html:227
+msgid "Your email and password didn't match. Please try again."
+msgstr "ایمیل و رمز عبور شما مطابقت ندارد. لطفاً دوباره تلاش کنید."
+
+#: apps/core/templates/registration/login.html:244
+#: apps/core/templates/signup.html:286
+msgid "Log In"
+msgstr "ورود"
+
+#: apps/core/templates/registration/login.html:248
+msgid "Don't have an account?"
+msgstr "حساب کاربری ندارید؟"
+
+#: apps/core/templates/signup.html:247
+msgid "Create your account to get started"
+msgstr "برای شروع حساب کاربری خود را ایجاد کنید"
+
+#: apps/core/templates/signup.html:276
+msgid "Your password can't be too similar to your other personal information."
+msgstr "رمز عبور شما نمی‌تواند بسیار شبیه به اطلاعات شخصی دیگر شما باشد."
+
+#: apps/core/templates/signup.html:277
+msgid "Your password must contain at least 8 characters."
+msgstr "رمز عبور شما باید حداقل ۸ کاراکتر داشته باشد."
+
+#: apps/core/templates/signup.html:278
+msgid "Your password can't be a commonly used password."
+msgstr "رمز عبور شما نمی‌تواند یک رمز عبور رایج باشد."
+
+#: apps/core/templates/signup.html:279
+msgid "Your password can't be entirely numeric."
+msgstr "رمز عبور شما نمی‌تواند کاملاً عددی باشد."
+
+#: apps/core/templates/signup.html:282
+msgid "Create Account"
+msgstr "ایجاد حساب کاربری"
+
+#: apps/core/templates/signup.html:286
+msgid "Already have an account?"
+msgstr "قبلاً حساب کاربری دارید؟"

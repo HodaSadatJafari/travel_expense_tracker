@@ -1,0 +1,680 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-03-31 12:56+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+#: apps/trips/forms/group.py:12
+msgid "Optional: Your initial contribution to the trip fund"
+msgstr "اختیاری: سهم اولیه شما در صندوق سفر"
+
+#: apps/trips/forms/group.py:29 apps/trips/forms/group.py:86
+#: apps/trips/forms/solo.py:22
+msgid "End date must be after start date."
+msgstr "تاریخ پایان باید بعد از تاریخ شروع باشد."
+
+#: apps/trips/forms/group.py:36
+msgid "First name of the participant"
+msgstr "نام شرکت‌کننده"
+
+#: apps/trips/forms/group.py:39
+msgid "Last name of the participant"
+msgstr "نام خانوادگی شرکت‌کننده"
+
+#: apps/trips/forms/group.py:42
+msgid "Optional: Email address for the participant"
+msgstr "اختیاری: آدرس ایمیل برای شرکت‌کننده"
+
+#: apps/trips/forms/group.py:47
+msgid "Number of shares (e.g., 2 for a couple, 3 for a family of three)"
+msgstr "تعداد سهم‌ها (مثلاً 2 برای یک زوج، 3 برای یک خانواده سه نفره)"
+
+#: apps/trips/forms/group.py:53
+msgid "Optional: Initial contribution to the trip fund"
+msgstr "اختیاری: سهم اولیه در صندوق سفر"
+
+#: apps/trips/forms/group.py:65
+msgid "At least one of first name, last name, or email must be provided."
+msgstr "حداقل یکی از نام، نام خانوادگی یا ایمیل باید ارائه شود."
+
+#: apps/trips/templates/add_group_trip.html:234
+#: apps/trips/templates/dashboard.html:357
+#: apps/trips/templates/dashboard.html:607
+msgid "Create Group Trip"
+msgstr "ایجاد سفر گروهی"
+
+#: apps/trips/templates/add_group_trip.html:239
+#: apps/trips/templates/add_solo_trip.html:216
+#: apps/trips/templates/edit_trip.html:237
+msgid "Trip Name"
+msgstr "نام سفر"
+
+#: apps/trips/templates/add_group_trip.html:250
+#: apps/trips/templates/add_solo_trip.html:220
+#: apps/trips/templates/edit_trip.html:245
+#: apps/trips/templates/view_group_trip.html:344
+#: apps/trips/templates/view_solo_trip.html:461
+msgid "Start Date"
+msgstr "تاریخ شروع"
+
+#: apps/trips/templates/add_group_trip.html:261
+#: apps/trips/templates/add_solo_trip.html:224
+#: apps/trips/templates/edit_trip.html:253
+#: apps/trips/templates/view_group_trip.html:347
+#: apps/trips/templates/view_solo_trip.html:464
+msgid "End Date"
+msgstr "تاریخ پایان"
+
+#: apps/trips/templates/add_group_trip.html:272
+msgid "Your Initial Contribution"
+msgstr "سهم اولیه شما"
+
+#: apps/trips/templates/add_group_trip.html:284
+#: apps/trips/templates/delete_trip.html:79
+#: apps/trips/templates/edit_trip.html:262
+#: apps/trips/templates/manage_participants.html:546
+#: apps/trips/templates/manage_participants.html:577
+msgid "Cancel"
+msgstr "انصراف"
+
+#: apps/trips/templates/add_group_trip.html:287
+#: apps/trips/templates/add_solo_trip.html:227
+msgid "Add Trip"
+msgstr "افزودن سفر"
+
+#: apps/trips/templates/add_solo_trip.html:212
+msgid "Add a New Trip"
+msgstr "افزودن سفر جدید"
+
+#: apps/trips/templates/dashboard.html:351
+msgid "My Trips"
+msgstr "سفرهای من"
+
+#: apps/trips/templates/dashboard.html:354
+#: apps/trips/templates/dashboard.html:441
+msgid "Create Trip"
+msgstr "ایجاد سفر"
+
+#: apps/trips/templates/dashboard.html:364
+msgid "Individual Trips"
+msgstr "سفرهای فردی"
+
+#: apps/trips/templates/dashboard.html:374
+#: apps/trips/templates/view_group_trip.html:771
+msgid "Individual"
+msgstr "فردی"
+
+#: apps/trips/templates/dashboard.html:389
+#: apps/trips/templates/dashboard.html:477
+#: apps/trips/templates/dashboard.html:545
+msgid "expense"
+msgstr "هزینه"
+
+#: apps/trips/templates/dashboard.html:397
+msgid "total expense"
+msgstr "کل هزینه"
+
+#: apps/trips/templates/dashboard.html:405
+#: apps/trips/templates/dashboard.html:496
+#: apps/trips/templates/dashboard.html:564
+msgid "Current trip"
+msgstr "سفر فعلی"
+
+#: apps/trips/templates/dashboard.html:407
+#: apps/trips/templates/dashboard.html:498
+#: apps/trips/templates/dashboard.html:566
+msgid "Upcoming trip"
+msgstr "سفر آینده"
+
+#: apps/trips/templates/dashboard.html:409
+#: apps/trips/templates/dashboard.html:500
+#: apps/trips/templates/dashboard.html:568
+msgid "Past trip"
+msgstr "سفر گذشته"
+
+#: apps/trips/templates/dashboard.html:418
+#: apps/trips/templates/dashboard.html:516
+#: apps/trips/templates/dashboard.html:584
+msgid "View Details"
+msgstr "مشاهده جزئیات"
+
+#: apps/trips/templates/dashboard.html:431
+msgid "Create New Trip"
+msgstr "ایجاد سفر جدید"
+
+#: apps/trips/templates/dashboard.html:438
+msgid "No Individual Trips Yet"
+msgstr "هنوز سفر فردی ندارید"
+
+#: apps/trips/templates/dashboard.html:439
+msgid "Start tracking your travel expenses by creating your first trip."
+msgstr "با ایجاد اولین سفر خود، پیگیری هزینه‌های سفر را شروع کنید."
+
+#: apps/trips/templates/dashboard.html:451
+msgid "Group Trips"
+msgstr "سفرهای گروهی"
+
+#: apps/trips/templates/dashboard.html:462
+#: apps/trips/templates/dashboard.html:530
+#: apps/trips/templates/view_group_trip.html:769
+msgid "Group"
+msgstr "گروه"
+
+#: apps/trips/templates/dashboard.html:487
+#: apps/trips/templates/dashboard.html:555
+msgid "participant"
+msgstr "شرکت‌کننده"
+
+#: apps/trips/templates/dashboard.html:509
+msgid "You created this trip"
+msgstr "شما این سفر را ایجاد کرده‌اید"
+
+#: apps/trips/templates/dashboard.html:577
+msgid "Created by"
+msgstr "ایجاد شده توسط"
+
+#: apps/trips/templates/dashboard.html:597
+msgid "Create New Group Trip"
+msgstr "ایجاد سفر گروهی جدید"
+
+#: apps/trips/templates/dashboard.html:604
+msgid "No Group Trips Yet"
+msgstr "هنوز سفر گروهی ندارید"
+
+#: apps/trips/templates/dashboard.html:605
+msgid "Create a group trip to share expenses with friends and family."
+msgstr "یک سفر گروهی برای اشتراک‌گذاری هزینه‌ها با دوستان و خانواده ایجاد کنید."
+
+#: apps/trips/templates/delete_trip.html:69
+#: apps/trips/templates/delete_trip.html:82
+#: apps/trips/templates/view_group_trip.html:336
+#: apps/trips/templates/view_solo_trip.html:453
+msgid "Delete Trip"
+msgstr "حذف سفر"
+
+#: apps/trips/templates/delete_trip.html:71
+msgid "Are you sure you want to delete"
+msgstr "آیا مطمئن هستید که می‌خواهید حذف کنید"
+
+#: apps/trips/templates/delete_trip.html:72
+msgid ""
+"This will permanently delete all associated expenses, contributions, and "
+"participant data. This action cannot be undone."
+msgstr ""
+"این کار تمام هزینه‌ها، مشارکت‌ها و اطلاعات شرکت‌کنندگان مرتبط را به طور دائمی حذف می‌کند. "
+"این عمل قابل بازگشت نیست."
+
+#: apps/trips/templates/edit_trip.html:223
+#: apps/trips/templates/view_group_trip.html:333
+#: apps/trips/templates/view_solo_trip.html:450
+msgid "Edit Trip"
+msgstr "ویرایش سفر"
+
+#: apps/trips/templates/edit_trip.html:265
+#: apps/trips/templates/manage_participants.html:547
+msgid "Save Changes"
+msgstr "ذخیره تغییرات"
+
+#: apps/trips/templates/manage_participants.html:415
+#: apps/trips/templates/view_group_trip.html:330
+msgid "Manage Participants"
+msgstr "مدیریت شرکت‌کنندگان"
+
+#: apps/trips/templates/manage_participants.html:418
+msgid "Continue to Trip"
+msgstr "ادامه به سفر"
+
+#: apps/trips/templates/manage_participants.html:426
+#: apps/trips/templates/manage_participants.html:479
+msgid "Add Participant"
+msgstr "افزودن شرکت‌کننده"
+
+#: apps/trips/templates/manage_participants.html:431
+#: apps/trips/templates/manage_participants.html:528
+msgid "First Name"
+msgstr "نام"
+
+#: apps/trips/templates/manage_participants.html:439
+#: apps/trips/templates/manage_participants.html:532
+msgid "Last Name"
+msgstr "نام خانوادگی"
+
+#: apps/trips/templates/manage_participants.html:447
+msgid "Email Address"
+msgstr "آدرس ایمیل"
+
+#: apps/trips/templates/manage_participants.html:447
+#: apps/trips/templates/manage_participants.html:463
+msgid "Optional"
+msgstr "اختیاری"
+
+#: apps/trips/templates/manage_participants.html:455
+#: apps/trips/templates/manage_participants.html:541
+msgid "Shares"
+msgstr "سهم‌ها"
+
+#: apps/trips/templates/manage_participants.html:463
+msgid "Initial Contribution"
+msgstr "سهم اولیه"
+
+#: apps/trips/templates/manage_participants.html:487
+msgid "Current Participants"
+msgstr "شرکت‌کنندگان فعلی"
+
+#: apps/trips/templates/manage_participants.html:502
+#: apps/trips/templates/view_group_trip.html:435
+msgid "shares"
+msgstr "سهم‌ها"
+
+#: apps/trips/templates/manage_participants.html:504
+#: apps/trips/templates/view_group_trip.html:437
+msgid "share"
+msgstr "سهم"
+
+#: apps/trips/templates/manage_participants.html:510
+msgid "Edit participant"
+msgstr "ویرایش شرکت‌کننده"
+
+#: apps/trips/templates/manage_participants.html:513
+msgid "Remove participant"
+msgstr "حذف شرکت‌کننده"
+
+#: apps/trips/templates/manage_participants.html:517
+msgid "You (Trip Owner)"
+msgstr "شما (مالک سفر)"
+
+#: apps/trips/templates/manage_participants.html:537
+msgid "Email"
+msgstr "ایمیل"
+
+#: apps/trips/templates/manage_participants.html:543
+msgid "Changing shares will affect how expenses are split"
+msgstr "تغییر سهم‌ها بر نحوه تقسیم هزینه‌ها تأثیر می‌گذارد"
+
+#: apps/trips/templates/manage_participants.html:555
+msgid "No participants added yet."
+msgstr "هنوز شرکت‌کننده‌ای اضافه نشده است."
+
+#: apps/trips/templates/manage_participants.html:568
+#: apps/trips/templates/manage_participants.html:580
+msgid "Remove Participant"
+msgstr "حذف شرکت‌کننده"
+
+#: apps/trips/templates/manage_participants.html:572
+msgid "Are you sure you want to remove this participant from the trip?"
+msgstr "آیا مطمئن هستید که می‌خواهید این شرکت‌کننده را از سفر حذف کنید؟"
+
+#: apps/trips/templates/manage_participants.html:573
+msgid "This will also remove all their contributions and expense shares."
+msgstr "این کار همچنین تمام مشارکت‌ها و سهم‌های هزینه آنها را حذف می‌کند."
+
+#: apps/trips/templates/manage_participants.html:574
+msgid ""
+"If this person paid for any expenses, those will be reassigned to you as the "
+"trip owner."
+msgstr ""
+"اگر این شخص هزینه‌ای پرداخت کرده باشد، آنها به عنوان مالک سفر به شما واگذار خواهند شد."
+
+#: apps/trips/templates/view_group_trip.html:325
+msgid "Group Trip"
+msgstr "سفر گروهی"
+
+#: apps/trips/templates/view_group_trip.html:354
+#: apps/trips/templates/view_group_trip.html:690
+#: apps/trips/templates/view_group_trip.html:776
+msgid "Group Fund"
+msgstr "صندوق گروهی"
+
+#: apps/trips/templates/view_group_trip.html:359
+msgid "Total Contributions"
+msgstr "کل مشارکت‌ها"
+
+#: apps/trips/templates/view_group_trip.html:362
+#: apps/trips/templates/view_group_trip.html:985
+msgid "Add Contribution"
+msgstr "افزودن مشارکت"
+
+#: apps/trips/templates/view_group_trip.html:370
+#: apps/trips/templates/view_group_trip.html:545
+msgid "Group Expenses"
+msgstr "هزینه‌های گروهی"
+
+#: apps/trips/templates/view_group_trip.html:373
+msgid "Add Group Expense"
+msgstr "افزودن هزینه گروهی"
+
+#: apps/trips/templates/view_group_trip.html:381
+msgid "Remaining Fund"
+msgstr "صندوق باقی‌مانده"
+
+#: apps/trips/templates/view_group_trip.html:392
+msgid "Settlements"
+msgstr "تسویه‌حساب‌ها"
+
+#: apps/trips/templates/view_group_trip.html:396
+msgid "To settle all debts, the following payments should be made:"
+msgstr "برای تسویه تمام بدهی‌ها، پرداخت‌های زیر باید انجام شود:"
+
+#: apps/trips/templates/view_group_trip.html:404
+msgid "pays"
+msgstr "پرداخت می‌کند"
+
+#: apps/trips/templates/view_group_trip.html:414
+msgid ""
+"These payments will fully settle all debts between participants for both "
+"group fund contributions and individual expenses."
+msgstr ""
+"این پرداخت‌ها تمام بدهی‌ها بین شرکت‌کنندگان را برای هر دو مشارکت صندوق گروهی و "
+"هزینه‌های فردی تسویه می‌کند."
+
+#: apps/trips/templates/view_group_trip.html:419
+msgid "All balances are settled! No payments needed."
+msgstr "تمام مانده‌ها تسویه شده‌اند! نیازی به پرداخت نیست."
+
+#: apps/trips/templates/view_group_trip.html:425
+msgid "Participant Financial Details"
+msgstr "جزئیات مالی شرکت‌کننده"
+
+#: apps/trips/templates/view_group_trip.html:444
+msgid "Financial Summary"
+msgstr "خلاصه مالی"
+
+#: apps/trips/templates/view_group_trip.html:448
+msgid "Contributed to Fund"
+msgstr "به صندوق مشارکت کرده"
+
+#: apps/trips/templates/view_group_trip.html:453
+msgid "Share of Group Expenses"
+msgstr "سهم هزینه‌های گروهی"
+
+#: apps/trips/templates/view_group_trip.html:458
+msgid "Group Fund Balance"
+msgstr "مانده صندوق گروهی"
+
+#: apps/trips/templates/view_group_trip.html:466
+msgid "Paid for Individual Expenses"
+msgstr "پرداخت شده برای هزینه‌های فردی"
+
+#: apps/trips/templates/view_group_trip.html:471
+msgid "Fair Share of Individual Expenses"
+msgstr "سهم منصفانه هزینه‌های فردی"
+
+#: apps/trips/templates/view_group_trip.html:476
+msgid "Individual Expenses Balance"
+msgstr "مانده هزینه‌های فردی"
+
+#: apps/trips/templates/view_group_trip.html:480
+msgid "Owed"
+msgstr "طلبکار"
+
+#: apps/trips/templates/view_group_trip.html:482
+msgid "Owes"
+msgstr "بدهکار"
+
+#: apps/trips/templates/view_group_trip.html:489
+msgid "Total Balance"
+msgstr "مانده کل"
+
+#: apps/trips/templates/view_group_trip.html:493
+msgid "Net amount owed to this person"
+msgstr "مبلغ خالص بدهی به این شخص"
+
+#: apps/trips/templates/view_group_trip.html:495
+msgid "Net amount this person owes others"
+msgstr "مبلغ خالص بدهی این شخص به دیگران"
+
+#: apps/trips/templates/view_group_trip.html:497
+msgid "Balanced"
+msgstr "متعادل"
+
+#: apps/trips/templates/view_group_trip.html:506
+msgid "Your Settlements"
+msgstr "تسویه‌حساب‌های شما"
+
+#: apps/trips/templates/view_group_trip.html:514
+msgid "You pay"
+msgstr "شما پرداخت می‌کنید"
+
+#: apps/trips/templates/view_group_trip.html:519
+msgid "pays you"
+msgstr "به شما پرداخت می‌کند"
+
+#: apps/trips/templates/view_group_trip.html:538
+msgid "Contributions"
+msgstr "مشارکت‌ها"
+
+#: apps/trips/templates/view_group_trip.html:552
+msgid "Paid For Others"
+msgstr "پرداخت شده برای دیگران"
+
+#: apps/trips/templates/view_group_trip.html:559
+msgid "Owes to Others"
+msgstr "بدهکار به دیگران"
+
+#: apps/trips/templates/view_group_trip.html:573
+#: apps/trips/templates/view_group_trip.html:602
+#: apps/trips/templates/view_group_trip.html:633
+#: apps/trips/templates/view_group_trip.html:674
+#: apps/trips/templates/view_group_trip.html:751
+#: apps/trips/templates/view_group_trip.html:839
+#: apps/trips/templates/view_group_trip.html:911
+#: apps/trips/templates/view_solo_trip.html:482
+msgid "Date"
+msgstr "تاریخ"
+
+#: apps/trips/templates/view_group_trip.html:574
+#: apps/trips/templates/view_group_trip.html:755
+#: apps/trips/templates/view_group_trip.html:841
+#: apps/trips/templates/view_group_trip.html:914
+#: apps/trips/templates/view_solo_trip.html:484
+msgid "Amount"
+msgstr "مبلغ"
+
+#: apps/trips/templates/view_group_trip.html:575
+msgid "Notes"
+msgstr "یادداشت‌ها"
+
+#: apps/trips/templates/view_group_trip.html:590
+msgid "No contributions"
+msgstr "بدون مشارکت"
+
+#: apps/trips/templates/view_group_trip.html:603
+#: apps/trips/templates/view_group_trip.html:634
+#: apps/trips/templates/view_group_trip.html:754
+#: apps/trips/templates/view_group_trip.html:840
+#: apps/trips/templates/view_group_trip.html:913
+#: apps/trips/templates/view_solo_trip.html:483
+msgid "Category"
+msgstr "دسته‌بندی"
+
+#: apps/trips/templates/view_group_trip.html:604
+#: apps/trips/templates/view_group_trip.html:635
+#: apps/trips/templates/view_group_trip.html:676
+#: apps/trips/templates/view_group_trip.html:757
+#: apps/trips/templates/view_group_trip.html:843
+#: apps/trips/templates/view_group_trip.html:916
+#: apps/trips/templates/view_solo_trip.html:485
+msgid "Description"
+msgstr "توضیحات"
+
+#: apps/trips/templates/view_group_trip.html:605
+#: apps/trips/templates/view_group_trip.html:637
+#: apps/trips/templates/view_group_trip.html:678
+msgid "Your Share"
+msgstr "سهم شما"
+
+#: apps/trips/templates/view_group_trip.html:621
+msgid "No group expense shares"
+msgstr "بدون سهم هزینه گروهی"
+
+#: apps/trips/templates/view_group_trip.html:636
+msgid "Total Paid"
+msgstr "کل پرداختی"
+
+#: apps/trips/templates/view_group_trip.html:638
+msgid "Others Owe You"
+msgstr "دیگران به شما بدهکارند"
+
+#: apps/trips/templates/view_group_trip.html:655
+msgid "Total others owe you:"
+msgstr "کل بدهی دیگران به شما:"
+
+#: apps/trips/templates/view_group_trip.html:662
+msgid "You haven't paid for others"
+msgstr "شما برای دیگران پرداخت نکرده‌اید"
+
+#: apps/trips/templates/view_group_trip.html:675
+#: apps/trips/templates/view_group_trip.html:753
+#: apps/trips/templates/view_group_trip.html:912
+msgid "Paid By"
+msgstr "پرداخت شده توسط"
+
+#: apps/trips/templates/view_group_trip.html:677
+msgid "Total Amount"
+msgstr "مبلغ کل"
+
+#: apps/trips/templates/view_group_trip.html:693
+msgid "You"
+msgstr "شما"
+
+#: apps/trips/templates/view_group_trip.html:707
+msgid "Total you owe others:"
+msgstr "کل بدهی شما به دیگران:"
+
+#: apps/trips/templates/view_group_trip.html:714
+msgid "You don't owe anything to others"
+msgstr "شما چیزی به دیگران بدهکار نیستید"
+
+#: apps/trips/templates/view_group_trip.html:724
+#: apps/trips/templates/view_group_trip.html:729
+msgid "All Expenses"
+msgstr "تمام هزینه‌ها"
+
+#: apps/trips/templates/view_group_trip.html:734
+msgid "Group Fund Expenses"
+msgstr "هزینه‌های صندوق گروهی"
+
+#: apps/trips/templates/view_group_trip.html:739
+msgid "Individual Expenses"
+msgstr "هزینه‌های فردی"
+
+#: apps/trips/templates/view_group_trip.html:752
+msgid "Type"
+msgstr "نوع"
+
+#: apps/trips/templates/view_group_trip.html:756
+#: apps/trips/templates/view_group_trip.html:842
+#: apps/trips/templates/view_group_trip.html:915
+msgid "Shared With"
+msgstr "اشتراک‌گذاری شده با"
+
+#: apps/trips/templates/view_group_trip.html:759
+#: apps/trips/templates/view_group_trip.html:845
+#: apps/trips/templates/view_group_trip.html:918
+#: apps/trips/templates/view_solo_trip.html:486
+msgid "Actions"
+msgstr "اقدامات"
+
+#: apps/trips/templates/view_group_trip.html:788
+#: apps/trips/templates/view_group_trip.html:800
+#: apps/trips/templates/view_group_trip.html:860
+#: apps/trips/templates/view_group_trip.html:872
+#: apps/trips/templates/view_group_trip.html:934
+#: apps/trips/templates/view_group_trip.html:946
+msgid "All Participants"
+msgstr "همه شرکت‌کنندگان"
+
+#: apps/trips/templates/view_group_trip.html:804
+#: apps/trips/templates/view_group_trip.html:876
+#: apps/trips/templates/view_group_trip.html:950
+msgid "Not Shared"
+msgstr "اشتراک‌گذاری نشده"
+
+#: apps/trips/templates/view_group_trip.html:811
+#: apps/trips/templates/view_group_trip.html:883
+#: apps/trips/templates/view_group_trip.html:957
+#: apps/trips/templates/view_solo_trip.html:498
+msgid "Edit"
+msgstr "ویرایش"
+
+#: apps/trips/templates/view_group_trip.html:814
+#: apps/trips/templates/view_group_trip.html:886
+#: apps/trips/templates/view_group_trip.html:960
+#: apps/trips/templates/view_solo_trip.html:501
+msgid "Delete"
+msgstr "حذف"
+
+#: apps/trips/templates/view_group_trip.html:827
+#: apps/trips/templates/view_solo_trip.html:513
+msgid "No expenses found for this trip."
+msgstr "هیچ هزینه‌ای برای این سفر یافت نشد."
+
+#: apps/trips/templates/view_group_trip.html:899
+msgid "No group fund expenses found for this trip."
+msgstr "هیچ هزینه صندوق گروهی برای این سفر یافت نشد."
+
+#: apps/trips/templates/view_group_trip.html:973
+msgid "No individual expenses found for this trip."
+msgstr "هیچ هزینه فردی برای این سفر یافت نشد."
+
+#: apps/trips/templates/view_group_trip.html:982
+#: apps/trips/templates/view_solo_trip.html:532
+msgid "Add Expense"
+msgstr "افزودن هزینه"
+
+#: apps/trips/templates/view_solo_trip.html:472
+msgid "Total Trip Expenses"
+msgstr "کل هزینه‌های سفر"
+
+#: apps/trips/templates/view_solo_trip.html:476
+msgid "Expenses"
+msgstr "هزینه‌ها"
+
+#: apps/trips/templates/view_solo_trip.html:518
+msgid "Expense Summary by Category"
+msgstr "خلاصه هزینه‌ها بر اساس دسته‌بندی"
+
+#: apps/trips/views/general.py:16
+msgid "Trip has been deleted successfully."
+msgstr "سفر با موفقیت حذف شد."
+
+#: apps/trips/views/general.py:30
+msgid "Trip details have been updated."
+msgstr "جزئیات سفر به‌روزرسانی شد."
+
+#: apps/trips/views/group.py:123
+msgid "Participant has been removed from the trip."
+msgstr "شرکت‌کننده از سفر حذف شد."
+
+#: apps/trips/views/group.py:135
+msgid "You cannot edit your own participant data."
+msgstr "شما نمی‌توانید اطلاعات شرکت‌کننده خود را ویرایش کنید."
+
+#: apps/trips/views/group.py:149
+msgid "This email is already in use by another user."
+msgstr "این ایمیل قبلاً توسط کاربر دیگری استفاده شده است."
+
+#: apps/trips/views/group.py:182
+msgid "Participant information updated successfully."
+msgstr "اطلاعات شرکت‌کننده با موفقیت به‌روزرسانی شد."
+
+#: apps/trips/views/group.py:199
+msgid "You are not a participant in this trip."
+msgstr "شما شرکت‌کننده این سفر نیستید."
+
+#: apps/trips/views/solo.py:27
+msgid "Trip created successfully!"
+msgstr "سفر با موفقیت ایجاد شد!"
