@@ -1,5 +1,7 @@
 # Travel Expense Tracker
 
+**More than 90% of this code is generated using various LLMs. The purpose of this project is to determine how quickly an idea can be turned into an MVP by using LLMs.**
+
 **Travel Expense Tracker** is a web application built with Django that helps users manage and track expenses during their trips. Whether you're traveling solo, with friends, or in a group, this app simplifies the process of recording and dividing expenses, ensuring everyone knows how much they owe.
 
 ![Travel Expense Tracker Landing Page](assets/landing-page.png)
